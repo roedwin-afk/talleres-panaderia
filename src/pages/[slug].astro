@@ -1,19 +1,19 @@
 ---
-// src/pages/talleres/[slug].astro
+// src/pages/[slug].astro
 import { getCollection, render } from 'astro:content';
-import '../../styles/talleres-tokens.css';
+import Layout from '../layouts/Layout.astro';
 import FormularioInscripcion from '../components/FormularioInscripcion.astro';
 
 export async function getStaticPaths() {
   const talleres = await getCollection('talleres');
   return talleres.map((taller) => ({
-    params: { slug: taller.id }, // el "id" (nombre del archivo) se vuelve el param de ruta
+    params: { slug: taller.id },
     props: { taller },
   }));
 }
 
 const { taller } = Astro.props;
-const { Content } = await render(taller); // reemplaza al viejo entry.render()
+const { Content } = await render(taller);
 
 const {
   nombre, fecha, horarioInicio, horarioFin, instructor, instructorGenero,
@@ -23,51 +23,39 @@ const {
 const etiquetaInstructor = instructorGenero === 'f' ? 'Chef Instructora' : 'Chef Instructor';
 const fechaFormateada = fecha.toLocaleDateString('es-SV', { weekday: 'long', day: 'numeric', month: 'long' });
 const precioFormateado = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(precio);
-
-const base = import.meta.env.BASE_URL;
 ---
 
-<html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{nombre} | Talleres | Equipo y Partes El Salvador</title>
-    <meta
-      name="description"
-      content={`Taller de ${nombre}, impartido por ${instructor}. ${cuposDisponibles} cupos disponibles.`}
-    />
-  </head>
-  <body>
-    <main>
-      <article class="detalle-taller">
-        <div class="container">
-          <a href={base} class="volver">&larr; Volver a Talleres</a>
+<Layout
+  title={`${nombre} | Talleres | Equipo y Partes El Salvador`}
+  description={`Taller de ${nombre}, impartido por ${instructor}. ${cuposDisponibles} cupos disponibles.`}
+>
+  <article class="detalle-taller">
+    <div class="container">
+      <a href="/" class="volver">&larr; Volver a Talleres</a>
 
-          <div class="detalle-header">
-            <img src={imagen} alt={imagenAlt} class="detalle-imagen" />
-            <div>
-              <span class="badge">Nivel: {nivel}</span>
-              <h1>{nombre}</h1>
-              <p class="detalle-instructor">{etiquetaInstructor}: {instructor}</p>
-              <ul class="detalle-datos">
-                <li><span>Fecha:</span> <span>{fechaFormateada}</span></li>
-                <li><span>Horario:</span> <span>{horarioInicio} - {horarioFin}</span></li>
-                <li><span>Cupos:</span> <span>{cuposDisponibles} de {cuposTotales} disponibles</span></li>
-                <li><span>Precio:</span> <span class="detalle-precio">{precioFormateado}</span></li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="detalle-contenido">
-            <Content />
-          </div>
+      <div class="detalle-header">
+        <img src={imagen} alt={imagenAlt} class="detalle-imagen" />
+        <div>
+          <span class="badge">Nivel: {nivel}</span>
+          <h1>{nombre}</h1>
+          <p class="detalle-instructor">{etiquetaInstructor}: {instructor}</p>
+          <ul class="detalle-datos">
+            <li><span>Fecha:</span> <span>{fechaFormateada}</span></li>
+            <li><span>Horario:</span> <span>{horarioInicio} - {horarioFin}</span></li>
+            <li><span>Cupos:</span> <span>{cuposDisponibles} de {cuposTotales} disponibles</span></li>
+            <li><span>Precio:</span> <span class="detalle-precio">{precioFormateado}</span></li>
+          </ul>
         </div>
-      </article>
+      </div>
 
-      <FormularioInscripcion tallerPreseleccionado={taller} />
-    </main>
-  </body>
-</html>
+      <div class="detalle-contenido">
+        <Content />
+      </div>
+    </div>
+  </article>
+
+  <FormularioInscripcion tallerPreseleccionado={taller} />
+</Layout>
 
 <style>
   .detalle-taller { padding: var(--space-lg) 0; }
@@ -106,9 +94,6 @@ const base = import.meta.env.BASE_URL;
     margin: 0 auto var(--space-lg);
   }
 
-  /* :global() es necesario porque el Markdown renderizado por <Content />
-     no recibe el scoping automático de Astro (no es HTML escrito directo
-     en este componente, sino inyectado desde afuera). */
   .detalle-contenido :global(h2) {
     color: var(--brand-primary);
     margin-top: var(--space-md);
