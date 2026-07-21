@@ -1,0 +1,66 @@
+---
+import { faq } from '../data/content';
+---
+
+<section id="faq" class="faq-section">
+  <div class="container">
+    <div class="section-header">
+      <h2>Preguntas Frecuentes</h2>
+      <p>Resolvemos las dudas más comunes antes de que reserves tu cupo.</p>
+    </div>
+
+    <div class="faq-list">
+      {faq.map((item) => (
+        <details class="faq-item">
+          <summary>{item.pregunta}</summary>
+          <p>{item.respuesta}</p>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq-section {
+    padding: var(--space-lg) 0;
+  }
+
+  .faq-list {
+    /* max-width: 700px; */
+    margin: 0 auto;
+  }
+
+  .faq-item {
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    padding: var(--space-sm) var(--space-md);
+    margin-bottom: var(--space-xs);
+  }
+
+  .faq-item summary {
+    cursor: pointer;
+    font-weight: 600;
+    list-style: none;
+  }
+
+  .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-item summary::after {
+    content: '+';
+    float: right;
+    font-size: 1.25rem;
+    color: var(--brand-primary);
+  }
+
+  .faq-item[open] summary::after {
+    content: '−';
+  }
+
+  .faq-item p {
+    margin-top: var(--space-sm);
+    color: var(--text-muted);
+  }
+</style>

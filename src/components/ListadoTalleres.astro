@@ -1,0 +1,36 @@
+---
+// src/components/talleres/ListadoTalleres.astro
+import { getCollection } from 'astro:content';
+import TarjetaTaller from './TarjetaTaller.astro';
+
+const talleresEntries = await getCollection('talleres');
+
+// Ordenamos por fecha ascendente: el próximo taller siempre primero.
+// Sin esto, el orden dependería del orden de lectura de archivos del filesystem,
+// que no es confiable ni intencional.
+const talleresOrdenados = talleresEntries.sort(
+  (a, b) => a.data.fecha.valueOf() - b.data.fecha.valueOf()
+);
+---
+
+<section id="workshops" class="workshops-section">
+  <div class="container">
+    <div class="section-header">
+      <h2>Cartelera de Talleres</h2>
+      <p>Grupos reducidos para garantizar atención personalizada y uso práctico de todos nuestros equipos en exhibición.</p>
+    </div>
+
+    <div class="grid">
+      {talleresOrdenados.map((taller) => (
+        <TarjetaTaller taller={taller} />
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .workshops-section {
+    padding: var(--space-lg) 0;
+  }
+
+</style>

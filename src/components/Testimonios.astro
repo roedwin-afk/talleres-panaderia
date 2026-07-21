@@ -1,0 +1,65 @@
+---
+import { testimonios } from '../data/content';
+---
+
+<section class="testimonios-section">
+  <div class="container">
+    <div class="section-header">
+      <h2>Lo Que Dicen Nuestros Alumnos</h2>
+      <p>Experiencias reales de quienes ya pasaron por nuestros talleres.</p>
+    </div>
+
+    <div class="grid testimonios-grid">
+      {testimonios.map((t) => (
+        <article class="testimonio-card">
+          <img src={t.imagen} alt={t.nombre} class="testimonio-avatar" />
+          <p class="testimonio-texto">"{t.texto}"</p>
+          <p class="testimonio-nombre">{t.nombre}</p>
+          <p class="testimonio-taller">{t.taller}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .testimonios-section {
+    padding: var(--space-lg) 0;
+    background-color: var(--bg-surface-alt);
+  }
+
+  .testimonios-grid {
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  }
+
+  .testimonio-card {
+    background-color: var(--bg-surface);
+    border-radius: var(--radius-lg);
+    padding: var(--space-md);
+    box-shadow: var(--shadow-sm);
+    text-align: center;
+  }
+
+  .testimonio-avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 0 auto var(--space-sm);
+  }
+
+  .testimonio-texto {
+    font-style: italic;
+    color: var(--text-main);
+    margin-bottom: var(--space-sm);
+  }
+
+  .testimonio-nombre {
+    font-weight: 700;
+  }
+
+  .testimonio-taller {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+  }
+</style>

@@ -1,0 +1,28 @@
+---
+// src/components/talleres/Footer.astro
+interface Props {
+  copyright: string;
+}
+
+const { copyright } = Astro.props;
+---
+
+<footer>
+  <div class="container">
+    <p>{copyright}</p>
+  </div>
+</footer>
+
+<style>
+  footer {
+    background-color: var(--text-main);
+    color: var(--text-light);
+    padding: var(--space-md) 0;
+    text-align: center;
+  }
+
+  footer p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+  }
+</style>

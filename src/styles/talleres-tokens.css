@@ -1,0 +1,167 @@
+/* src/styles/talleres-tokens.css
+   Design tokens — actualizar cuando Marketing confirme el Manual de Marca. */
+
+:root {
+  /* Paleta de Colores (Temática cálida, panadería profesional) */
+  --brand-primary: #C05621;
+  --brand-primary-hover: #9C4221;
+  --brand-secondary: #F6AD55;
+
+  --bg-page: #FAF5F0;
+  --bg-surface: #FFFFFF;
+  --bg-surface-alt: #F3EAE1;
+
+  --text-main: #2D3748;
+  --text-muted: #718096;
+  --text-light: #F7FAFC;
+
+  --border-light: #E2E8F0;
+  --status-available: #38A169;
+  --status-few: #DD6B20;
+
+  /* Tipografía */
+  --font-family-headings: 'Georgia', serif;
+  --font-family-body: 'System-UI', -apple-system, sans-serif;
+
+  /* Espaciado */
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 2rem;
+  --space-lg: 4rem;
+  --space-xl: 6rem;
+
+  /* Bordes y sombras */
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+  --shadow-md: 0 4px 6px rgba(0,0,0,0.05), 0 10px 15px rgba(0,0,0,0.1);
+  --shadow-lg: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+
+  /* Transiciones */
+  --transition-speed: 0.3s ease;
+}
+
+/* Reset básico */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family-body);
+  color: var(--text-main);
+  background-color: var(--bg-page);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-family-headings);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--text-main);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--space-sm);
+}
+
+/* Botones — compartidos entre Hero, TarjetaTaller, FormularioInscripcion, Modal */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  font-family: var(--font-family-body);
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  border: none;
+  transition: all var(--transition-speed);
+  text-align: center;
+  font-size: 1rem;
+  text-decoration: none;
+}
+
+.btn-primary {
+  background-color: var(--brand-primary);
+  color: var(--text-light);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-primary:hover {
+  background-color: var(--brand-primary-hover);
+  transform: translateY(-2px);
+  color: var(--text-light);
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: var(--brand-primary);
+  border: 2px solid var(--brand-primary);
+}
+
+.btn-outline:hover {
+  background-color: var(--brand-primary);
+  color: var(--text-light);
+}
+
+.btn-block {
+  width: 100%;
+}
+
+/* Badges — usados en TarjetaTaller */
+.badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border-radius: 999px;
+  background-color: var(--bg-surface-alt);
+  color: var(--text-muted);
+}
+
+.badge.available {
+  background-color: rgba(56, 161, 105, 0.1);
+  color: var(--status-available);
+}
+
+.badge.few {
+  background-color: rgba(221, 107, 32, 0.1);
+  color: var(--status-few);
+}
+
+/* Compartido entre ListadoTalleres, TalleresAnteriores, Testimonios, FAQ */
+.section-header {
+  text-align: center;
+  margin-bottom: var(--space-lg);
+}
+
+.section-header h2 {
+  font-size: 2.5rem;
+  margin-bottom: var(--space-xs);
+  color: var(--brand-primary);
+}
+
+.section-header p {
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: var(--space-md);
+}

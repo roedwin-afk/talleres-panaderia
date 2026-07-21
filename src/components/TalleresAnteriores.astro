@@ -1,0 +1,50 @@
+---
+import { talleresAnteriores } from '../data/content';
+---
+
+<section class="galeria-section">
+  <div class="container">
+    <div class="section-header">
+      <h2>Talleres Anteriores</h2>
+      <p>Un vistazo a nuestras sesiones pasadas y el ambiente práctico de cada taller.</p>
+    </div>
+
+    <div class="grid galeria-grid">
+      {talleresAnteriores.map((item) => (
+        <figure class="galeria-item">
+          <img src={item.imagen} alt={item.titulo} />
+          <figcaption>{item.titulo}</figcaption>
+        </figure>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .galeria-section {
+    padding: var(--space-lg) 0;
+  }
+
+  .galeria-grid {
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  }
+
+  .galeria-item {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .galeria-item img {
+    height: 220px;
+    object-fit: cover;
+  }
+
+  .galeria-item figcaption {
+    padding: var(--space-sm);
+    background-color: var(--bg-surface);
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-align: center;
+  }
+</style>
