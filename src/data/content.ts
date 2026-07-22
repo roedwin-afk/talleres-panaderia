@@ -93,15 +93,15 @@ export const talleresAnteriores: TallerAnterior[] = [
   },
   {
     titulo: "Demostración de hornos rotativos",
-    imagen: "https://images.unsplash.com/photo-1585478259715-4ce4d64a4b1f?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+    imagen: "https://images.unsplash.com/photo-1766232280181-0607bd9fe6de?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
   },
-  {
+  { 
     titulo: "Grupo taller de pastelería",
     imagen: "https://images.unsplash.com/photo-1556910103-1c02745aae4d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
   },
   {
     titulo: "Entrega de diplomas",
-    imagen: "https://images.unsplash.com/photo-1517686748843-bb360cbb4c60?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+    imagen: "https://images.unsplash.com/photo-1750128327271-d37dff37497d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
   },
 ];
 

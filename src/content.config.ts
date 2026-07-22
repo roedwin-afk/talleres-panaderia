@@ -1,26 +1,24 @@
-// src/content/config.ts
+// src/content.config.ts
 import { defineCollection, z } from 'astro:content';
+import { glob } from 'astro/loaders';
 
-const talleresCollection = defineCollection({
-  type: 'content', // usamos markdown con frontmatter, no solo data JSON
+const talleres = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/talleres' }),
   schema: z.object({
     nombre: z.string(),
-    slug: z.string(), // usado para el modal de detalle y para "scrollToForm"
-    fecha: z.date(),
-    horarioInicio: z.string(), // "09:00 AM" — lo dejamos string, no vale la pena tipar como Date solo la hora
+    fecha: z.coerce.date(),
+    horarioInicio: z.string(),
     horarioFin: z.string(),
     instructor: z.string(),
-    instructorGenero: z.enum(['m', 'f']).default('m'), // para "Chef Instructor" vs "Chef Instructora"
+    instructorGenero: z.enum(['m', 'f']).default('m'),
     nivel: z.enum(['Todo público', 'Principiante', 'Intermedio', 'Avanzado']),
     cuposDisponibles: z.number().int().nonnegative(),
     cuposTotales: z.number().int().positive(),
     precio: z.number().positive(),
-    imagen: z.string(), // path o URL de la imagen de portada
+    imagen: z.string(),
     imagenAlt: z.string(),
-    destacado: z.boolean().default(false), // por si luego querés resaltar un taller en particular
+    destacado: z.boolean().default(false),
   }),
 });
 
-export const collections = {
-  talleres: talleresCollection,
-};
+export const collections = { talleres };

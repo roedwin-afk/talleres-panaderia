@@ -23,6 +23,8 @@ const {
 const etiquetaInstructor = instructorGenero === 'f' ? 'Chef Instructora' : 'Chef Instructor';
 const fechaFormateada = fecha.toLocaleDateString('es-SV', { weekday: 'long', day: 'numeric', month: 'long' });
 const precioFormateado = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(precio);
+
+const base = import.meta.env.BASE_URL;
 ---
 
 <Layout
@@ -31,7 +33,7 @@ const precioFormateado = new Intl.NumberFormat('en-US', { style: 'currency', cur
 >
   <article class="detalle-taller">
     <div class="container">
-      <a href="/" class="volver">&larr; Volver a Talleres</a>
+      <a href={base} class="volver">&larr; Volver a Talleres</a>
 
       <div class="detalle-header">
         <img src={imagen} alt={imagenAlt} class="detalle-imagen" />
@@ -90,7 +92,7 @@ const precioFormateado = new Intl.NumberFormat('en-US', { style: 'currency', cur
   .detalle-precio { font-weight: 700; color: var(--brand-primary); }
 
   .detalle-contenido {
-    max-width: 700px;
+    /* max-width: 700px; */
     margin: 0 auto var(--space-lg);
   }
 

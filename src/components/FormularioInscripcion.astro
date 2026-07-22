@@ -1,12 +1,12 @@
 ---
 // src/components/talleres/FormularioInscripcion.astro
-import type { CollectionEntry } from 'astro:content';
+import type { CollectionEntry } from "astro:content";
 
 interface Props {
   // Para el formulario general (index): recibe todos los talleres para el <select>
-  talleres?: CollectionEntry<'talleres'>[];
+  talleres?: CollectionEntry<"talleres">[];
   // Para la página de detalle: el taller ya viene fijo, sin <select>
-  tallerPreseleccionado?: CollectionEntry<'talleres'>;
+  tallerPreseleccionado?: CollectionEntry<"talleres">;
 }
 
 const { talleres, tallerPreseleccionado } = Astro.props;
@@ -17,50 +17,99 @@ const { talleres, tallerPreseleccionado } = Astro.props;
     <div class="form-container">
       <h3>Reserva tu espacio</h3>
       <p class="form-desc">
-        Llena este formulario sin compromiso para separar tu cupo. Un asesor se comunicará contigo para confirmar los detalles y finalizar la inscripción.
+        Llena este formulario sin compromiso para separar tu cupo. Un asesor se
+        comunicará contigo para confirmar los detalles y finalizar la
+        inscripción.
       </p>
 
       <form id="form-preinscripcion">
         <div class="form-group">
           <label for="name" class="form-label">Nombre Completo</label>
-          <input type="text" id="name" name="nombre" class="form-control" placeholder="Ej. Juan Pérez" required />
+          <input
+            type="text"
+            id="name"
+            name="nombre"
+            class="form-control"
+            placeholder="Ej. Juan Pérez"
+            required
+          />
         </div>
 
         <div class="form-group">
           <label for="email" class="form-label">Correo Electrónico</label>
-          <input type="email" id="email" name="correo" class="form-control" placeholder="ejemplo@correo.com" required />
+          <input
+            type="email"
+            id="email"
+            name="correo"
+            class="form-control"
+            placeholder="ejemplo@correo.com"
+            required
+          />
         </div>
 
         <div class="form-group">
           <label for="phone" class="form-label">Teléfono / WhatsApp</label>
-          <input type="tel" id="phone" name="telefono" class="form-control" placeholder="Ej. 7000-0000" required />
+          <input
+            type="tel"
+            id="phone"
+            name="telefono"
+            class="form-control"
+            placeholder="Ej. 7000-0000"
+            required
+          />
         </div>
 
-        {tallerPreseleccionado ? (
-          <div class="form-group">
-            <span class="form-label">Taller de Interés</span>
-            <div class="form-control form-control-static">{tallerPreseleccionado.data.nombre}</div>
-            <input type="hidden" name="taller" value={tallerPreseleccionado.id} />
-          </div>
-        ) : (
-          <div class="form-group">
-            <label for="workshop-select" class="form-label">Taller de Interés</label>
-            <select id="workshop-select" name="taller" class="form-control" required>
-              <option value="" disabled selected>Selecciona un taller...</option>
-              {talleres?.map((taller) => (
-                <option value={taller.id}>
-                  {taller.data.nombre} — {taller.data.fecha.toLocaleDateString('es-SV', { day: 'numeric', month: 'short' })}
+        {
+          tallerPreseleccionado ? (
+            <div class="form-group">
+              <span class="form-label">Taller de Interés</span>
+              <div class="form-control form-control-static">
+                {tallerPreseleccionado.data.nombre}
+              </div>
+              <input
+                type="hidden"
+                name="taller"
+                value={tallerPreseleccionado.id}
+              />
+            </div>
+          ) : (
+            <div class="form-group">
+              <label for="workshop-select" class="form-label">
+                Taller de Interés
+              </label>
+              <select
+                id="workshop-select"
+                name="taller"
+                class="form-control"
+                required
+              >
+                <option value="" disabled selected>
+                  Selecciona un taller...
                 </option>
-              ))}
-            </select>
-          </div>
-        )}
+                {talleres?.map((taller) => (
+                  <option value={taller.id}>
+                    {taller.data.nombre} —{" "}
+                    {taller.data.fecha.toLocaleDateString("es-SV", {
+                      day: "numeric",
+                      month: "short",
+                    })}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )
+        }
 
-        <button type="submit" class="btn btn-primary btn-block" style="margin-top: 1rem;">
+        <button
+          type="submit"
+          class="btn btn-primary btn-block"
+          style="margin-top: 1rem;"
+        >
           Solicitar Pre-inscripción
         </button>
         <p class="form-note">
-          *El pago y confirmación final se gestionan de forma directa con nuestro equipo comercial.
+          *El pago y confirmación final se gestionan de forma directa con
+          nuestro equipo comercial.
         </p>
       </form>
     </div>
@@ -135,23 +184,34 @@ const { talleres, tallerPreseleccionado } = Astro.props;
     color: var(--text-muted);
     margin-top: 1rem;
   }
+  @media (max-width: 600px) {
+    .form-container {
+      padding: var(--space-md) var(--space-sm);
+    }
+  }
 </style>
 
 <script>
   // Envío mock por ahora — se conecta a Power Automate + Zoho Sheet más adelante.
-  const form = document.getElementById('form-preinscripcion') as HTMLFormElement | null;
+  const form = document.getElementById(
+    "form-preinscripcion",
+  ) as HTMLFormElement | null;
 
-  form?.addEventListener('submit', (e) => {
+  form?.addEventListener("submit", (e) => {
     e.preventDefault();
-    alert('Gracias por tu preinscripción. Un asesor se comunicará contigo pronto.');
+    alert(
+      "Gracias por tu preinscripción. Un asesor se comunicará contigo pronto.",
+    );
     form.reset();
   });
 
   // Pre-selección vía query param (?taller=slug), usado desde TarjetaTaller
   // cuando el formulario general (con <select>) está en la misma página.
   const params = new URLSearchParams(window.location.search);
-  const tallerParam = params.get('taller');
-  const select = document.getElementById('workshop-select') as HTMLSelectElement | null;
+  const tallerParam = params.get("taller");
+  const select = document.getElementById(
+    "workshop-select",
+  ) as HTMLSelectElement | null;
   if (tallerParam && select) {
     select.value = tallerParam;
   }

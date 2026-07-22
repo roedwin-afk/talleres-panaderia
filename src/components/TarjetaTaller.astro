@@ -38,6 +38,9 @@ const precioFormateado = new Intl.NumberFormat("en-US", {
 
 const etiquetaInstructor =
     instructorGenero === "f" ? "Chef Instructora" : "Chef Instructor";
+
+
+const base = import.meta.env.BASE_URL;
 ---
 
 <article class="card">
@@ -88,11 +91,11 @@ const etiquetaInstructor =
         <div class="card-price">{precioFormateado}</div>
 
         <div class="card-actions">
-            <a href={`/talleres/${taller.id}`} class="btn btn-outline"
+            <a href={`${base}${taller.id}`} class="btn btn-outline"
                 >Ver detalles</a
             >
             <a
-                href={`/#registration?taller=${taller.id}`}
+                href={`/${base}#registration?taller=${taller.id}`}
                 class="btn btn-primary">Inscribirme</a
             >
         </div>
