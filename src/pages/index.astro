@@ -1,32 +1,62 @@
 ---
-// src/pages/index.astro
-import { getCollection } from 'astro:content';
+// src/pages/index.astro — hub principal
 import Layout from '../layouts/Layout.astro';
-import Hero from '../components/Hero.astro';
-import ListadoTalleres from '../components/ListadoTalleres.astro';
-import TalleresAnteriores from '../components/TalleresAnteriores.astro';
-import Testimonios from '../components/Testimonios.astro';
-import FAQ from '../components/FAQ.astro';
-import FormularioInscripcion from '../components/FormularioInscripcion.astro';
-import { sitio } from '../data/content';
-
-const talleres = await getCollection('talleres');
+import TarjetaCategoria from '../components/TarjetaCategoria.astro';
+import { categorias } from '../data/categorias';
 ---
 
 <Layout
-  title="Talleres de Panadería | Equipo y Partes El Salvador"
-  description="Talleres prácticos de alta panadería con equipo profesional. Cupos limitados, inscríbete hoy."
+  title="Talleres Profesionales | Equipo y Partes El Salvador"
+  description="Talleres prácticos con equipo profesional: panadería, pastelería, carnicería y cocina. Elegí tu categoría e inscribite hoy."
 >
-  <Hero
-    titulo={sitio.hero.titulo}
-    descripcion={sitio.hero.descripcion}
-    textoBoton={sitio.hero.textoBoton}
-    anclaBoton={sitio.hero.anclaBoton}
-    imagenFondo={sitio.hero.imagenFondo}
-  />
-  <ListadoTalleres />
-  <TalleresAnteriores />
-  <Testimonios />
-  <FAQ />
-  <FormularioInscripcion talleres={talleres} />
+  <section class="hub-hero">
+    <div class="container">
+      <h1>Domina Nuevas Técnicas con Equipamiento Profesional</h1>
+      <p>
+        Elegí la categoría de taller que más se ajusta a tu negocio o pasión. Grupos reducidos,
+        instructores expertos y uso práctico de equipo industrial real.
+      </p>
+    </div>
+  </section>
+
+  <section class="hub-categorias">
+    <div class="container">
+      <div class="grid">
+        {categorias.map((categoria) => (
+          <TarjetaCategoria categoria={categoria} />
+        ))}
+      </div>
+    </div>
+  </section>
 </Layout>
+
+<style>
+  .hub-hero {
+    background-color: var(--text-main);
+    color: var(--text-light);
+    padding: var(--space-xl) 0 var(--space-lg);
+    text-align: center;
+  }
+
+  .hub-hero h1 {
+    color: var(--text-light);
+    font-size: 2.8rem;
+    max-width: 800px;
+    margin: 0 auto var(--space-sm);
+  }
+
+  .hub-hero p {
+    color: #E2E8F0;
+    max-width: 600px;
+    margin: 0 auto;
+    font-size: 1.1rem;
+  }
+
+  .hub-categorias {
+    padding: var(--space-lg) 0;
+  }
+
+  @media (max-width: 768px) {
+    .hub-hero h1 { font-size: 2rem; }
+  }
+</style>

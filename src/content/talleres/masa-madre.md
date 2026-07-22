@@ -13,6 +13,7 @@ precio: 45.00
 imagen: "https://images.unsplash.com/photo-1549931319-a545dcf3bc73?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
 imagenAlt: "Masa Madre"
 destacado: false
+categoria: "panaderia"
 ---
 
 En este taller intensivo dominarás los procesos fundamentales de preparación, leudado y horneado. Nuestro enfoque es 100% práctico.

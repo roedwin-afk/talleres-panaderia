@@ -1,0 +1,105 @@
+---
+// src/pages/talleres/[categoria]/[slug].astro
+import { getCollection, render } from 'astro:content';
+import Layout from '../../../layouts/Layout.astro';
+import ZohoFormularioHTML from '../../../components/ZohoFormularioHTML.astro';
+import { categorias } from '../../../data/categorias';
+
+export async function getStaticPaths() {
+  const talleres = await getCollection('talleres');
+  return talleres.map((taller) => ({
+    params: { categoria: taller.data.categoria, slug: taller.id },
+    props: { taller },
+  }));
+}
+
+const { taller } = Astro.props;
+const { Content } = await render(taller);
+const base = import.meta.env.BASE_URL;
+
+const categoriaInfo = categorias.find((c) => c.id === taller.data.categoria);
+
+const {
+  nombre, fecha, horarioInicio, horarioFin, instructor, instructorGenero,
+  nivel, cuposDisponibles, cuposTotales, precio, imagen, imagenAlt, categoria,
+} = taller.data;
+
+const etiquetaInstructor = instructorGenero === 'f' ? 'Instructora' : 'Instructor';
+const fechaFormateada = fecha.toLocaleDateString('es-SV', { weekday: 'long', day: 'numeric', month: 'long' });
+const precioFormateado = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(precio);
+---
+
+<Layout
+  title={`${nombre} | Talleres | Equipo y Partes El Salvador`}
+  description={`Taller de ${nombre}, impartido por ${instructor}. ${cuposDisponibles} cupos disponibles.`}
+>
+  <div class="categoria-scope" style={categoriaInfo ? `--brand-primary: ${categoriaInfo.colorAcento}; --brand-primary-hover: color-mix(in srgb, ${categoriaInfo.colorAcento} 80%, black);` : ''}>
+    <article class="detalle-taller">
+      <div class="container">
+        <a href={`${base}talleres/${categoria}/`} class="volver">&larr; Volver a {categoriaInfo?.nombre ?? 'Talleres'}</a>
+
+        <div class="detalle-header">
+          <img src={imagen} alt={imagenAlt} class="detalle-imagen" />
+          <div>
+            <span class="badge">Nivel: {nivel}</span>
+            <h1>{nombre}</h1>
+            <p class="detalle-instructor">{etiquetaInstructor}: {instructor}</p>
+            <ul class="detalle-datos">
+              <li><span>Fecha:</span> <span>{fechaFormateada}</span></li>
+              <li><span>Horario:</span> <span>{horarioInicio} - {horarioFin}</span></li>
+              <li><span>Cupos:</span> <span>{cuposDisponibles} de {cuposTotales} disponibles</span></li>
+              <li><span>Precio:</span> <span class="detalle-precio">{precioFormateado}</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="detalle-contenido">
+          <Content />
+        </div>
+      </div>
+    </article>
+
+    <ZohoFormularioHTML tallerPreseleccionado={taller} />
+  </div>
+</Layout>
+
+<style>
+  .detalle-taller { padding: var(--space-lg) 0; }
+  .volver { display: inline-block; margin-bottom: var(--space-md); color: var(--text-muted); }
+
+  .detalle-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-lg);
+    align-items: center;
+    margin-bottom: var(--space-lg);
+  }
+
+  .detalle-imagen { border-radius: var(--radius-lg); box-shadow: var(--shadow-md); }
+  .detalle-instructor { color: var(--text-muted); margin: var(--space-xs) 0 var(--space-sm); }
+
+  .detalle-datos { list-style: none; }
+  .detalle-datos li {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .detalle-precio { font-weight: 700; color: var(--brand-primary); }
+  .detalle-contenido { max-width: 700px; margin: 0 auto var(--space-lg); }
+
+  .detalle-contenido :global(h2) {
+    color: var(--brand-primary);
+    margin-top: var(--space-md);
+    margin-bottom: var(--space-xs);
+  }
+  .detalle-contenido :global(ul) {
+    padding-left: var(--space-md);
+    margin-bottom: var(--space-sm);
+  }
+
+  @media (max-width: 768px) {
+    .detalle-header { grid-template-columns: 1fr; }
+  }
+</style>

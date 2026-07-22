@@ -9,6 +9,7 @@ interface Props {
 const { taller } = Astro.props;
 const {
     nombre,
+    categoria,
     fecha,
     horarioInicio,
     horarioFin,
@@ -36,8 +37,7 @@ const precioFormateado = new Intl.NumberFormat("en-US", {
     currency: "USD",
 }).format(precio);
 
-const etiquetaInstructor =
-    instructorGenero === "f" ? "Chef Instructora" : "Chef Instructor";
+const etiquetaInstructor = instructorGenero === 'f' ? 'Instructora' : 'Instructor';
 
 
 const base = import.meta.env.BASE_URL;
@@ -91,9 +91,7 @@ const base = import.meta.env.BASE_URL;
         <div class="card-price">{precioFormateado}</div>
 
         <div class="card-actions">
-            <a href={`${base}${taller.id}`} class="btn btn-outline"
-                >Ver detalles</a
-            >
+            <a href={`${base}talleres/${categoria}/${taller.id}`} class="btn btn-outline">Ver detalles</a>
             <a
                 href={`/${base}#registration?taller=${taller.id}`}
                 class="btn btn-primary">Inscribirme</a

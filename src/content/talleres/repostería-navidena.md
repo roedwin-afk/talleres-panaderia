@@ -13,6 +13,7 @@ precio: 48.00
 imagen: "https://images.unsplash.com/photo-1766426910194-5291e9fe1926?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
 imagenAlt: "pastel"
 destacado: false
+categoria: "panaderia"
 ---
 
 En este taller intensivo dominarás los procesos fundamentales de preparación, leudado y horneado. Nuestro enfoque es 100% práctico.

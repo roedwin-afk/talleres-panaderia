@@ -1,0 +1,92 @@
+---
+// src/pages/talleres/[categoria]/index.astro
+import { getCollection } from 'astro:content';
+import Layout from '../../../layouts/Layout.astro';
+import Hero from '../../../components/Hero.astro';
+import ListadoTalleres from '../../../components/ListadoTalleres.astro';
+import TalleresAnteriores from '../../../components/TalleresAnteriores.astro';
+import Testimonios from '../../../components/Testimonios.astro';
+import FAQ from '../../../components/FAQ.astro';
+import ZohoFormularioHTML from '../../../components/ZohoFormularioHTML.astro';
+import { categorias } from '../../../data/categorias';
+import { contenidoPorCategoria } from '../../../data/content';
+
+export async function getStaticPaths() {
+  return categorias.map((categoria) => ({
+    params: { categoria: categoria.id },
+    props: { categoria },
+  }));
+}
+
+const { categoria } = Astro.props;
+const contenido = contenidoPorCategoria[categoria.id]; // undefined si aún no hay contenido cargado
+
+const talleresDeCategoria = contenido
+  ? await getCollection('talleres', ({ data }) => data.categoria === categoria.id)
+  : [];
+---
+
+<Layout
+  title={`Talleres de ${categoria.nombre} | Equipo y Partes El Salvador`}
+  description={categoria.descripcionCorta}
+>
+  <div class="categoria-scope" style={`--brand-primary: ${categoria.colorAcento}; --brand-primary-hover: color-mix(in srgb, ${categoria.colorAcento} 80%, black);`}>
+    {contenido ? (
+      <>
+        <Hero
+          titulo={contenido.heroTitulo}
+          descripcion={contenido.heroDescripcion}
+          textoBoton={`Conoce nuestros talleres de ${categoria.nombre}`}
+          anclaBoton="#workshops"
+          imagenFondo={contenido.heroImagenFondo}
+        />
+        <ListadoTalleres categoria={categoria.id} />
+        <TalleresAnteriores items={contenido.talleresAnteriores} />
+        <Testimonios items={contenido.testimonios} />
+        <FAQ items={contenido.faq} />
+        <ZohoFormularioHTML talleres={talleresDeCategoria} />
+      </>
+    ) : (
+      <section class="proximamente">
+        <div class="container">
+          <img src={categoria.imagen} alt={categoria.nombre} class="proximamente-img" />
+          <h1>Talleres de {categoria.nombre}</h1>
+          <p>{categoria.descripcionCorta}</p>
+          <p class="proximamente-aviso">Muy pronto vas a poder inscribirte a talleres de esta categoría. ¡Volvé pronto!</p>
+          <a href={`${import.meta.env.BASE_URL}`} class="btn btn-outline">Ver otras categorías</a>
+        </div>
+      </section>
+    )}
+  </div>
+</Layout>
+
+<style>
+  .proximamente {
+    padding: var(--space-xl) 0;
+    text-align: center;
+  }
+
+  .proximamente-img {
+    max-width: 300px;
+    border-radius: var(--radius-lg);
+    margin: 0 auto var(--space-md);
+    box-shadow: var(--shadow-md);
+  }
+
+  .proximamente h1 {
+    font-size: 2.2rem;
+    color: var(--brand-primary);
+    margin-bottom: var(--space-xs);
+  }
+
+  .proximamente p {
+    color: var(--text-muted);
+    max-width: 500px;
+    margin: 0 auto var(--space-sm);
+  }
+
+  .proximamente-aviso {
+    font-weight: 600;
+    color: var(--text-main);
+  }
+</style>

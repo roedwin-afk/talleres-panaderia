@@ -1,15 +1,21 @@
 ---
 // src/components/talleres/ListadoTalleres.astro
-import { getCollection } from 'astro:content';
-import TarjetaTaller from './TarjetaTaller.astro';
+import { getCollection } from "astro:content";
+import TarjetaTaller from "./TarjetaTaller.astro";
 
-const talleresEntries = await getCollection('talleres');
+interface Props {
+  categoria: string;
+}
 
-// Ordenamos por fecha ascendente: el próximo taller siempre primero.
-// Sin esto, el orden dependería del orden de lectura de archivos del filesystem,
-// que no es confiable ni intencional.
+const { categoria } = Astro.props;
+
+const talleresEntries = await getCollection(
+  "talleres",
+  ({ data }) => data.categoria === categoria,
+);
+
 const talleresOrdenados = talleresEntries.sort(
-  (a, b) => a.data.fecha.valueOf() - b.data.fecha.valueOf()
+  (a, b) => a.data.fecha.valueOf() - b.data.fecha.valueOf(),
 );
 ---
 
@@ -17,13 +23,14 @@ const talleresOrdenados = talleresEntries.sort(
   <div class="container">
     <div class="section-header">
       <h2>Cartelera de Talleres</h2>
-      <p>Grupos reducidos para garantizar atención personalizada y uso práctico de todos nuestros equipos en exhibición.</p>
+      <p>
+        Grupos reducidos para garantizar atención personalizada y uso práctico
+        de todos nuestros equipos en exhibición.
+      </p>
     </div>
 
     <div class="grid">
-      {talleresOrdenados.map((taller) => (
-        <TarjetaTaller taller={taller} />
-      ))}
+      {talleresOrdenados.map((taller) => <TarjetaTaller taller={taller} />)}
     </div>
   </div>
 </section>
@@ -32,5 +39,4 @@ const talleresOrdenados = talleresEntries.sort(
   .workshops-section {
     padding: var(--space-lg) 0;
   }
-
 </style>

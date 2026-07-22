@@ -6,6 +6,7 @@ const talleres = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/talleres' }),
   schema: z.object({
     nombre: z.string(),
+    categoria: z.string(),
     fecha: z.coerce.date(),
     horarioInicio: z.string(),
     horarioFin: z.string(),

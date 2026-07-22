@@ -1,21 +1,30 @@
 ---
-import { talleresAnteriores } from '../data/content';
+import type { TallerAnterior } from "../data/content";
+interface Props {
+  items: TallerAnterior[];
+}
+const { items } = Astro.props;
 ---
 
 <section class="galeria-section">
   <div class="container">
     <div class="section-header">
       <h2>Talleres Anteriores</h2>
-      <p>Un vistazo a nuestras sesiones pasadas y el ambiente práctico de cada taller.</p>
+      <p>
+        Un vistazo a nuestras sesiones pasadas y el ambiente práctico de cada
+        taller.
+      </p>
     </div>
 
     <div class="grid galeria-grid">
-      {talleresAnteriores.map((item) => (
-        <figure class="galeria-item">
-          <img src={item.imagen} alt={item.titulo} />
-          <figcaption>{item.titulo}</figcaption>
-        </figure>
-      ))}
+      {
+        items.map((item) => (
+          <figure class="galeria-item">
+            <img src={item.imagen} alt={item.titulo} />
+            <figcaption>{item.titulo}</figcaption>
+          </figure>
+        ))
+      }
     </div>
   </div>
 </section>
