@@ -37,8 +37,8 @@ const precioFormateado = new Intl.NumberFormat("en-US", {
     currency: "USD",
 }).format(precio);
 
-const etiquetaInstructor = instructorGenero === 'f' ? 'Instructora' : 'Instructor';
-
+const etiquetaInstructor =
+    instructorGenero === "f" ? "Instructora" : "Instructor";
 
 const base = import.meta.env.BASE_URL;
 ---
@@ -49,16 +49,45 @@ const base = import.meta.env.BASE_URL;
     </div>
     <div class="card-content">
         <div class="card-meta">
-            <span class="badge">Nivel: {nivel}</span>
+            <span class="badge badge-nivel">
+                 <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                >
+                     <line x1="4" y1="20" x2="4" y2="14"></line>
+                     <line x1="12" y1="20" x2="12" y2="9"></line>
+                     <line x1="20" y1="20" x2="20" y2="4"></line>
+                    
+                </svg>
+                 {nivel}
+                
+            </span>
             {
                 pocosCupos ? (
                     <span class="badge few">
-                        ¡Solo {cuposDisponibles} cupos!
-                    </span>
+         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+           <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+           <circle cx="9" cy="7" r="4" />
+           <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+          <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+         </svg>
+         ¡Solo {cuposDisponibles}!
+       </span>
                 ) : (
                     <span class="badge available">
-                        {cuposDisponibles} Cupos disponibles
-                    </span>
+         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+           <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+           <circle cx="9" cy="7" r="4" />
+           <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+           <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+         </svg>
+         {cuposDisponibles} disponibles
+       </span>
                 )
             }
         </div>
@@ -91,7 +120,10 @@ const base = import.meta.env.BASE_URL;
         <div class="card-price">{precioFormateado}</div>
 
         <div class="card-actions">
-            <a href={`${base}talleres/${categoria}/${taller.id}`} class="btn btn-outline">Ver detalles</a>
+            <a
+                href={`${base}talleres/${categoria}/${taller.id}`}
+                class="btn btn-outline">Ver detalles</a
+            >
             <a
                 href={`/${base}#registration?taller=${taller.id}`}
                 class="btn btn-primary">Inscribirme</a

@@ -39,7 +39,7 @@ export interface TallerAnterior {
 export interface ContenidoCategoria {
   heroTitulo: string;
   heroDescripcion: string;
-  heroImagenFondo: string;
+  heroImagenesFondo: string[];
   faq: FaqItem[];
   testimonios: Testimonio[];
   talleresAnteriores: TallerAnterior[];
@@ -50,8 +50,11 @@ export const contenidoPorCategoria: Record<string, ContenidoCategoria> = {
     heroTitulo: "Domina la Alta Panadería con Equipamiento Profesional",
     heroDescripcion:
       "Nuestros talleres prácticos son el espacio ideal para perfeccionar tu técnica. Guiados por instructores expertos, descubrirás cómo el uso de maquinaria e insumos de alto rendimiento transforma tus recetas en obras maestras.",
-    heroImagenFondo:
+    heroImagenesFondo: [
       "https://images.unsplash.com/photo-1509440159596-0249088772ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
+      "https://images.unsplash.com/photo-1779006887705-5cf0e2794e08?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
+      "https://images.unsplash.com/photo-1568254183919-78a4f43a2877?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
+    ],
     faq: [
       {
         pregunta: "¿Necesito experiencia previa en panadería?",
