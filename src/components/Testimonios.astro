@@ -1,5 +1,11 @@
 ---
-import { testimonios } from '../data/content';
+import type { Testimonio } from "../data/content";
+
+interface Props {
+  items: Testimonio[];
+}
+
+const { items } = Astro.props;
 ---
 
 <section class="testimonios-section">
@@ -10,14 +16,16 @@ import { testimonios } from '../data/content';
     </div>
 
     <div class="grid testimonios-grid">
-      {testimonios.map((t) => (
-        <article class="testimonio-card">
-          <img src={t.imagen} alt={t.nombre} class="testimonio-avatar" />
-          <p class="testimonio-texto">"{t.texto}"</p>
-          <p class="testimonio-nombre">{t.nombre}</p>
-          <p class="testimonio-taller">{t.taller}</p>
-        </article>
-      ))}
+      {
+        items.map((t) => (
+          <article class="testimonio-card">
+            <img src={t.imagen} alt={t.nombre} class="testimonio-avatar" />
+            <p class="testimonio-texto">"{t.texto}"</p>
+            <p class="testimonio-nombre">{t.nombre}</p>
+            <p class="testimonio-taller">{t.taller}</p>
+          </article>
+        ))
+      }
     </div>
   </div>
 </section>

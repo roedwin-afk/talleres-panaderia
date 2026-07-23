@@ -1,5 +1,11 @@
 ---
-import { faq } from '../data/content';
+import type { FaqItem } from "../data/content";
+
+interface Props {
+  items: FaqItem[];
+}
+
+const { items } = Astro.props;
 ---
 
 <section id="faq" class="faq-section">
@@ -10,12 +16,14 @@ import { faq } from '../data/content';
     </div>
 
     <div class="faq-list">
-      {faq.map((item) => (
-        <details class="faq-item">
-          <summary>{item.pregunta}</summary>
-          <p>{item.respuesta}</p>
-        </details>
-      ))}
+      {
+        items.map((item) => (
+          <details class="faq-item">
+            <summary>{item.pregunta}</summary>
+            <p>{item.respuesta}</p>
+          </details>
+        ))
+      }
     </div>
   </div>
 </section>
@@ -49,14 +57,14 @@ import { faq } from '../data/content';
   }
 
   .faq-item summary::after {
-    content: '+';
+    content: "+";
     float: right;
     font-size: 1.25rem;
     color: var(--brand-primary);
   }
 
   .faq-item[open] summary::after {
-    content: '−';
+    content: "−";
   }
 
   .faq-item p {

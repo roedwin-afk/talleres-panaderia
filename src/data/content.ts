@@ -101,7 +101,7 @@ export const contenidoPorCategoria: Record<string, ContenidoCategoria> = {
       },
       {
         titulo: "Demostración de hornos rotativos",
-        imagen: "https://images.unsplash.com/photo-1585478259715-4ce4d64a4b1f?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+        imagen: "https://images.unsplash.com/photo-1738846258491-442902625fdb?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
       },
       {
         titulo: "Grupo taller de pastelería",
@@ -109,7 +109,7 @@ export const contenidoPorCategoria: Record<string, ContenidoCategoria> = {
       },
       {
         titulo: "Entrega de diplomas",
-        imagen: "https://images.unsplash.com/photo-1517686748843-bb360cbb4c60?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+        imagen: "https://images.unsplash.com/photo-1759142016096-a9d1a5ebcc09?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
       },
     ],
   },
