@@ -1,10 +1,10 @@
 ---
 // src/components/ZohoFormularioHTML.astro
-import type { CollectionEntry } from 'astro:content';
+import type { CollectionEntry } from "astro:content";
 
 interface Props {
-  talleres?: CollectionEntry<'talleres'>[];
-  tallerPreseleccionado?: CollectionEntry<'talleres'>;
+  talleres?: CollectionEntry<"talleres">[];
+  tallerPreseleccionado?: CollectionEntry<"talleres">;
 }
 
 const { talleres, tallerPreseleccionado } = Astro.props;
@@ -15,12 +15,14 @@ const { talleres, tallerPreseleccionado } = Astro.props;
     <div class="form-container">
       <h3>Reserva tu espacio</h3>
       <p class="form-desc">
-        Llena este formulario sin compromiso para separar tu cupo. Un asesor se comunicará contigo para confirmar los detalles y finalizar la inscripción.
+        Llena este formulario sin compromiso para separar tu cupo. Un asesor se
+        comunicará contigo para confirmar los detalles y finalizar la
+        inscripción.
       </p>
 
       <!-- Change or deletion of the name attributes in the input tags will lead to empty values on record submission -->
       <form
-        action="https://forms.zohopublic.com/promaica/form/RegistrodeTalleresdePanadera/formperma/8Znatko58Yl6p6O17r3YomF3yP2d-ifDUGoJ42r0lTo/htmlRecords/submit"
+        action="https://forms.zohopublic.com/promaica/form/RegistrodeTalleresdePanadera/formperma/PNfb7AnEn57_0lPFmklJYqYcyDjjlua1DQiQSElpV8w/htmlRecords/submit"
         name="form"
         id="zoho-form"
         method="POST"
@@ -33,18 +35,39 @@ const { talleres, tallerPreseleccionado } = Astro.props;
 
         <div class="form-row">
           <div class="form-group">
-            <label for="Name_First" class="form-label">Nombres <em>*</em></label>
-            <input type="text" id="Name_First" name="Name_First" maxlength="255" class="form-control" required />
+            <label for="Name_First" class="form-label">Nombres <em>*</em></label
+            >
+            <input
+              type="text"
+              id="Name_First"
+              name="Name_First"
+              maxlength="255"
+              class="form-control"
+              required
+            />
           </div>
           <div class="form-group">
             <label for="Name_Last" class="form-label">Apellidos</label>
-            <input type="text" id="Name_Last" name="Name_Last" maxlength="255" class="form-control" />
+            <input
+              type="text"
+              id="Name_Last"
+              name="Name_Last"
+              maxlength="255"
+              class="form-control"
+            />
           </div>
         </div>
 
         <div class="form-group">
           <label for="Email" class="form-label">Correo Electrónico</label>
-          <input type="email" id="Email" name="Email" maxlength="255" class="form-control" placeholder="ejemplo@correo.com" />
+          <input
+            type="email"
+            id="Email"
+            name="Email"
+            maxlength="255"
+            class="form-control"
+            placeholder="ejemplo@correo.com"
+          />
         </div>
 
         <div class="form-row">
@@ -53,7 +76,7 @@ const { talleres, tallerPreseleccionado } = Astro.props;
             <input
               type="text"
               id="phone-code"
-              name="PhoneNumber_countrycode"
+              name="PhoneNumber_countrycodeval"
               maxlength="20"
               class="form-control"
               value="503"
@@ -61,11 +84,13 @@ const { talleres, tallerPreseleccionado } = Astro.props;
             />
           </div>
           <div class="form-group">
-            <label for="phone-number" class="form-label">Número <em>*</em></label>
+            <label for="phone-number" class="form-label"
+              >Número <em>*</em></label
+            >
             <input
               type="text"
               id="phone-number"
-              name="PhoneNumber_countrycodeval"
+              name="PhoneNumber_countrycode"
               maxlength="10"
               class="form-control"
               placeholder="Ej. 7000-0000"
@@ -74,34 +99,65 @@ const { talleres, tallerPreseleccionado } = Astro.props;
           </div>
         </div>
 
-        {tallerPreseleccionado ? (
-          <div class="form-group">
-            <span class="form-label">Taller de Interés</span>
-            <div class="form-control form-control-static">{tallerPreseleccionado.data.nombre}</div>
-            <input type="hidden" name="Dropdown" value={tallerPreseleccionado.data.nombre} />
-          </div>
-        ) : (
-          <div class="form-group">
-            <label for="Dropdown" class="form-label">Taller de Interés <em>*</em></label>
-            <select id="Dropdown" name="Dropdown" class="form-control" required>
-              <option value="" disabled selected>Selecciona un taller...</option>
-              {talleres?.map((taller) => (
-                <option value={taller.data.nombre}>{taller.data.nombre}</option>
-              ))}
-            </select>
-          </div>
-        )}
+        {
+          tallerPreseleccionado ? (
+            <div class="form-group">
+              <span class="form-label">Taller de Interés</span>
+              <div class="form-control form-control-static">
+                {tallerPreseleccionado.data.nombre}
+              </div>
+              <input
+                type="hidden"
+                name="Dropdown"
+                value={tallerPreseleccionado.data.nombre}
+              />
+            </div>
+          ) : (
+            <div class="form-group">
+              <label for="Dropdown" class="form-label">
+                Taller de Interés <em>*</em>
+              </label>
+              <select
+                id="Dropdown"
+                name="Dropdown"
+                class="form-control"
+                required
+              >
+                <option value="" disabled selected>
+                  Selecciona un taller...
+                </option>
+                {talleres?.map((taller) => (
+                  <option value={taller.data.nombre}>
+                    {taller.data.nombre}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )
+        }
 
         <div class="form-group">
-          <label for="MultiLine" class="form-label">Mensaje o comentario (opcional)</label>
-          <textarea id="MultiLine" name="MultiLine" maxlength="65535" class="form-control" rows="3"></textarea>
+          <label for="MultiLine" class="form-label"
+            >Mensaje o comentario (opcional)</label
+          >
+          <textarea
+            id="MultiLine"
+            name="MultiLine"
+            maxlength="65535"
+            class="form-control"
+            rows="3"></textarea>
         </div>
 
-        <button type="submit" class="btn btn-primary btn-block" style="margin-top: 1rem;">
+        <button
+          type="submit"
+          class="btn btn-primary btn-block"
+          style="margin-top: 1rem;"
+        >
           Solicitar Pre-inscripción
         </button>
         <p class="form-note">
-          *El pago y confirmación final se gestionan de forma directa con nuestro equipo comercial.
+          *El pago y confirmación final se gestionan de forma directa con
+          nuestro equipo comercial.
         </p>
       </form>
     </div>
@@ -189,28 +245,38 @@ const { talleres, tallerPreseleccionado } = Astro.props;
   }
 
   @media (max-width: 600px) {
-    .form-container { padding: var(--space-md) var(--space-sm); }
-    .form-row { grid-template-columns: 1fr; }
+    .form-container {
+      padding: var(--space-md) var(--space-sm);
+    }
+    .form-row {
+      grid-template-columns: 1fr;
+    }
   }
 </style>
 
 <script is:inline>
   // Pre-selección vía query param (?taller=id), busca el <option> cuyo texto
   // visible coincide con el nombre del taller (Zoho usa el nombre completo como value).
-  document.addEventListener('DOMContentLoaded', function () {
+  document.addEventListener("DOMContentLoaded", function () {
     var params = new URLSearchParams(window.location.search);
-    var tallerParam = params.get('taller');
-    var select = document.getElementById('Dropdown');
-    if (tallerParam && select && select.tagName === 'SELECT') {
+    var tallerParam = params.get("taller");
+    var select = document.getElementById("Dropdown");
+    if (tallerParam && select && select.tagName === "SELECT") {
       for (var i = 0; i < select.options.length; i++) {
-        if (select.options[i].value.toLowerCase().indexOf(tallerParam.toLowerCase()) !== -1) {
+        if (
+          select.options[i].value
+            .toLowerCase()
+            .indexOf(tallerParam.toLowerCase()) !== -1
+        ) {
           select.value = select.options[i].value;
           break;
         }
       }
     }
     // Referrer para tracking, reemplaza el zf_referrer_name vacío del hidden input
-    var referrerInput = document.querySelector('input[name="zf_referrer_name"]');
+    var referrerInput = document.querySelector(
+      'input[name="zf_referrer_name"]',
+    );
     if (referrerInput) referrerInput.value = window.location.href;
   });
 </script>
