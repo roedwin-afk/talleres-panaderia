@@ -6,12 +6,8 @@
 
 export const sitio = {
   nombreEmpresa: "Equipo y Partes El Salvador",
-  header: {
-    textoBotonNav: "Ver Talleres",
-    anclaBotonNav: "/talleres/panaderia/", // ajustamos esto en el Paso del hub
-  },
   footer: {
-    copyright: "© 2026 Equipo y Partes El Salvador (Grupo Promaica). Todos los derechos reservados.",
+    copyrightBase: "Equipo y Partes El Salvador (Grupo Promaica). Todos los derechos reservados.",
   },
 };
 

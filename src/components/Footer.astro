@@ -1,15 +1,16 @@
 ---
 // src/components/talleres/Footer.astro
 interface Props {
-  copyright: string;
+  copyrightBase: string;
 }
 
-const { copyright } = Astro.props;
+const { copyrightBase } = Astro.props;
+const anioActual = new Date().getFullYear();
 ---
 
 <footer>
   <div class="container">
-    <p>{copyright}</p>
+    <p>© {anioActual} {copyrightBase}</p>
   </div>
 </footer>
 

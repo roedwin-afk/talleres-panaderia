@@ -29,10 +29,8 @@ const base = import.meta.env.BASE_URL;
   <body>
     <Header
       nombreEmpresa={sitio.nombreEmpresa}
-      textoBotonNav={sitio.header.textoBotonNav}
-      anclaBotonNav={sitio.header.anclaBotonNav}
     />
     <slot />
-    <Footer copyright={sitio.footer.copyright} />
+    <Footer copyrightBase={sitio.footer.copyrightBase} />
   </body>
 </html>
