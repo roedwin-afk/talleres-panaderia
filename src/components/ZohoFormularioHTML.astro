@@ -73,15 +73,14 @@ const { talleres, tallerPreseleccionado } = Astro.props;
         <div class="form-row">
           <div class="form-group">
             <label for="phone-code" class="form-label">Código <em>*</em></label>
-            <input
-              type="text"
+            <select
               id="phone-code"
               name="PhoneNumber_countrycodeval"
-              maxlength="20"
               class="form-control"
-              value="503"
               required
-            />
+            >
+              <option value="503" selected>🇸🇻 +503</option>
+            </select>
           </div>
           <div class="form-group">
             <label for="phone-number" class="form-label"
