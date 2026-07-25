@@ -10,6 +10,7 @@ import FAQ from '../../../components/FAQ.astro';
 import ZohoFormularioHTML from '../../../components/ZohoFormularioHTML.astro';
 import { categorias } from '../../../data/categorias';
 import { contenidoPorCategoria } from '../../../data/content';
+import ZohoFormulario from '../../../components/ZohoFormulario.astro';
 
 export async function getStaticPaths() {
   return categorias.map((categoria) => ({
@@ -42,6 +43,7 @@ const talleresDeCategoria = contenido
         />
         <ListadoTalleres categoria={categoria.id} />
         <ZohoFormularioHTML talleres={talleresDeCategoria} />
+        {/* <ZohoFormulario formPerma="PNfb7AnEn57_0lPFmklJYqYcyDjjlua1DQiQSElpV8w" /> */}
         <TalleresAnteriores items={contenido.talleresAnteriores} />
         {/* <Testimonios items={contenido.testimonios} /> */}
         <FAQ items={contenido.faq} />

@@ -22,7 +22,7 @@ const { talleres, tallerPreseleccionado } = Astro.props;
 
       <!-- Change or deletion of the name attributes in the input tags will lead to empty values on record submission -->
       <form
-        action="https://forms.zohopublic.com/promaica/form/RegistrodeTalleresdePanadera/formperma/PNfb7AnEn57_0lPFmklJYqYcyDjjlua1DQiQSElpV8w/htmlRecords/submit"
+        action="https://forms.zohopublic.com/promaica/form/TestRegistrodetalleresdepanaderia/formperma/uM5jTSyZQ1nZD8qY9C1ClM9xsGZJGDX7VEfXTWBfcZI/htmlRecords/submit"
         name="form"
         id="zoho-form"
         method="POST"
@@ -96,6 +96,7 @@ const { talleres, tallerPreseleccionado } = Astro.props;
               required
             />
           </div>
+          
         </div>
 
         {
@@ -130,6 +131,7 @@ const { talleres, tallerPreseleccionado } = Astro.props;
                     {taller.data.nombre}
                   </option>
                 ))}
+                <option value="Panadería Básica">Panadería Básica</option>
               </select>
             </div>
           )
