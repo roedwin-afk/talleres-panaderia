@@ -22,7 +22,7 @@ const { talleres, tallerPreseleccionado } = Astro.props;
 
       <!-- Change or deletion of the name attributes in the input tags will lead to empty values on record submission -->
       <form
-        action="https://forms.zohopublic.com/promaica/form/TestRegistrodetalleresdepanaderia/formperma/uM5jTSyZQ1nZD8qY9C1ClM9xsGZJGDX7VEfXTWBfcZI/htmlRecords/submit"
+        action="https://forms.zohopublic.com/promaica/form/RegistrodeTalleresdePanadera/formperma/PNfb7AnEn57_0lPFmklJYqYcyDjjlua1DQiQSElpV8w/htmlRecords/submit"
         name="form"
         id="zoho-form"
         method="POST"
@@ -35,15 +35,15 @@ const { talleres, tallerPreseleccionado } = Astro.props;
 
         <div class="form-row">
           <div class="form-group">
-            <label for="Name_First" class="form-label">Nombres <em>*</em></label
-            >
+            <label for="Name_First" class="form-label">Nombres <em>*</em></label>
             <input
               type="text"
               id="Name_First"
               name="Name_First"
               maxlength="255"
+              fieldType="7"
               class="form-control"
-              required
+              placeholder=""
             />
           </div>
           <div class="form-group">
@@ -53,7 +53,9 @@ const { talleres, tallerPreseleccionado } = Astro.props;
               id="Name_Last"
               name="Name_Last"
               maxlength="255"
+              fieldType="7"
               class="form-control"
+              placeholder=""
             />
           </div>
         </div>
@@ -61,10 +63,12 @@ const { talleres, tallerPreseleccionado } = Astro.props;
         <div class="form-group">
           <label for="Email" class="form-label">Correo Electrónico</label>
           <input
-            type="email"
+            type="text"
             id="Email"
             name="Email"
             maxlength="255"
+            value=""
+            fieldType="9"
             class="form-control"
             placeholder="ejemplo@correo.com"
           />
@@ -72,30 +76,39 @@ const { talleres, tallerPreseleccionado } = Astro.props;
 
         <div class="form-row">
           <div class="form-group">
-            <label for="phone-code" class="form-label">Código <em>*</em></label>
-            <select
-              id="phone-code"
-              name="PhoneNumber_countrycodeval"
-              class="form-control"
-            >
-              <option value="+503" selected>🇸🇻 +503</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="phone-number" class="form-label"
-              >Número <em>*</em></label
-            >
+            <label for="international_PhoneNumber_countrycodeval" class="form-label">
+              Código <em>*</em>
+            </label>
             <input
               type="text"
-              id="phone-number"
-              name="PhoneNumber_countrycode"
+              compname="PhoneNumber_countrycodeval"
+              name="PhoneNumber_countrycodeval"
+              phoneFormat="1"
               maxlength="10"
+              id="international_PhoneNumber_countrycodeval"
               class="form-control"
-              placeholder="Ej. 7000-0000"
-              required
+              placeholder="+503"
+              value="+503"
             />
           </div>
-          
+          <div class="form-group">
+            <label for="international_PhoneNumber_countrycode" class="form-label">
+              Número <em>*</em>
+            </label>
+            <input
+              type="text"
+              compname="PhoneNumber"
+              name="PhoneNumber_countrycode"
+              phoneFormat="1"
+              isCountryCodeEnabled="true"
+              maxlength="20"
+              value=""
+              fieldType="11"
+              id="international_PhoneNumber_countrycode"
+              class="form-control"
+              placeholder="Ej. 7000-0000"
+            />
+          </div>
         </div>
 
         {
@@ -116,15 +129,8 @@ const { talleres, tallerPreseleccionado } = Astro.props;
               <label for="Dropdown" class="form-label">
                 Taller de Interés <em>*</em>
               </label>
-              <select
-                id="Dropdown"
-                name="Dropdown"
-                class="form-control"
-                required
-              >
-                <option value="" disabled selected>
-                  Selecciona un taller...
-                </option>
+              <select id="Dropdown" name="Dropdown" class="form-control">
+                <option selected="true" value="-Select-">-Select-</option>
                 {talleres?.map((taller) => (
                   <option value={taller.data.nombre}>
                     {taller.data.nombre}
@@ -144,7 +150,8 @@ const { talleres, tallerPreseleccionado } = Astro.props;
             name="MultiLine"
             maxlength="65535"
             class="form-control"
-            rows="3"></textarea>
+            rows="3"
+            placeholder=""></textarea>
         </div>
 
         <button
@@ -254,8 +261,6 @@ const { talleres, tallerPreseleccionado } = Astro.props;
 </style>
 
 <script is:inline>
-  // Pre-selección vía query param (?taller=id), busca el <option> cuyo texto
-  // visible coincide con el nombre del taller (Zoho usa el nombre completo como value).
   document.addEventListener("DOMContentLoaded", function () {
     var params = new URLSearchParams(window.location.search);
     var tallerParam = params.get("taller");
@@ -272,7 +277,6 @@ const { talleres, tallerPreseleccionado } = Astro.props;
         }
       }
     }
-    // Referrer para tracking, reemplaza el zf_referrer_name vacío del hidden input
     var referrerInput = document.querySelector(
       'input[name="zf_referrer_name"]',
     );
