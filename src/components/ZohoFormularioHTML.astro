@@ -1,154 +1,220 @@
 ---
-// src/components/FormularioInscripcion.astro
-// Sección de inscripción — envío directo a Zoho Forms (formulario "Test Registro de talleres de panaderia")
-// IMPORTANTE: no modificar ni eliminar los atributos `name` / `compname` de los inputs.
-// Zoho los usa para mapear los campos al registro; cambiarlos deja el envío en blanco.
+// src/components/ZohoFormularioHTML.astro
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  talleres?: CollectionEntry<"talleres">[];
+  tallerPreseleccionado?: CollectionEntry<"talleres">;
+}
+
+const { talleres, tallerPreseleccionado } = Astro.props;
 ---
 
-<section class="inscripcion" id="inscripcion">
+<section id="registration" class="registration-section">
   <div class="container">
-    <div class="section-header">
-      <h2>Reserva tu lugar</h2>
-      <p>Completa el formulario y te confirmamos tu cupo en el taller elegido.</p>
+    <div class="form-container">
+      <h3>Reserva tu espacio</h3>
+      <p class="form-desc">
+        Llena este formulario sin compromiso para separar tu cupo. Un asesor se
+        comunicará contigo para confirmar los detalles y finalizar la
+        inscripción.
+      </p>
+
+      <!-- Change or deletion of the name attributes in the input tags will lead to empty values on record submission -->
+      <form
+        action="https://forms.zohopublic.com/promaica/form/RegistrodeTalleresdePanadera/formperma/8Znatko58Yl6p6O17r3YomF3yP2d-ifDUGoJ42r0lTo/htmlRecords/submit"
+        name="form"
+        id="zoho-form"
+        method="POST"
+        accept-charset="UTF-8"
+        enctype="multipart/form-data"
+      >
+        <input type="hidden" name="zf_referrer_name" value="" />
+        <input type="hidden" name="zf_redirect_url" value="" />
+        <input type="hidden" name="zc_gad" value="" />
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="Name_First" class="form-label">Nombres <em>*</em></label
+            >
+            <input
+              type="text"
+              id="Name_First"
+              name="Name_First"
+              maxlength="255"
+              class="form-control"
+              placeholder="Ej. María"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="Name_Last" class="form-label">Apellidos</label>
+            <input
+              type="text"
+              id="Name_Last"
+              name="Name_Last"
+              maxlength="255"
+              class="form-control"
+              placeholder="Ej. González"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="Email" class="form-label">Correo Electrónico</label>
+          <input
+            type="text"
+            id="Email"
+            name="Email"
+            maxlength="255"
+            class="form-control"
+            placeholder="ejemplo@correo.com"
+          />
+        </div>
+
+        <!--
+          IMPORTANTE — mapeo confirmado por prueba real contra Zoho:
+          - name="PhoneNumber_countrycodeval"  → es el CÓDIGO DE PAÍS (debe llevar el signo +, ej. "+503")
+          - name="PhoneNumber_countrycode"     → es el NÚMERO real (mínimo 8 dígitos)
+          Los nombres de Zoho están invertidos respecto a lo que uno esperaría, no los cambies.
+        -->
+        <div class="form-row">
+          <div class="form-group">
+            <label
+              for="international_PhoneNumber_countrycodeval"
+              class="form-label"
+            >
+              Código <em>*</em>
+            </label>
+            <input
+              type="text"
+              name="PhoneNumber_countrycodeval"
+              id="international_PhoneNumber_countrycodeval"
+              maxlength="10"
+              class="form-control"
+              value="+503"
+              readonly
+            />
+          </div>
+          <div class="form-group">
+            <label
+              for="international_PhoneNumber_countrycode"
+              class="form-label"
+            >
+              Número <em>*</em>
+            </label>
+            <input
+              type="text"
+              name="PhoneNumber_countrycode"
+              id="international_PhoneNumber_countrycode"
+              maxlength="20"
+              class="form-control"
+              placeholder="Ej. 71778450"
+              required
+            />
+          </div>
+        </div>
+
+        {
+          tallerPreseleccionado ? (
+            <div class="form-group">
+              <span class="form-label">Taller de Interés</span>
+              <div class="form-control form-control-static">
+                {tallerPreseleccionado.data.nombre}
+              </div>
+              <input
+                type="hidden"
+                name="Dropdown"
+                value={tallerPreseleccionado.data.nombre}
+              />
+            </div>
+          ) : (
+            <div class="form-group">
+              <label for="Dropdown" class="form-label">
+                Taller de Interés <em>*</em>
+              </label>
+              <select
+                id="Dropdown"
+                name="Dropdown"
+                class="form-control"
+                required
+              >
+                <option value="" disabled selected>
+                  Selecciona un taller...
+                </option>
+                {talleres?.map((taller) => (
+                  <option value={taller.data.nombre}>
+                    {taller.data.nombre}
+                  </option>
+                ))}
+                <option value="Panadería Básica">Panadería Básica</option>
+                <option value="Postres Avanzados">Postres Avanzados</option>
+                <option value="Pan Artesanal">Pan Artesanal</option>
+                <option value="Decoración de Pasteles">
+                  Decoración de Pasteles
+                </option>
+              </select>
+            </div>
+          )
+        }
+
+        <div class="form-group">
+          <label for="MultiLine" class="form-label"
+            >Mensaje o comentario (opcional)</label
+          >
+          <textarea
+            id="MultiLine"
+            name="MultiLine"
+            maxlength="65535"
+            class="form-control"
+            rows="3"
+            placeholder="Cuéntanos si tienes alguna pregunta o requerimiento especial"
+          ></textarea>
+        </div>
+
+        <button
+          type="submit"
+          class="btn btn-primary btn-block"
+          style="margin-top: 1rem;"
+        >
+          Solicitar Pre-inscripción
+        </button>
+        <p class="form-note">
+          *El pago y confirmación final se gestionan de forma directa con
+          nuestro equipo comercial.
+        </p>
+      </form>
     </div>
-
-    <form
-      class="form-card"
-      action="https://forms.zohopublic.com/promaica/form/TestRegistrodetalleresdepanaderia/formperma/2Nk8m2rKCbbMNYq0PRvvIOsgrQWgjyw3qDub5n600mU/htmlRecords/submit"
-      name="form"
-      id="form"
-      method="POST"
-      accept-charset="UTF-8"
-      enctype="multipart/form-data"
-    >
-      <!-- Campos ocultos de tracking — no eliminar -->
-      <input type="hidden" name="zf_referrer_name" value="" />
-      <input type="hidden" name="zf_redirect_url" value="" />
-      <input type="hidden" name="zc_gad" value="" />
-
-      <div class="form-row">
-        <div class="form-field">
-          <label for="Name_First">
-            Nombres <em>*</em>
-          </label>
-          <input
-            type="text"
-            maxlength="255"
-            name="Name_First"
-            id="Name_First"
-            fieldType="7"
-            placeholder="Ej. María"
-            required
-          />
-        </div>
-
-        <div class="form-field">
-          <label for="Name_Last">Apellidos</label>
-          <input
-            type="text"
-            maxlength="255"
-            name="Name_Last"
-            id="Name_Last"
-            fieldType="7"
-            placeholder="Ej. González"
-          />
-        </div>
-      </div>
-
-      <div class="form-field">
-        <label for="Email">Correo electrónico</label>
-        <input
-          type="text"
-          maxlength="255"
-          name="Email"
-          id="Email"
-          value=""
-          fieldType="9"
-          placeholder="tucorreo@ejemplo.com"
-        />
-      </div>
-
-      <div class="form-row">
-        <div class="form-field form-field--code">
-          <label for="international_PhoneNumber_countrycode">Código</label>
-          <input
-            type="text"
-            compname="PhoneNumber"
-            name="PhoneNumber_countrycode"
-            phoneFormat="1"
-            isCountryCodeEnabled="true"
-            maxlength="20"
-            value=""
-            fieldType="11"
-            id="international_PhoneNumber_countrycode"
-            placeholder="+503"
-          />
-        </div>
-
-        <div class="form-field form-field--phone">
-          <label for="international_PhoneNumber_countrycodeval">
-            Teléfono <em>*</em>
-          </label>
-          <input
-            type="text"
-            compname="PhoneNumber_countrycodeval"
-            name="PhoneNumber_countrycodeval"
-            phoneFormat="1"
-            maxlength="10"
-            id="international_PhoneNumber_countrycodeval"
-            placeholder="0000-0000"
-            required
-          />
-        </div>
-      </div>
-
-      <div class="form-field">
-        <label for="Dropdown">
-          Taller al que deseas asistir <em>*</em>
-        </label>
-        <select name="Dropdown" id="Dropdown" required>
-          <option selected value="-Select-">-Select-</option>
-          <option value="Fundamentos de Pastelería Francesa Comercial">Fundamentos de Pastelería Francesa Comercial</option>
-          <option value="Masa Madre y Panes Rústicos de Alta Hidratación">Masa Madre y Panes Rústicos de Alta Hidratación</option>
-          <option value="Pizzas Artesanales y Uso de Hornos de Piso">Pizzas Artesanales y Uso de Hornos de Piso</option>
-          <option value="Reposteria Navideña">Reposteria Navideña</option>
-        </select>
-      </div>
-
-      <div class="form-field">
-        <label for="MultiLine">Mensaje o comentario adicional</label>
-        <textarea
-          name="MultiLine"
-          id="MultiLine"
-          maxlength="65535"
-          rows="4"
-          placeholder="Cuéntanos si tienes alguna pregunta o requerimiento especial"
-        ></textarea>
-      </div>
-
-      <button type="submit" class="btn btn-primary btn-block">
-        <em>Reservar mi lugar</em>
-      </button>
-    </form>
   </div>
 </section>
 
 <style>
-  .inscripcion {
-    padding: var(--space-xl) 0;
-    background-color: var(--bg-page);
+  .registration-section {
+    background-color: var(--bg-surface-alt);
+    padding: var(--space-lg) 0;
+    border-top: 1px solid var(--border-light);
   }
 
-  .form-card {
-    max-width: 640px;
-    margin: 0 auto;
+  .form-container {
     background-color: var(--bg-surface);
+    padding: var(--space-md) var(--space-lg);
     border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-lg);
-    padding: var(--space-md);
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-sm);
+    box-shadow: var(--shadow-md);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .form-container h3 {
+    margin-bottom: var(--space-xs);
+    text-align: center;
+    font-size: 1.8rem;
+  }
+
+  .form-desc {
+    text-align: center;
+    color: var(--text-muted);
+    margin-bottom: var(--space-md);
+    font-size: 0.95rem;
   }
 
   .form-row {
@@ -157,86 +223,81 @@
     gap: var(--space-sm);
   }
 
-  .form-field--code {
-    grid-column: span 1;
+  .form-group {
+    margin-bottom: var(--space-sm);
   }
 
-  .form-field--phone {
-    grid-column: span 2;
+  .form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    font-size: 0.95rem;
   }
 
-  .form-field {
-    display: flex;
-    flex-direction: column;
-    gap: 0.35rem;
+  .form-label em {
+    color: var(--status-few);
+    font-style: normal;
   }
 
-  label {
-    font-size: 0.9rem;
+  .form-control {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    font-family: var(--font-family-body);
+    font-size: 1rem;
+    transition: border-color var(--transition-speed);
+  }
+
+  .form-control:focus {
+    outline: none;
+    border-color: var(--brand-primary);
+    box-shadow: 0 0 0 3px rgba(192, 86, 33, 0.1);
+  }
+
+  .form-control-static {
+    background-color: var(--bg-surface-alt);
     font-weight: 600;
     color: var(--text-main);
   }
 
-  label em {
-    color: var(--brand-primary);
-    font-style: normal;
-    margin-left: 2px;
-  }
-
-  input[type='text'],
-  select,
-  textarea {
-    font-family: var(--font-family-body);
-    font-size: 1rem;
-    color: var(--text-main);
-    background-color: var(--bg-surface);
-    border: 1px solid var(--border-light);
-    border-radius: var(--radius-md);
-    padding: 0.65rem 0.85rem;
-    transition: border-color var(--transition-speed), box-shadow var(--transition-speed);
-  }
-
-  input[type='text']:focus,
-  select:focus,
-  textarea:focus {
-    outline: none;
-    border-color: var(--brand-primary);
-    box-shadow: 0 0 0 3px rgba(192, 86, 33, 0.15);
-  }
-
-  input[type='text']::placeholder,
-  textarea::placeholder {
+  .form-note {
+    text-align: center;
+    font-size: 0.8rem;
     color: var(--text-muted);
-  }
-
-  textarea {
-    resize: vertical;
-    min-height: 90px;
-  }
-
-  select {
-    appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23718096' d='M6 8 0 0h12z'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 0.85rem center;
-    padding-right: 2.25rem;
-  }
-
-  .form-card .btn {
-    margin-top: var(--space-xs);
+    margin-top: 1rem;
   }
 
   @media (max-width: 600px) {
-    .form-card {
-      padding: var(--space-sm);
+    .form-container {
+      padding: var(--space-md) var(--space-sm);
     }
-
     .form-row {
       grid-template-columns: 1fr;
     }
-
-    .form-field--phone {
-      grid-column: span 1;
-    }
   }
 </style>
+
+<script is:inline>
+  document.addEventListener("DOMContentLoaded", function () {
+    var params = new URLSearchParams(window.location.search);
+    var tallerParam = params.get("taller");
+    var select = document.getElementById("Dropdown");
+    if (tallerParam && select && select.tagName === "SELECT") {
+      for (var i = 0; i < select.options.length; i++) {
+        if (
+          select.options[i].value
+            .toLowerCase()
+            .indexOf(tallerParam.toLowerCase()) !== -1
+        ) {
+          select.value = select.options[i].value;
+          break;
+        }
+      }
+    }
+    var referrerInput = document.querySelector(
+      'input[name="zf_referrer_name"]',
+    );
+    if (referrerInput) referrerInput.value = window.location.href;
+  });
+</script>

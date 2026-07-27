@@ -1,17 +1,17 @@
 ---
-nombre: "Fundamentos de Pastelería Francesa Comercial"
-slug: "fundamentos-pasteleria-francesa"
-fecha: 2026-11-20
-horarioInicio: "02:00 PM"
-horarioFin: "06:00 PM"
-instructor: "Ana Sofía Ríos"
-instructorGenero: "f"
-nivel: "Principiante"
-cuposDisponibles: 3
+nombre: "Decoración de Pasteles"
+slug: "decoración-de-pasteles"
+fecha: 2026-11-29
+horarioInicio: "10:00 AM"
+horarioFin: "02:00 PM"
+instructor: "Carlos Mendoza Pueblo"
+instructorGenero: "m"
+nivel: "Intermedio"
+cuposDisponibles: 7
 cuposTotales: 15
-precio: 55.00
-imagen: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
-imagenAlt: "Pastelería"
+precio: 48.00
+imagen: "https://images.unsplash.com/photo-1766426910194-5291e9fe1926?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+imagenAlt: "pastel"
 destacado: false
 categoria: "panaderia"
 ---

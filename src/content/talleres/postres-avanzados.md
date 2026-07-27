@@ -1,17 +1,17 @@
 ---
-nombre: "Masa Madre y Panes Rústicos de Alta Hidratación"
-slug: "masa-madre"
-fecha: 2026-11-15
-horarioInicio: "09:00 AM"
-horarioFin: "01:00 PM"
-instructor: "Carlos Mendoza"
-instructorGenero: "m"
-nivel: "Intermedio"
-cuposDisponibles: 8
+nombre: "Postres Avanzados"
+slug: "postres-avanzados"
+fecha: 2026-11-20
+horarioInicio: "02:00 PM"
+horarioFin: "06:00 PM"
+instructor: "Ana Sofía Ríos"
+instructorGenero: "f"
+nivel: "Principiante"
+cuposDisponibles: 3
 cuposTotales: 15
-precio: 45.00
-imagen: "https://images.unsplash.com/photo-1549931319-a545dcf3bc73?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
-imagenAlt: "Masa Madre"
+precio: 55.00
+imagen: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+imagenAlt: "Pastelería"
 destacado: false
 categoria: "panaderia"
 ---

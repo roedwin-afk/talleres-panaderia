@@ -1,6 +1,6 @@
 ---
-nombre: "Pizzas Artesanales y Uso de Hornos de Piso"
-slug: "pizzas-artesanales"
+nombre: "Pan Artesanal"
+slug: "pan-artesanal"
 fecha: 2026-11-29
 horarioInicio: "10:00 AM"
 horarioFin: "02:00 PM"
