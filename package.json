@@ -9,10 +9,12 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "build:test": "cross-env SITE=https://landing.mequipo.com BASE=/landings/talleres/ astro build"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",
-    "astro": "^7.1.3"
+    "astro": "^7.1.3",
+    "cross-env": "^10.1.0"
   }
 }
