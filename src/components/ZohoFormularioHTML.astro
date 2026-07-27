@@ -41,7 +41,6 @@ const { talleres, tallerPreseleccionado } = Astro.props;
               id="Name_First"
               name="Name_First"
               maxlength="255"
-              fieldType="7"
               class="form-control"
               placeholder=""
             />
@@ -53,7 +52,6 @@ const { talleres, tallerPreseleccionado } = Astro.props;
               id="Name_Last"
               name="Name_Last"
               maxlength="255"
-              fieldType="7"
               class="form-control"
               placeholder=""
             />
@@ -68,7 +66,6 @@ const { talleres, tallerPreseleccionado } = Astro.props;
             name="Email"
             maxlength="255"
             value=""
-            fieldType="9"
             class="form-control"
             placeholder="ejemplo@correo.com"
           />
@@ -81,9 +78,7 @@ const { talleres, tallerPreseleccionado } = Astro.props;
             </label>
             <input
               type="text"
-              compname="PhoneNumber_countrycodeval"
               name="PhoneNumber_countrycodeval"
-              phoneFormat="1"
               maxlength="10"
               id="international_PhoneNumber_countrycodeval"
               class="form-control"
@@ -97,13 +92,9 @@ const { talleres, tallerPreseleccionado } = Astro.props;
             </label>
             <input
               type="text"
-              compname="PhoneNumber"
               name="PhoneNumber_countrycode"
-              phoneFormat="1"
-              isCountryCodeEnabled="true"
               maxlength="20"
               value=""
-              fieldType="11"
               id="international_PhoneNumber_countrycode"
               class="form-control"
               placeholder="Ej. 7000-0000"
