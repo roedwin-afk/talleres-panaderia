@@ -8,6 +8,12 @@ export interface Categoria {
   imagen: string;          // portada para la tarjeta del hub
 }
 
+export interface Menu {
+  id: string;              // usado en la URL: /talleres/[id]/ y en el campo "categoria" de cada taller
+  nombre: string;           // portada para la tarjeta del hub
+  tag: string;
+}
+
 export const categorias: Categoria[] = [
   {
     id: 'panaderia',
@@ -36,5 +42,28 @@ export const categorias: Categoria[] = [
     colorAcento: '#2C7A7B',
     descripcionCorta: 'Freidoras, licuadoras y procesadores para equipar tu cocina profesional.',
     imagen: 'https://images.unsplash.com/photo-1556910103-1c02745aae4d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+  },
+];
+
+export const menu: Menu[] = [
+  {
+    id: 'talleres',
+    nombre: 'Talleres',
+    tag: 'workshops',
+  },
+  {
+    id: 'formulario',
+    nombre: 'Formulario',
+    tag: 'registration',
+  },
+  {
+    id: 'talleres-anteriores',
+    nombre: 'Talleres Anteriores',
+    tag: 'talleres-anteriores',
+  },
+  {
+    id: 'faq',
+    nombre: 'Preguntas Frecuentes',
+    tag: 'faq',
   },
 ];
