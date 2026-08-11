@@ -1,0 +1,503 @@
+---
+// src/pages/contacto.astro
+import Layout from '../layouts/Layout.astro';
+
+const telefono = '(503) 2515-0031';
+const telefonoWhatsapp = '50325150031'; // solo dígitos, con código de país, sin +
+const correo = 'ventas@equipoypartes.com';
+
+const redes = [
+  {
+    nombre: 'Facebook',
+    url: 'https://www.facebook.com/equipaturestaurante/',
+    icono: 'facebook',
+  },
+  {
+    nombre: 'Instagram',
+    url: 'https://www.instagram.com/equipoypartessv/',
+    icono: 'instagram',
+  },
+  {
+    nombre: 'YouTube',
+    url: 'https://www.youtube.com/channel/UCZgrsL1kSMimdMYZvZw8hwQ',
+    icono: 'youtube',
+  },
+  {
+    nombre: 'TikTok',
+    url: 'https://www.tiktok.com/@equipoypartessv',
+    icono: 'tiktok',
+  },
+];
+
+const ICONOS: Record<string, string> = {
+  telefono:
+    '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>',
+  correo:
+    '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z" opacity="0"/><path d="M22 6c0-1.1-.9-2-2-2H4a2 2 0 0 0-2 2v12c0 1.1.9 2 2 2h16a2 2 0 0 0 2-2V6z"/><path d="m22 6-10 7L2 6"/></svg>',
+  pin: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>',
+  facebook:
+    '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.56 9.88v-6.99H7.9V12h2.54V9.8c0-2.5 1.49-3.89 3.78-3.89 1.1 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.44 2.89h-2.34v6.99A10 10 0 0 0 22 12z"/></svg>',
+  instagram:
+    '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>',
+  youtube:
+    '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg>',
+  tiktok:
+    '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M16.6 5.82c-.9-.98-1.4-2.25-1.4-3.57h-3.15v13.2a2.7 2.7 0 1 1-2.32-2.68v-3.2A5.85 5.85 0 0 0 6.5 21.85 5.85 5.85 0 0 0 15.3 17v-6.62a8.14 8.14 0 0 0 4.76 1.53V8.76a4.85 4.85 0 0 1-3.46-2.94z"/></svg>',
+};
+
+const whatsappHref = 'https://wa.me/' + telefonoWhatsapp;
+const mailHref = 'mailto:' + correo;
+
+const sucursalesBase = [
+  {
+    nombre: 'San Salvador',
+    direccion: 'Calle Roma y Calle Lorena #170, San Salvador.',
+    horario: [
+      'Lunes - Viernes: 8:00 a.m. - 5:00 p.m.',
+      'Sábado: 8:00 a.m. - 4:00 p.m.',
+      'Domingo: Cerrado',
+    ],
+  },
+  {
+    nombre: 'San Miguel',
+    direccion:
+      'Carretera Panamericana, 500 metros de Metrocentro. Ex local Zócalo, San Miguel.',
+    horario: [
+      'Lunes - Viernes: 8:00 a.m. - 5:00 p.m.',
+      'Sábado: 8:00 a.m. - 12:00 m.d.',
+      'Domingo: Cerrado',
+    ],
+  },
+];
+
+// Se precalculan aquí (y no dentro del markup) para no tener URLs sueltas
+// mezcladas con atributos JSX, que es justo lo que se rompió la vez pasada.
+const sucursales = sucursalesBase.map((sucursal) => {
+  const direccionCompleta = sucursal.direccion + ' El Salvador';
+  const direccionCodificada = encodeURIComponent(direccionCompleta);
+  return {
+    ...sucursal,
+    mapEmbedSrc:
+      'https://www.google.com/maps?q=' +
+      direccionCodificada +
+      '&output=embed',
+    mapsUrl:
+      'https://www.google.com/maps/search/' + direccionCodificada,
+  };
+});
+---
+
+<Layout
+  title="Contacto | Equipo y Partes El Salvador"
+  description="Visítanos, escríbenos o síguenos en redes sociales. Sucursales en San Salvador y San Miguel."
+>
+  <section class="contacto-hero">
+    <div class="container">
+      <h1>Hablemos</h1>
+      <span class="hero-acento" aria-hidden="true"></span>
+      <p>
+        Escríbenos por cualquier duda sobre nuestros talleres, o visítanos en
+        cualquiera de nuestras sucursales.
+      </p>
+    </div>
+  </section>
+
+  <section class="info-directa">
+    <div class="container">
+      <div class="grid grid-info">
+        <a class="info-card" href={whatsappHref} target="_blank" rel="noopener">
+          <span class="info-icon" set:html={ICONOS.telefono} />
+          <div>
+            <h3>Llámanos o escríbenos por WhatsApp</h3>
+            <p>{telefono}</p>
+          </div>
+        </a>
+
+        <a class="info-card" href={mailHref}>
+          <span class="info-icon" set:html={ICONOS.correo} />
+          <div>
+            <h3>Escríbenos</h3>
+            <p>{correo}</p>
+          </div>
+        </a>
+      </div>
+
+      <div class="redes">
+        <span class="redes-label">Síguenos</span>
+        <div class="redes-lista">
+          {
+            redes.map((red) => (
+              <a
+                href={red.url}
+                target="_blank"
+                rel="noopener"
+                class="red-icono"
+                aria-label={red.nombre}
+                set:html={ICONOS[red.icono]}
+              />
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sucursales">
+    <div class="container">
+      <div class="section-header">
+        <h2>Visítanos</h2>
+        <p>Dos sucursales para atenderte mejor.</p>
+      </div>
+
+      <div class="grid">
+        {
+          sucursales.map((sucursal) => (
+            <div class="sucursal-card">
+              <iframe
+                class="sucursal-mapa"
+                title={"Mapa - " + sucursal.nombre}
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+                src={sucursal.mapEmbedSrc}
+              />
+              <div class="sucursal-body">
+                <h3>{sucursal.nombre}</h3>
+                <p class="sucursal-direccion">
+                  <span class="info-icon-sm" set:html={ICONOS.pin} />
+                  {sucursal.direccion}
+                </p>
+                <ul class="sucursal-horario">
+                  {sucursal.horario.map((linea) => (
+                    <li>{linea}</li>
+                  ))}
+                </ul>
+                <a
+                  class="btn btn-outline btn-block"
+                  href={sucursal.mapsUrl}
+                  target="_blank"
+                  rel="noopener"
+                >
+                  Cómo llegar
+                </a>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="dudas">
+    <div class="container">
+      <div class="form-container">
+        <h2>¿Tienes alguna duda?</h2>
+        <p class="form-desc">
+          Mándanos tu consulta y te respondemos a la brevedad.
+        </p>
+
+        <form id="form-dudas">
+          <div class="form-group">
+            <label for="duda-nombre" class="form-label">Nombre</label>
+            <input
+              type="text"
+              id="duda-nombre"
+              name="nombre"
+              class="form-control"
+              placeholder="Ej. Juan Pérez"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="duda-correo" class="form-label"
+              >Correo electrónico</label
+            >
+            <input
+              type="email"
+              id="duda-correo"
+              name="correo"
+              class="form-control"
+              placeholder="ejemplo@correo.com"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="duda-mensaje" class="form-label">Mensaje</label>
+            <textarea
+              id="duda-mensaje"
+              name="mensaje"
+              class="form-control"
+              rows="4"
+              placeholder="Cuéntanos en qué te podemos ayudar"
+              required
+            ></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block">
+            Enviar mensaje
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<script is:inline>
+  const form = document.getElementById("form-dudas");
+  form?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    alert("Gracias por escribirnos. Te responderemos pronto.");
+    form.reset();
+  });
+</script>
+
+<style>
+  /* --- Patrón de fondo compartido (hero + sección de dudas) --- */
+  .contacto-hero,
+  .dudas {
+    position: relative;
+    background-color: var(--text-main);
+    background-image:
+      radial-gradient(
+        circle at 1px 1px,
+        rgba(246, 173, 85, 0.18) 1.5px,
+        transparent 0
+      );
+    background-size: 22px 22px;
+  }
+
+  .contacto-hero {
+    color: var(--text-light);
+    padding: var(--space-xl) 0 var(--space-lg);
+    text-align: center;
+  }
+
+  .contacto-hero h1 {
+    color: var(--brand-primary);
+    font-size: 3rem;
+    font-weight: 800;
+  }
+
+  .hero-acento {
+    display: block;
+    width: 72px;
+    height: 4px;
+    margin: var(--space-sm) auto;
+    background-color: var(--brand-secondary);
+    border-radius: 999px;
+  }
+
+  .contacto-hero p {
+    max-width: 600px;
+    margin: 0 auto;
+    color: #e2e8f0;
+    font-size: 1.1rem;
+  }
+
+  /* --- Info directa (whatsapp / correo / redes) --- */
+  .info-directa {
+    padding: var(--space-lg) 0 var(--space-md);
+  }
+
+  .grid-info {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+
+  .info-card {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    background-color: var(--bg-surface);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    padding: var(--space-md);
+    text-decoration: none;
+    color: inherit;
+    transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+  }
+
+  .info-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .info-icon {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 999px;
+    background-color: var(--bg-surface-alt);
+    color: var(--brand-primary);
+  }
+
+  .info-card h3 {
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .info-card p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    word-break: break-word;
+  }
+
+  .redes {
+    margin-top: var(--space-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+  }
+
+  .redes-label {
+    font-weight: 600;
+    color: var(--text-muted);
+  }
+
+  .redes-lista {
+    display: flex;
+    gap: var(--space-xs);
+  }
+
+  .red-icono {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 999px;
+    background-color: var(--brand-primary);
+    color: var(--text-light);
+    transition: background-color var(--transition-speed), transform var(--transition-speed);
+  }
+
+  .red-icono:hover {
+    background-color: var(--brand-primary-hover);
+    transform: translateY(-2px);
+  }
+
+  /* --- Sucursales --- */
+  .sucursales {
+    padding: var(--space-lg) 0;
+  }
+
+  .sucursal-card {
+    background-color: var(--bg-surface);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+  }
+
+  .sucursal-mapa {
+    width: 100%;
+    height: 220px;
+    border: 0;
+    display: block;
+  }
+
+  .sucursal-body {
+    padding: var(--space-md);
+  }
+
+  .sucursal-body h3 {
+    color: var(--brand-primary);
+    margin-bottom: var(--space-xs);
+    font-size: 1.4rem;
+  }
+
+  .sucursal-direccion {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.4rem;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin-bottom: var(--space-sm);
+  }
+
+  .info-icon-sm {
+    flex-shrink: 0;
+    color: var(--brand-primary);
+    margin-top: 2px;
+  }
+
+  .sucursal-horario {
+    list-style: none;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-bottom: var(--space-md);
+  }
+
+  .sucursal-horario li {
+    padding: 0.15rem 0;
+  }
+
+  /* --- Formulario de dudas --- */
+  .dudas {
+    padding: var(--space-lg) 0;
+  }
+
+  .dudas .form-container {
+    background-color: var(--bg-surface);
+    padding: var(--space-md) var(--space-lg);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .dudas .form-container h2 {
+    text-align: center;
+    margin-bottom: var(--space-xs);
+    font-size: 1.8rem;
+  }
+
+  .dudas .form-desc {
+    text-align: center;
+    color: var(--text-muted);
+    margin-bottom: var(--space-md);
+    font-size: 0.95rem;
+  }
+
+  .form-group {
+    margin-bottom: var(--space-sm);
+  }
+
+  .form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+
+  .form-control {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    font-family: var(--font-family-body);
+    font-size: 1rem;
+    transition: border-color var(--transition-speed);
+    resize: vertical;
+  }
+
+  .form-control:focus {
+    outline: none;
+    border-color: var(--brand-primary);
+    box-shadow: 0 0 0 3px rgba(192, 86, 33, 0.1);
+  }
+
+  @media (max-width: 600px) {
+    .contacto-hero h1 {
+      font-size: 2.2rem;
+    }
+
+    .dudas .form-container {
+      padding: var(--space-md) var(--space-sm);
+    }
+  }
+</style>

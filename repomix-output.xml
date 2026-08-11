@@ -1317,49 +1317,6 @@ En este taller intensivo dominarás los procesos fundamentales de preparación, 
 - Diploma de participación firmado por nuestro Chef Instructor.
 </file>
 
-<file path="src/data/categorias.ts">
-// src/data/categorias.ts
-
-export interface Categoria {
-  id: string;              // usado en la URL: /talleres/[id]/ y en el campo "categoria" de cada taller
-  nombre: string;          // texto visible
-  colorAcento: string;     // hex, se inyecta como CSS variable por página
-  descripcionCorta: string; // usada en la tarjeta del hub y en el Hero de la categoría
-  imagen: string;          // portada para la tarjeta del hub
-}
-
-export const categorias: Categoria[] = [
-  {
-    id: 'panaderia',
-    nombre: 'Panadería',
-    colorAcento: '#C05621',
-    descripcionCorta: 'Hornos, amasadoras y laminadoras para dominar el pan artesanal e industrial.',
-    imagen: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-  },
-  {
-    id: 'pasteleria',
-    nombre: 'Pastelería y Repostería',
-    colorAcento: '#B83280',
-    descripcionCorta: 'Batidoras, exhibidores y técnicas de decoración para repostería comercial.',
-    imagen: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-  },
-  {
-    id: 'carniceria',
-    nombre: 'Carnicería',
-    colorAcento: '#9B2C2C',
-    descripcionCorta: 'Molinos, sierras y cortadoras para procesamiento profesional de carnes.',
-    imagen: 'https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-  },
-  {
-    id: 'cocina',
-    nombre: 'Cocina y Restaurante',
-    colorAcento: '#2C7A7B',
-    descripcionCorta: 'Freidoras, licuadoras y procesadores para equipar tu cocina profesional.',
-    imagen: 'https://images.unsplash.com/photo-1556910103-1c02745aae4d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-  },
-];
-</file>
-
 <file path="tsconfig.json">
 {
   "extends": "astro/tsconfigs/strict",
@@ -2049,319 +2006,76 @@ const iframeSrcBase = `${formUrlBase}/${formPerma}?zf_rszfm=1`;
 </script>
 </file>
 
-<file path="src/components/Header.astro">
----
-import { Image } from "astro:assets";
-import logo from "../assets/editable-logo-equipoypartes.webp";
-import { categorias } from "../data/categorias";
-import { contenidoPorCategoria } from "../data/content";
+<file path="src/data/categorias.ts">
+// src/data/categorias.ts
 
-interface Props {
-  nombreEmpresa: string;
+export interface Categoria {
+  id: string;              // usado en la URL: /talleres/[id]/ y en el campo "categoria" de cada taller
+  nombre: string;          // texto visible
+  colorAcento: string;     // hex, se inyecta como CSS variable por página
+  descripcionCorta: string; // usada en la tarjeta del hub y en el Hero de la categoría
+  imagen: string;          // portada para la tarjeta del hub
 }
 
-const { nombreEmpresa } = Astro.props;
-const base = import.meta.env.BASE_URL;
----
-
-<header id="site-header">
-  <div class="container header-content">
-    <div class="header-top">
-      <button
-        id="nav-toggle"
-        class="nav-toggle"
-        aria-label="Abrir menú"
-        aria-expanded="false"
-      >
-        <span></span><span></span><span></span>
-      </button>
-
-      <a href={base} class="logo">
-        <Image
-          src={logo}
-          alt={nombreEmpresa}
-          width={200}
-          height={184}
-          class="navbar__logo-img"
-        />
-      </a>
-    </div>
-
-    <nav id="main-nav" class="main-nav">
-      <ul>
-        {
-          categorias.map((cat) => {
-            const disponible = !!contenidoPorCategoria[cat.id];
-            const href = `${base}talleres/${cat.id}/`;
-            const activo = Astro.url.pathname.startsWith(href);
-            return (
-              <li>
-                {disponible ? (
-                  <a href={href} class:list={["nav-link", { activo }]}>
-                    {cat.nombre}
-                  </a>
-                ) : (
-                  <span class="nav-link nav-link--disabled">
-                    {cat.nombre} <small>(Próximamente)</small>
-                  </span>
-                )}
-              </li>
-            );
-          })
-        }
-      </ul>
-    </nav>
-  </div>
-</header>
-
-<style>
-  header {
-    background-color: var(--bg-surface);
-    padding: var(--space-sm) 0;
-    box-shadow: var(--shadow-sm);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-  }
-
-  .header-content {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .header-top {
-    position: relative;
-    width: 100%;
-    min-height: 3.5rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .logo {
-    display: flex;
-    align-items: center;
-    overflow: hidden;
-    max-height: 7rem;
-    opacity: 1;
-    transform: translateY(0);
-    transition:
-      max-height 0.35s ease,
-      opacity 0.25s ease,
-      transform 0.35s ease,
-      margin 0.35s ease;
-  }
-
-  .navbar__logo-img {
-    display: block;
-    height: 7rem;
-    width: auto;
-  }
-
-  /* --- Estado "scrolled": oculta el logo en ambos, mobile y desktop --- */
-  header.scrolled .logo {
-    max-height: 0;
-    opacity: 0;
-    transform: translateY(-12px);
-    margin: 0;
-    pointer-events: none;
-  }
-
-  .nav-toggle {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0.5rem;
-    position: absolute;
-    top: 50%;
-    left: 0.5rem;
-    transform: translateY(-50%);
-    z-index: 10;
-  }
-
-  .nav-toggle span {
-    width: 24px;
-    height: 2px;
-    background-color: var(--text-main);
-  }
-
-  /* --- El menú es un dropdown flotante: no empuja el contenido --- */
-  .main-nav {
-    display: none;
-  }
-
-  .main-nav.open {
-    display: block;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    background: var(--bg-surface);
-    box-shadow: var(--shadow-md, 0 8px 20px rgba(0, 0, 0, 0.15));
-    padding: var(--space-md);
-    z-index: 99;
-    border-top: 1px solid var(--border, rgba(0, 0, 0, 0.08));
-  }
-
-  .main-nav.open ul {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--space-sm);
-    list-style: none;
-  }
-
-  .nav-link {
-    color: var(--text-main);
-    text-decoration: none;
-    font-weight: 600;
-    padding: 0.4rem 0;
-    border-bottom: 2px solid transparent;
-    transition:
-      border-color var(--transition-speed),
-      color var(--transition-speed);
-  }
-
-  .nav-link:hover {
-    color: var(--brand-primary);
-  }
-
-  .nav-link.activo {
-    color: var(--brand-primary);
-    border-bottom-color: var(--brand-primary);
-  }
-
-  .nav-link--disabled {
-    color: var(--text-muted);
-    cursor: default;
-  }
-
-  .nav-link--disabled small {
-    font-size: 0.75em;
-  }
-</style>
-
-<script is:inline>
-  const header = document.getElementById("site-header");
-  const toggle = document.getElementById("nav-toggle");
-  const nav = document.getElementById("main-nav");
-
-  toggle?.addEventListener("click", () => {
-    if (!nav) return;
-    const isOpen = nav.classList.toggle("open");
-    toggle.setAttribute("aria-expanded", String(isOpen));
-  });
-
-  document.addEventListener("click", (e) => {
-    if (!nav || !nav.classList.contains("open")) return;
-    const target = e.target;
-    if (!(target instanceof Node)) return;
-    if (nav.contains(target) || toggle?.contains(target)) return;
-    nav.classList.remove("open");
-    toggle?.setAttribute("aria-expanded", "false");
-  });
-
-  const SCROLL_THRESHOLD = 40;
-  let ticking = false;
-
-  function updateHeaderState() {
-    if (!header) return;
-    if (window.scrollY > SCROLL_THRESHOLD) {
-      header.classList.add("scrolled");
-    } else {
-      header.classList.remove("scrolled");
-    }
-    ticking = false;
-  }
-
-  window.addEventListener(
-    "scroll",
-    () => {
-      if (!ticking) {
-        requestAnimationFrame(updateHeaderState);
-        ticking = true;
-      }
-    },
-    { passive: true }
-  );
-
-  updateHeaderState();
-</script>
-</file>
-
-<file path="src/components/TalleresAnteriores.astro">
----
-import type { TallerAnterior } from "../data/content";
-interface Props {
-  items: TallerAnterior[];
+export interface Menu {
+  id: string;              // usado en la URL: /talleres/[id]/ y en el campo "categoria" de cada taller
+  nombre: string;           // portada para la tarjeta del hub
+  tag: string;
 }
-const { items } = Astro.props;
----
 
-<section class="galeria-section">
-  <div class="container">
-    <div class="section-header">
-      <h2>Talleres Anteriores</h2>
-      <p>
-        Un vistazo a nuestras sesiones pasadas y el ambiente práctico de cada
-        taller.
-      </p>
-    </div>
+export const categorias: Categoria[] = [
+  {
+    id: 'panaderia',
+    nombre: 'Panadería',
+    colorAcento: '#C05621',
+    descripcionCorta: 'Hornos, amasadoras y laminadoras para dominar el pan artesanal e industrial.',
+    imagen: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+  },
+  {
+    id: 'pasteleria',
+    nombre: 'Pastelería y Repostería',
+    colorAcento: '#B83280',
+    descripcionCorta: 'Batidoras, exhibidores y técnicas de decoración para repostería comercial.',
+    imagen: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+  },
+  {
+    id: 'carniceria',
+    nombre: 'Carnicería',
+    colorAcento: '#9B2C2C',
+    descripcionCorta: 'Molinos, sierras y cortadoras para procesamiento profesional de carnes.',
+    imagen: 'https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+  },
+  {
+    id: 'cocina',
+    nombre: 'Cocina y Restaurante',
+    colorAcento: '#2C7A7B',
+    descripcionCorta: 'Freidoras, licuadoras y procesadores para equipar tu cocina profesional.',
+    imagen: 'https://images.unsplash.com/photo-1556910103-1c02745aae4d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+  },
+];
 
-    <div class="grid galeria-grid">
-      {
-        items.map((item) => (
-          <figure class="galeria-item">
-            <img src={item.imagen} alt={item.titulo} />
-            <figcaption>{item.titulo}</figcaption>
-          </figure>
-        ))
-      }
-    </div>
-  </div>
-</section>
-
-<style>
-  .galeria-section {
-    padding: var(--space-lg) 0;
-  }
-
-  .galeria-grid {
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  }
-
-  .galeria-item {
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-    box-shadow: var(--shadow-sm);
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-  }
-
-  .galeria-item img {
-    height: 220px;
-    flex-shrink: 0;
-    object-fit: cover;
-  }
-
-  .galeria-item figcaption {
-    padding: var(--space-sm);
-    background-color: var(--bg-surface);
-    font-weight: 600;
-    font-size: 0.95rem;
-    text-align: center;
-    flex-grow: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-</style>
+export const menu: Menu[] = [
+  {
+    id: 'talleres',
+    nombre: 'Talleres',
+    tag: 'workshops',
+  },
+  {
+    id: 'formulario',
+    nombre: 'Formulario',
+    tag: 'registration',
+  },
+  {
+    id: 'talleres-anteriores',
+    nombre: 'Talleres Anteriores',
+    tag: 'talleres-anteriores',
+  },
+  {
+    id: 'faq',
+    nombre: 'Preguntas Frecuentes',
+    tag: 'faq',
+  },
+];
 </file>
 
 <file path="src/content.config.ts">
@@ -2912,6 +2626,366 @@ img {
 }
 </file>
 
+<file path="src/components/Header.astro">
+---
+import { Image } from "astro:assets";
+import logo from "../assets/editable-logo-equipoypartes.webp";
+import { menu } from "../data/categorias";
+import { contenidoPorCategoria } from "../data/content";
+
+interface Props {
+  nombreEmpresa: string;
+}
+
+const { nombreEmpresa } = Astro.props;
+const base = import.meta.env.BASE_URL;
+---
+
+<header id="site-header">
+  <div class="container header-content">
+    <div class="header-top">
+      <button
+        id="nav-toggle"
+        class="nav-toggle"
+        aria-label="Abrir menú"
+        aria-expanded="false"
+      >
+        <span></span><span></span><span></span>
+      </button>
+
+      <a href={base} class="logo">
+        <Image
+          src={logo}
+          alt={nombreEmpresa}
+          width={200}
+          height={184}
+          class="navbar__logo-img"
+        />
+      </a>
+    </div>
+
+    <nav id="main-nav" class="main-nav">
+      <ul>
+        {
+          menu.map((cat) => {
+            //const disponible = !!contenidoPorCategoria[cat.id];
+            const href = `${base}#${cat.tag}`;
+            const activo = Astro.url.pathname.startsWith(href);
+            return (
+              <li>                
+                  <a href={href} class:list={["nav-link", { activo }]}>
+                    {cat.nombre}
+                  </a>
+              </li>
+            );
+          })
+        }
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  header {
+    background-color: var(--bg-surface);
+    padding: var(--space-sm) 0;
+    box-shadow: var(--shadow-sm);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    transition: padding 0.3s ease;
+  }
+
+  header.scrolled {
+    padding: 0;
+  }
+
+  .header-content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .header-top {
+    position: relative;
+    width: 100%;
+    max-height: 9rem;
+    min-height: 3.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    transition: max-height 0.3s ease, min-height 0.3s ease;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    transition:
+      opacity 0.2s ease,
+      transform 0.2s ease;
+  }
+
+  .navbar__logo-img {
+    display: block;
+    height: 7rem;
+    width: auto;
+  }
+
+  /* --- Estado "scrolled": el header se comprime al mínimo indispensable --- */
+  header.scrolled .header-top {
+    max-height: 2.75rem;
+    min-height: 2.75rem;
+  }
+
+  header.scrolled .logo {
+    opacity: 0;
+    transform: translateY(-12px) scale(0.9);
+    pointer-events: none;
+  }
+
+  .nav-toggle {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    position: absolute;
+    top: 50%;
+    left: 0.5rem;
+    transform: translateY(-50%);
+    z-index: 10;
+  }
+
+  .nav-toggle span {
+    width: 24px;
+    height: 2px;
+    background-color: var(--text-main);
+  }
+
+  /* --- El menú es un dropdown flotante en mobile: no empuja el contenido --- */
+  .main-nav {
+    display: none;
+  }
+
+  .main-nav.open {
+    display: block;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: var(--bg-surface);
+    box-shadow: var(--shadow-md, 0 8px 20px rgba(0, 0, 0, 0.15));
+    padding: var(--space-md);
+    z-index: 99;
+    border-top: 1px solid var(--border, rgba(0, 0, 0, 0.08));
+  }
+
+  .main-nav.open ul {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-sm);
+    list-style: none;
+  }
+
+  .nav-link {
+    color: var(--text-main);
+    text-decoration: none;
+    font-weight: 600;
+    padding: 0.4rem 0;
+    border-bottom: 2px solid transparent;
+    transition:
+      border-color var(--transition-speed),
+      color var(--transition-speed);
+  }
+
+  .nav-link:hover {
+    color: var(--brand-primary);
+  }
+
+  .nav-link.activo {
+    color: var(--brand-primary);
+    border-bottom-color: var(--brand-primary);
+  }
+
+  .nav-link--disabled {
+    color: var(--text-muted);
+    cursor: default;
+  }
+
+  .nav-link--disabled small {
+    font-size: 0.75em;
+  }
+
+  /* --- Desktop: logo arriba, nav horizontal debajo, sin hamburguesa --- */
+  @media (min-width: 768px) {
+    .nav-toggle {
+      display: none;
+    }
+
+    .header-top {
+      min-height: auto;
+    }
+
+    .main-nav {
+      display: block; /* ya no depende de .open */
+      position: static;
+      width: auto;
+      background: none;
+      box-shadow: none;
+      padding: var(--space-sm, 0.75rem) 0 0;
+      border-top: none;
+      margin-top: var(--space-xs, 0.5rem);
+      transition: padding 0.3s ease, margin 0.3s ease;
+    }
+
+    .main-nav ul {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      gap: var(--space-md, 1.5rem);
+      list-style: none;
+    }
+
+    header.scrolled .main-nav {
+      padding-top: 0.25rem;
+      margin-top: 0;
+    }
+  }
+</style>
+<script is:inline>
+  const header = document.getElementById("site-header");
+  const toggle = document.getElementById("nav-toggle");
+  const nav = document.getElementById("main-nav");
+
+  toggle?.addEventListener("click", () => {
+    if (!nav) return;
+    const isOpen = nav.classList.toggle("open");
+    toggle.setAttribute("aria-expanded", String(isOpen));
+  });
+
+  document.addEventListener("click", (e) => {
+    if (!nav || !nav.classList.contains("open")) return;
+    const target = e.target;
+    if (!(target instanceof Node)) return;
+    if (nav.contains(target) || toggle?.contains(target)) return;
+    nav.classList.remove("open");
+    toggle?.setAttribute("aria-expanded", "false");
+  });
+
+  // Histéresis: el rango entre ENTER y EXIT debe ser mayor que el salto de
+  // altura que produce el header al encogerse (9rem -> 3.5rem ≈ 88px),
+  // para que el cambio de scrollY causado por el propio colapso no pueda
+  // cruzar ambos umbrales y generar un loop de parpadeo.
+  const SCROLL_ENTER = 220;
+  const SCROLL_EXIT = 20;
+  let ticking = false;
+
+  function updateHeaderState() {
+    if (!header) return;
+    const y = window.scrollY;
+    if (y > SCROLL_ENTER) {
+      header.classList.add("scrolled");
+    } else if (y < SCROLL_EXIT) {
+      header.classList.remove("scrolled");
+    }
+    ticking = false;
+  }
+
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (!ticking) {
+        requestAnimationFrame(updateHeaderState);
+        ticking = true;
+      }
+    },
+    { passive: true }
+  );
+
+  updateHeaderState();
+</script>
+</file>
+
+<file path="src/components/TalleresAnteriores.astro">
+---
+import type { TallerAnterior } from "../data/content";
+interface Props {
+  items: TallerAnterior[];
+}
+const { items } = Astro.props;
+---
+
+<section id="talleres-anteriores" class="galeria-section">
+  <div class="container">
+    <div class="section-header">
+      <h2>Talleres Anteriores</h2>
+      <p>
+        Un vistazo a nuestras sesiones pasadas y el ambiente práctico de cada
+        taller.
+      </p>
+    </div>
+
+    <div class="grid galeria-grid">
+      {
+        items.map((item) => (
+          <figure class="galeria-item">
+            <img src={item.imagen} alt={item.titulo} />
+            <figcaption>{item.titulo}</figcaption>
+          </figure>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .galeria-section {
+    padding: var(--space-lg) 0;
+  }
+
+  .galeria-grid {
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  }
+
+  .galeria-item {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .galeria-item img {
+    height: 220px;
+    flex-shrink: 0;
+    object-fit: cover;
+  }
+
+  .galeria-item figcaption {
+    padding: var(--space-sm);
+    background-color: var(--bg-surface);
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-align: center;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+</style>
+</file>
+
 <file path="src/components/TarjetaTaller.astro">
 ---
 // src/components/talleres/TarjetaTaller.astro
@@ -3040,7 +3114,7 @@ const base = import.meta.env.BASE_URL;
                 class="btn btn-outline">Ver detalles</a
             >
             <a
-                href={`/${base}#registration?taller=${taller.id}`}
+                href={`${base}talleres/${categoria}/${taller.id}/#registration`}
                 class="btn btn-primary">Inscribirme</a
             >
         </div>

@@ -3,6 +3,8 @@
 import Layout from '../layouts/Layout.astro';
 import TarjetaCategoria from '../components/TarjetaCategoria.astro';
 import { categorias } from '../data/categorias';
+
+const categoriasVisibles = categorias.filter((categoria) => categoria.activa);
 ---
 
 <Layout
@@ -22,7 +24,7 @@ import { categorias } from '../data/categorias';
   <section class="hub-categorias">
     <div class="container">
       <div class="grid">
-        {categorias.map((categoria) => (
+        {categoriasVisibles.map((categoria) => (
           <TarjetaCategoria categoria={categoria} />
         ))}
       </div>
@@ -54,6 +56,13 @@ import { categorias } from '../data/categorias';
 
   .hub-categorias {
     padding: var(--space-lg) 0;
+  }
+
+  /* Con pocas categorías activas (ej. solo Panadería), evita que .grid
+     (auto-fit + 1fr) estire las tarjetas a todo el ancho del contenedor. */
+  .hub-categorias .grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 360px));
+    justify-content: center;
   }
 
   @media (max-width: 768px) {

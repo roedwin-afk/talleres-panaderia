@@ -118,7 +118,15 @@ const { talleres, tallerPreseleccionado } = Astro.props;
 
 <style>
   .registration-section {
+    position: relative;
     background-color: var(--bg-surface-alt);
+    background-image:
+      radial-gradient(
+        circle at 1px 1px,
+        rgba(192, 86, 33, 0.16) 1.5px,
+        transparent 0
+      );
+    background-size: 22px 22px;
     padding: var(--space-lg) 0;
     border-top: 1px solid var(--border-light);
   }

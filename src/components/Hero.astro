@@ -23,6 +23,7 @@ const { titulo, descripcion, textoBoton, anclaBoton, imagenesFondo } =
   }
   <div class="container hero-content">
     <h1>{titulo}</h1>
+    <span class="hero-acento" aria-hidden="true"></span>
     <p>{descripcion}</p>
     <!-- <a href={anclaBoton} class="btn btn-primary">{textoBoton}</a> -->
   </div>
@@ -42,7 +43,7 @@ const { titulo, descripcion, textoBoton, anclaBoton, imagenesFondo } =
     content: "";
     position: absolute;
     inset: 0;
-    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8));
+    background: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.85));
     z-index: 1;
   }
 
@@ -68,9 +69,21 @@ const { titulo, descripcion, textoBoton, anclaBoton, imagenesFondo } =
   }
 
   .hero h1 {
-    color: var(--text-light);
-    font-size: 3rem;
-    margin-bottom: var(--space-sm);
+    color: var(--brand-primary);
+    font-size: 3.4rem;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    text-shadow: 0 4px 24px rgba(0, 0, 0, 0.45);
+    margin-bottom: 0;
+  }
+
+  .hero-acento {
+    display: block;
+    width: 72px;
+    height: 4px;
+    margin: var(--space-sm) auto;
+    background-color: var(--brand-secondary);
+    border-radius: 999px;
   }
 
   .hero p {
@@ -81,7 +94,11 @@ const { titulo, descripcion, textoBoton, anclaBoton, imagenesFondo } =
 
   @media (max-width: 768px) {
     .hero h1 {
-      font-size: 2.2rem;
+      font-size: 2.3rem;
+    }
+
+    .hero-acento {
+      width: 56px;
     }
   }
 </style>

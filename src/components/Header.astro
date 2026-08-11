@@ -2,6 +2,7 @@
 import { Image } from "astro:assets";
 import logo from "../assets/editable-logo-equipoypartes.webp";
 import { menu } from "../data/categorias";
+import { categorias } from "../data/categorias";
 import { contenidoPorCategoria } from "../data/content";
 
 interface Props {
@@ -10,6 +11,10 @@ interface Props {
 
 const { nombreEmpresa } = Astro.props;
 const base = import.meta.env.BASE_URL;
+
+const tallerActual = Astro.url.pathname.split("/talleres/")[1];
+console.log("Header tallerActual:", tallerActual);
+console.log("es contacto?", tallerActual === undefined);
 ---
 
 <header id="site-header">
@@ -38,25 +43,42 @@ const base = import.meta.env.BASE_URL;
     <nav id="main-nav" class="main-nav">
       <ul>
         {
-          menu.map((cat) => {
-            const disponible = !!contenidoPorCategoria[cat.id];
-            const href = `${base}${cat.tag}/`;
-            const activo = Astro.url.pathname.startsWith(href);
-            return (
-              <li>
-                {disponible ? (
-                  <a href={href} class:list={["nav-link", { activo }]}>
-                    {cat.nombre}
-                  </a>
-                ) : (
-                  <span class="nav-link nav-link--disabled">
-                    {cat.nombre}
-                  </span>
-                )}
-              </li>
-            );
-          })
+          !(tallerActual === undefined)
+            ? menu.map((cat) => {
+                //const disponible = !!contenidoPorCategoria[cat.id];
+                const href = `${base}talleres/${tallerActual}#${cat.tag}`;
+                const activo = Astro.url.pathname.startsWith(href);
+                return (
+                  <li>
+                    <a href={href} class:list={["nav-link", { activo }]}>
+                      {cat.nombre}
+                    </a>
+                  </li>
+                );
+              })
+            : categorias.map((cat) => {
+                const href = `${base}talleres/${cat.id}/`;
+                const activo = Astro.url.pathname.startsWith(href);
+                return (
+                  <li>
+                    <a href={href} class:list={["nav-link", { activo }]}>
+                      {cat.nombre}
+                    </a>
+                  </li>
+                );
+              })
         }
+        <li>
+          <a
+            href={`${base}contacto/`}
+            class:list={[
+              "nav-link",
+              { activo: Astro.url.pathname.startsWith(`${base}contacto`) },
+            ]}
+          >
+            Contacto
+          </a>
+        </li>
       </ul>
     </nav>
   </div>
@@ -93,7 +115,9 @@ const base = import.meta.env.BASE_URL;
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    transition: max-height 0.3s ease, min-height 0.3s ease;
+    transition:
+      max-height 0.3s ease,
+      min-height 0.3s ease;
   }
 
   .logo {
@@ -221,7 +245,9 @@ const base = import.meta.env.BASE_URL;
       padding: var(--space-sm, 0.75rem) 0 0;
       border-top: none;
       margin-top: var(--space-xs, 0.5rem);
-      transition: padding 0.3s ease, margin 0.3s ease;
+      transition:
+        padding 0.3s ease,
+        margin 0.3s ease;
     }
 
     .main-nav ul {
@@ -286,7 +312,7 @@ const base = import.meta.env.BASE_URL;
         ticking = true;
       }
     },
-    { passive: true }
+    { passive: true },
   );
 
   updateHeaderState();
