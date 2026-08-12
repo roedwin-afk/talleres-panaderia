@@ -9,10 +9,11 @@ const { items } = Astro.props;
 <section id="talleres-anteriores" class="galeria-section">
   <div class="container">
     <div class="section-header">
-      <h2>Talleres Anteriores</h2>
+      <span class="eyebrow">Así se viven nuestros talleres</span>
+      <h2>Aprende haciendo y conoce equipos profesionales</h2>
       <p>
-        Un vistazo a nuestras sesiones pasadas y el ambiente práctico de cada
-        taller.
+        Vive una experiencia práctica donde aprenderás nuevas preparaciones
+        mientras conoces maquinaria que facilita y agiliza el trabajo.
       </p>
     </div>
 
@@ -20,7 +21,12 @@ const { items } = Astro.props;
       {
         items.map((item) => (
           <figure class="galeria-item">
-            <img src={item.imagen} alt={item.titulo} />
+            <div
+              class="galeria-imagen-wrap"
+              style={`background-image: url('${item.imagen}');`}
+            >
+              <img src={item.imagen} alt={item.titulo} loading="lazy" />
+            </div>
             <figcaption>{item.titulo}</figcaption>
           </figure>
         ))
@@ -32,6 +38,16 @@ const { items } = Astro.props;
 <style>
   .galeria-section {
     padding: var(--space-lg) 0;
+  }
+
+  .eyebrow {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--brand-primary);
+    margin-bottom: var(--space-xs);
   }
 
   .galeria-grid {
@@ -48,9 +64,39 @@ const { items } = Astro.props;
   }
 
   .galeria-item img {
+    position: relative;
+    z-index: 1;
+    max-height: 220px;
+    max-width: 100%;
+    width: auto;
+    height: auto;
+    margin: 0 auto;
+    object-fit: contain;
+    display: block;
+  }
+
+  .galeria-imagen-wrap {
+    position: relative;
     height: 220px;
     flex-shrink: 0;
-    object-fit: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+  }
+
+  .galeria-imagen-wrap::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: inherit;
+    background-size: cover;
+    background-position: center;
+    filter: blur(14px) brightness(0.7);
+    transform: scale(1.15); /* evita bordes borrosos visibles por el blur */
+    z-index: 0;
   }
 
   .galeria-item figcaption {

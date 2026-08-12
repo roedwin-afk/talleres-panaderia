@@ -12,11 +12,18 @@ const categoriasVisibles = categorias.filter((categoria) => categoria.activa);
   description="Talleres prácticos con equipo profesional: panadería, pastelería, carnicería y cocina. Elegí tu categoría e inscribite hoy."
 >
   <section class="hub-hero">
-    <div class="container">
-      <h1>Domina Nuevas Técnicas con Equipamiento Profesional</h1>
+    <div class="hub-hero-glow" aria-hidden="true"></div>
+    <div class="hub-hero-dots" aria-hidden="true"></div>
+    <div class="hub-hero-arco" aria-hidden="true"></div>
+    <div class="container hub-hero-content">
+      <h1>
+        Aprende, practica y lleva <span class="destacado">nuevas ideas</span> a
+        tu negocio
+      </h1>
       <p>
-        Elegí la categoría de taller que más se ajusta a tu negocio o pasión. Grupos reducidos,
-        instructores expertos y uso práctico de equipo industrial real.
+        Talleres prácticos pensados para emprendedores y personas que quieren
+        aprender nuevas preparaciones utilizando maquinaria profesional que
+        facilita y agiliza el trabajo.
       </p>
     </div>
   </section>
@@ -34,10 +41,68 @@ const categoriasVisibles = categorias.filter((categoria) => categoria.activa);
 
 <style>
   .hub-hero {
+    position: relative;
     background-color: var(--text-main);
     color: var(--text-light);
     padding: var(--space-xl) 0 var(--space-lg);
     text-align: center;
+    overflow: hidden;
+  }
+
+  /* Glow naranja, esquina inferior izquierda */
+  .hub-hero-glow {
+    position: absolute;
+    left: -160px;
+    bottom: -160px;
+    width: 480px;
+    height: 480px;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      rgba(253, 122, 24, 0.45) 0%,
+      transparent 70%
+    );
+    filter: blur(20px);
+    z-index: 0;
+  }
+
+  /* Arco decorativo, esquina inferior izquierda */
+  .hub-hero-arco {
+    position: absolute;
+    left: -140px;
+    bottom: -140px;
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    border: 1px solid rgba(253, 122, 24, 0.4);
+    z-index: 0;
+  }
+
+  /* Patrón de puntos, esquina superior derecha */
+  .hub-hero-dots {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 280px;
+    height: 280px;
+    background-image: radial-gradient(
+      circle at 1px 1px,
+      rgba(253, 155, 75, 0.55) 1.5px,
+      transparent 0
+    );
+    background-size: 18px 18px;
+    -webkit-mask-image: radial-gradient(
+      circle at top right,
+      black 0%,
+      transparent 75%
+    );
+    mask-image: radial-gradient(circle at top right, black 0%, transparent 75%);
+    z-index: 0;
+  }
+
+  .hub-hero-content {
+    position: relative;
+    z-index: 1;
   }
 
   .hub-hero h1 {
@@ -45,6 +110,10 @@ const categoriasVisibles = categorias.filter((categoria) => categoria.activa);
     font-size: 2.8rem;
     max-width: 800px;
     margin: 0 auto var(--space-sm);
+  }
+
+  .hub-hero h1 .destacado {
+    color: var(--brand-primary);
   }
 
   .hub-hero p {

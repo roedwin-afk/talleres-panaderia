@@ -5,19 +5,28 @@ import type { CollectionEntry } from "astro:content";
 interface Props {
   talleres?: CollectionEntry<"talleres">[];
   tallerPreseleccionado?: CollectionEntry<"talleres">;
+  patronFondo?: string; // data-URI de un SVG, para tematizar el fondo por categoría
 }
 
-const { talleres, tallerPreseleccionado } = Astro.props;
+// Patrón default: espigas de trigo, temática de Panadería.
+// Para otra categoría, pasa tu propio SVG por la prop `patronFondo`
+// (ej. un cupcake para Pastelería, un cuchillo para Carnicería, etc.)
+const PATRON_TRIGO =
+  "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56' viewBox='0 0 56 56'%3E%3Cg fill='none' stroke='%23C05621' stroke-width='1.4' stroke-linecap='round' opacity='0.4' transform='rotate(15 28 28)'%3E%3Cline x1='28' y1='10' x2='28' y2='46'/%3E%3Cpath d='M28 15 L22 20 M28 15 L34 20'/%3E%3Cpath d='M28 22 L22 27 M28 22 L34 27'/%3E%3Cpath d='M28 29 L22 34 M28 29 L34 34'/%3E%3Cpath d='M28 36 L22 41 M28 36 L34 41'/%3E%3C/g%3E%3C/svg%3E\")";
+
+const { talleres, tallerPreseleccionado, patronFondo = PATRON_TRIGO } =
+  Astro.props;
 ---
 
-<section id="registration" class="registration-section">
+<section id="registration" class="registration-section" style={`--patron-fondo: ${patronFondo};`}>
   <div class="container">
     <div class="form-container">
       <h3>Reserva tu espacio</h3>
       <p class="form-desc">
-        Llena este formulario sin compromiso para separar tu cupo. Un asesor se
-        comunicará contigo para confirmar los detalles y finalizar la
-        inscripción.
+        ¿Encontraste el taller ideal para ti? Completa el formulario para
+        solicitar tu preinscripción. Nuestro equipo se pondrá en contacto
+        contigo para confirmar disponibilidad, brindarte los detalles de pago
+        y finalizar tu inscripción.
       </p>
 
       <!-- Change or deletion of the name attributes in the input tags will lead to empty values on record submission -->
@@ -190,7 +199,11 @@ const { talleres, tallerPreseleccionado } = Astro.props;
 
 <style>
   .registration-section {
+    position: relative;
     background-color: var(--bg-surface-alt);
+    background-image: var(--patron-fondo);
+    background-repeat: repeat;
+    background-size: 56px 56px;
     padding: var(--space-lg) 0;
     border-top: 1px solid var(--border-light);
   }

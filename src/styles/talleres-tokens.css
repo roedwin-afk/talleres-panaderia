@@ -2,16 +2,17 @@
    Design tokens — actualizar cuando Marketing confirme el Manual de Marca. */
 
 :root {
-  /* Paleta de Colores (Temática cálida, panadería profesional) */
-  --brand-primary: #C05621;
-  --brand-primary-hover: #9C4221;
-  --brand-secondary: #F6AD55;
+  /* Paleta de Colores — oficial, del Manual de Marca (EYP_MANUAL_DE_MARCA) */
+  --brand-primary: #FD7A18;       /* Color Secundario del manual: títulos, botones CTA */
+  --brand-primary-hover: #D9660C;
+  --brand-secondary: #FEB92D;      /* Color Principal del manual: fondos, acentos */
+  --brand-accent: #FD9B4B;         /* Color de Acento del manual: CTA, precios, números */
 
   --bg-page: #FAF5F0;
   --bg-surface: #FFFFFF;
   --bg-surface-alt: #F3EAE1;
 
-  --text-main: #2D3748;
+  --text-main: #232426;            /* Color secundario oscuro del manual */
   --text-muted: #718096;
   --text-light: #F7FAFC;
 

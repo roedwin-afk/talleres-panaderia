@@ -43,9 +43,9 @@ export interface ContenidoCategoria {
 
 export const contenidoPorCategoria: Record<string, ContenidoCategoria> = {
   panaderia: {
-    heroTitulo: "Domina la Alta Panadería con Equipamiento Profesional",
+    heroTitulo: "Aprende, Emprende y Crece con Nuestros Talleres Prácticos",
     heroDescripcion:
-      "Nuestros talleres prácticos son el espacio ideal para perfeccionar tu técnica. Guiados por instructores expertos, descubrirás cómo el uso de maquinaria e insumos de alto rendimiento transforma tus recetas en obras maestras.",
+      "Talleres prácticos creados para emprendedores y personas que quieren aprender nuevas preparaciones utilizando maquinaria profesional. Aprende haciendo y descubre cómo los equipos adecuados pueden ayudarte a agilizar procesos, facilitar el trabajo y llevar nuevas ideas a tu negocio.",
     heroImagenesFondo: [
       "https://images.unsplash.com/photo-1509440159596-0249088772ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
       "https://images.unsplash.com/photo-1779006887705-5cf0e2794e08?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
@@ -53,24 +53,16 @@ export const contenidoPorCategoria: Record<string, ContenidoCategoria> = {
     ],
     faq: [
       {
-        pregunta: "¿Necesito experiencia previa en panadería?",
-        respuesta: "No. La mayoría de nuestros talleres están diseñados para todo público, salvo los marcados como 'Intermedio' o 'Avanzado', donde sí se recomienda conocimiento básico de amasado.",
+        pregunta: "¿Qué incluye el precio del taller?",
+        respuesta: "Incluye los ingredientes y materiales utilizados durante la actividad, uso de maquinaria profesional y utensilios, hoja impresa con ingredientes y procedimiento de la receta, degustación de los productos preparados y diploma de participación.",
       },
       {
-        pregunta: "¿Qué incluye el precio del taller?",
-        respuesta: "Materia prima completa, uso de delantal y herramientas, degustación, material impreso y diploma de participación firmado por el instructor.",
+        pregunta: "¿Los talleres son prácticos?",
+        respuesta: "Sí. Queremos que aprendas haciendo. Durante nuestros talleres podrás participar en las preparaciones y conocer cómo utilizar maquinaria profesional que ayuda a agilizar y facilitar diferentes procesos de producción.",
       },
       {
         pregunta: "¿Puedo cancelar o cambiar mi inscripción?",
-        respuesta: "Sí, contáctanos con al menos 48 horas de anticipación para reprogramar tu cupo sin costo adicional a otro taller disponible.",
-      },
-      {
-        pregunta: "¿Hay restricción de edad?",
-        respuesta: "Nuestros talleres están dirigidos a mayores de 16 años, dado el uso de equipo industrial como hornos y amasadoras.",
-      },
-      {
-        pregunta: "¿Cómo se confirma mi pago?",
-        respuesta: "El formulario en esta página solo reserva tu espacio. Un asesor comercial te contactará directamente para gestionar el pago y confirmar los detalles finales.",
+        respuesta: "Si cancelas tu participación o no puedes asistir al taller, no se realizan devoluciones de dinero en efectivo. El monto pagado se entregará como nota de crédito válida exclusivamente para la compra de materias primas en Equipo y Partes.",
       },
     ],
     testimonios: [
