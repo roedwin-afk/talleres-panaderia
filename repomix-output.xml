@@ -69,14 +69,17 @@ src/components/Testimonios.astro
 src/components/ZohoFormulario.astro
 src/components/ZohoFormularioHTML.astro
 src/content.config.ts
-src/content/talleres/decoración-de-pasteles.md
-src/content/talleres/pan-artesanal.md
-src/content/talleres/panaderia-basica.md
-src/content/talleres/postres-avanzados.md
+src/content/decoración-de-pasteles.md
+src/content/pan-artesanal.md
+src/content/panaderia-basica.md
+src/content/postres-avanzados.md
+src/content/talleres/domina-el-arte-de-la-pizza.md
+src/content/talleres/torta-chilena-milhoja-napoleon.md
 src/data/categorias.ts
 src/data/content.ts
 src/layouts/Layout.astro
 src/pages/[slug].astro
+src/pages/contacto.astro
 src/pages/index.astro
 src/pages/talleres/[categoria]/[slug].astro
 src/pages/talleres/[categoria]/index.astro
@@ -87,7 +90,7 @@ tsconfig.json
 <files>
 This section contains the contents of the repository's files.
 
-<file path="src/content/talleres/decoración-de-pasteles.md">
+<file path="src/content/decoración-de-pasteles.md">
 ---
 nombre: "Decoración de Pasteles"
 slug: "decoración-de-pasteles"
@@ -1120,96 +1123,7 @@ All commands are run from the root of the project, from a terminal:
 Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
 </file>
 
-<file path="src/components/TarjetaCategoria.astro">
----
-import type { Categoria } from "../data/categorias";
-import { contenidoPorCategoria } from "../data/content";
-
-interface Props {
-    categoria: Categoria;
-}
-
-const { categoria } = Astro.props;
-const base = import.meta.env.BASE_URL;
-const disponible = !!contenidoPorCategoria[categoria.id];
----
-
-<a
-    href={`${base}talleres/${categoria.id}/`}
-    class="tarjeta-categoria"
-    style={`--color-cat: ${categoria.colorAcento}`}
->
-    <div class="tarjeta-img-wrap">
-        <img src={categoria.imagen} alt={categoria.nombre} />
-        {!disponible && <span class="badge-proximamente">Próximamente</span>}
-    </div>
-    <div class="tarjeta-body">
-        <h3>{categoria.nombre}</h3>
-        <p>{categoria.descripcionCorta}</p>
-    </div>
-</a>
-
-<style>
-    .tarjeta-categoria {
-        display: block;
-        background-color: var(--bg-surface);
-        border-radius: var(--radius-lg);
-        overflow: hidden;
-        box-shadow: var(--shadow-md);
-        text-decoration: none;
-        color: inherit;
-        transition:
-            transform var(--transition-speed),
-            box-shadow var(--transition-speed);
-        border-top: 4px solid var(--color-cat);
-    }
-
-    .tarjeta-categoria:hover {
-        transform: translateY(-5px);
-        box-shadow: var(--shadow-lg);
-    }
-
-    .tarjeta-img-wrap {
-        position: relative;
-        height: 180px;
-    }
-
-    .tarjeta-img-wrap img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-
-    .badge-proximamente {
-        position: absolute;
-        top: var(--space-xs);
-        right: var(--space-xs);
-        background-color: var(--text-main);
-        color: var(--text-light);
-        padding: 0.25rem 0.75rem;
-        border-radius: 999px;
-        font-size: 0.8rem;
-        font-weight: 600;
-    }
-
-    .tarjeta-body {
-        padding: var(--space-md);
-    }
-
-    .tarjeta-body h3 {
-        color: var(--color-cat);
-        margin-bottom: var(--space-xs);
-        font-size: 1.4rem;
-    }
-
-    .tarjeta-body p {
-        color: var(--text-muted);
-        font-size: 0.95rem;
-    }
-</style>
-</file>
-
-<file path="src/content/talleres/pan-artesanal.md">
+<file path="src/content/pan-artesanal.md">
 ---
 nombre: "Pan Artesanal"
 slug: "pan-artesanal"
@@ -1245,7 +1159,7 @@ En este taller intensivo dominarás los procesos fundamentales de preparación, 
 - Diploma de participación firmado por nuestro Chef Instructor.
 </file>
 
-<file path="src/content/talleres/panaderia-basica.md">
+<file path="src/content/panaderia-basica.md">
 ---
 nombre: "Panadería Básica"
 slug: "panaderia-basica"
@@ -1281,7 +1195,7 @@ En este taller intensivo dominarás los procesos fundamentales de preparación, 
 - Diploma de participación firmado por nuestro Chef Instructor.
 </file>
 
-<file path="src/content/talleres/postres-avanzados.md">
+<file path="src/content/postres-avanzados.md">
 ---
 nombre: "Postres Avanzados"
 slug: "postres-avanzados"
@@ -1315,6 +1229,599 @@ En este taller intensivo dominarás los procesos fundamentales de preparación, 
 - Uso de delantal y herramientas.
 - Degustación y material impreso.
 - Diploma de participación firmado por nuestro Chef Instructor.
+</file>
+
+<file path="src/content/talleres/domina-el-arte-de-la-pizza.md">
+---
+nombre: "Domina el Arte de la Pizza"
+slug: "domina-el-arte-de-la-pizza"
+fecha: 2026-08-22
+horarioInicio: "9:00 AM"
+horarioFin: "12:00 PM"
+instructor: "Felipe Gonzalez"
+instructorGenero: "m"
+nivel: "Todo público"
+cuposDisponibles: 10
+cuposTotales: 10
+precio: 35.00
+imagen: "https://images.unsplash.com/photo-1513104890138-7c749659a591?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+imagenAlt: "Pizza artesanal recién horneada"
+destacado: false
+categoria: "panaderia"
+---
+
+Aprende haciendo y descubre todo el proceso para preparar una deliciosa pizza. En este taller práctico participarás en la preparación mientras conoces las técnicas y maquinaria profesional que puede ayudarte a facilitar el trabajo y agilizar las diferentes etapas de producción.
+
+Una experiencia ideal si quieres aprender, incorporar pizza a tu emprendimiento o conocer nuevas formas de hacer más eficiente tu negocio gastronómico.
+
+## ¿Qué aprenderás?
+
+- Cómo preparar pizza paso a paso, participando directamente en el proceso.
+- Técnicas prácticas para trabajar la masa y desarrollar una buena preparación.
+- Cómo apoyarte en maquinaria profesional para facilitar diferentes etapas del trabajo.
+- Cómo agilizar procesos y reducir trabajo manual utilizando los equipos adecuados.
+- Preparación y horneado de la pizza durante la experiencia práctica.
+- Recomendaciones que podrás aplicar en tu emprendimiento o negocio gastronómico.
+
+## ¿Qué incluye?
+
+- Ingredientes y materiales necesarios para las preparaciones realizadas durante el taller.
+- Uso de maquinaria profesional y utensilios necesarios durante la actividad.
+- Participación práctica durante el proceso.
+- Hoja impresa con ingredientes y procedimiento de la receta.
+- Degustación de las preparaciones realizadas durante el taller.
+- Diploma de participación.
+</file>
+
+<file path="src/content/talleres/torta-chilena-milhoja-napoleon.md">
+---
+nombre: "Torta Chilena y Milhoja Napoleón"
+slug: "torta-chilena-milhoja-napoleon"
+fecha: 2026-08-29
+horarioInicio: "9:00 AM"
+horarioFin: "12:00 PM"
+instructor: "Felipe Gonzalez"
+instructorGenero: "m"
+nivel: "Todo público"
+cuposDisponibles: 10
+cuposTotales: 10
+precio: 35.00
+imagen: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+imagenAlt: "Torta Chilena y Milhoja Napoleón"
+destacado: false
+categoria: "panaderia"
+---
+
+Aprende haciendo y descubre el proceso para preparar Torta Chilena y Milhoja Napoleón, dos deliciosas opciones de repostería que puedes incorporar a tu emprendimiento o negocio.
+
+En este taller práctico participarás en las preparaciones mientras conoces técnicas y maquinaria profesional que puede ayudarte a facilitar el trabajo y agilizar diferentes etapas de producción.
+
+Una experiencia ideal si quieres aprender nuevas preparaciones, ampliar tu variedad de productos y descubrir nuevas opciones para ofrecer a tus clientes.
+
+## ¿Qué aprenderás?
+
+- Cómo preparar Torta Chilena paso a paso, participando directamente en el proceso.
+- Cómo elaborar Milhoja Napoleón y conocer las diferentes etapas de su preparación.
+- Técnicas prácticas para trabajar las masas utilizadas en ambas preparaciones.
+- Cómo realizar correctamente el armado y presentación de cada producto.
+- Cómo apoyarte en maquinaria profesional para facilitar diferentes etapas del trabajo.
+- Cómo agilizar procesos y reducir trabajo manual utilizando los equipos adecuados.
+- Recomendaciones que podrás aplicar en tu emprendimiento o negocio gastronómico.
+
+## ¿Qué incluye?
+
+- Ingredientes y materiales necesarios para las preparaciones realizadas durante el taller.
+- Uso de maquinaria profesional y utensilios necesarios durante la actividad.
+- Participación práctica durante el proceso.
+- Hoja impresa con ingredientes y procedimiento de ambas recetas.
+- Degustación de las preparaciones realizadas durante el taller.
+- Diploma de participación.
+</file>
+
+<file path="src/pages/contacto.astro">
+---
+// src/pages/contacto.astro
+import Layout from '../layouts/Layout.astro';
+
+const telefono = '(503) 2515-0031';
+const telefonoWhatsapp = '50325150031'; // solo dígitos, con código de país, sin +
+const correo = 'ventas@equipoypartes.com';
+
+const redes = [
+  {
+    nombre: 'Facebook',
+    url: 'https://www.facebook.com/equipaturestaurante/',
+    icono: 'facebook',
+  },
+  {
+    nombre: 'Instagram',
+    url: 'https://www.instagram.com/equipoypartessv/',
+    icono: 'instagram',
+  },
+  {
+    nombre: 'YouTube',
+    url: 'https://www.youtube.com/channel/UCZgrsL1kSMimdMYZvZw8hwQ',
+    icono: 'youtube',
+  },
+  {
+    nombre: 'TikTok',
+    url: 'https://www.tiktok.com/@equipoypartessv',
+    icono: 'tiktok',
+  },
+];
+
+const ICONOS: Record<string, string> = {
+  telefono:
+    '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>',
+  correo:
+    '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z" opacity="0"/><path d="M22 6c0-1.1-.9-2-2-2H4a2 2 0 0 0-2 2v12c0 1.1.9 2 2 2h16a2 2 0 0 0 2-2V6z"/><path d="m22 6-10 7L2 6"/></svg>',
+  pin: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>',
+  facebook:
+    '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.56 9.88v-6.99H7.9V12h2.54V9.8c0-2.5 1.49-3.89 3.78-3.89 1.1 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.44 2.89h-2.34v6.99A10 10 0 0 0 22 12z"/></svg>',
+  instagram:
+    '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>',
+  youtube:
+    '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg>',
+  tiktok:
+    '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M16.6 5.82c-.9-.98-1.4-2.25-1.4-3.57h-3.15v13.2a2.7 2.7 0 1 1-2.32-2.68v-3.2A5.85 5.85 0 0 0 6.5 21.85 5.85 5.85 0 0 0 15.3 17v-6.62a8.14 8.14 0 0 0 4.76 1.53V8.76a4.85 4.85 0 0 1-3.46-2.94z"/></svg>',
+};
+
+const whatsappHref = 'https://wa.me/' + telefonoWhatsapp;
+const mailHref = 'mailto:' + correo;
+
+const sucursalesBase = [
+  {
+    nombre: 'San Salvador',
+    direccion: 'Calle Roma y Calle Lorena #170, San Salvador.',
+    horario: [
+      'Lunes - Viernes: 8:00 a.m. - 5:00 p.m.',
+      'Sábado: 8:00 a.m. - 4:00 p.m.',
+      'Domingo: Cerrado',
+    ],
+  },
+  {
+    nombre: 'San Miguel',
+    direccion:
+      'Carretera Panamericana, 500 metros de Metrocentro. Ex local Zócalo, San Miguel.',
+    horario: [
+      'Lunes - Viernes: 8:00 a.m. - 5:00 p.m.',
+      'Sábado: 8:00 a.m. - 12:00 m.d.',
+      'Domingo: Cerrado',
+    ],
+  },
+];
+
+// Se precalculan aquí (y no dentro del markup) para no tener URLs sueltas
+// mezcladas con atributos JSX, que es justo lo que se rompió la vez pasada.
+const sucursales = sucursalesBase.map((sucursal) => {
+  const direccionCompleta = sucursal.direccion + ' El Salvador';
+  const direccionCodificada = encodeURIComponent(direccionCompleta);
+  return {
+    ...sucursal,
+    mapEmbedSrc:
+      'https://www.google.com/maps?q=' +
+      direccionCodificada +
+      '&output=embed',
+    mapsUrl:
+      'https://www.google.com/maps/search/' + direccionCodificada,
+  };
+});
+---
+
+<Layout
+  title="Contacto | Equipo y Partes El Salvador"
+  description="Visítanos, escríbenos o síguenos en redes sociales. Sucursales en San Salvador y San Miguel."
+>
+  <section class="contacto-hero">
+    <div class="container">
+      <h1>Hablemos</h1>
+      <span class="hero-acento" aria-hidden="true"></span>
+      <p>
+        Escríbenos por cualquier duda sobre nuestros talleres, o visítanos en
+        cualquiera de nuestras sucursales.
+      </p>
+    </div>
+  </section>
+
+  <section class="info-directa">
+    <div class="container">
+      <div class="grid grid-info">
+        <a class="info-card" href={whatsappHref} target="_blank" rel="noopener">
+          <span class="info-icon" set:html={ICONOS.telefono} />
+          <div>
+            <h3>Llámanos o escríbenos por WhatsApp</h3>
+            <p>{telefono}</p>
+          </div>
+        </a>
+
+        <a class="info-card" href={mailHref}>
+          <span class="info-icon" set:html={ICONOS.correo} />
+          <div>
+            <h3>Escríbenos</h3>
+            <p>{correo}</p>
+          </div>
+        </a>
+      </div>
+
+      <div class="redes">
+        <span class="redes-label">Síguenos</span>
+        <div class="redes-lista">
+          {
+            redes.map((red) => (
+              <a
+                href={red.url}
+                target="_blank"
+                rel="noopener"
+                class="red-icono"
+                aria-label={red.nombre}
+                set:html={ICONOS[red.icono]}
+              />
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sucursales">
+    <div class="container">
+      <div class="section-header">
+        <h2>Visítanos</h2>
+        <p>Dos sucursales para atenderte mejor.</p>
+      </div>
+
+      <div class="grid">
+        {
+          sucursales.map((sucursal) => (
+            <div class="sucursal-card">
+              <iframe
+                class="sucursal-mapa"
+                title={"Mapa - " + sucursal.nombre}
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+                src={sucursal.mapEmbedSrc}
+              />
+              <div class="sucursal-body">
+                <h3>{sucursal.nombre}</h3>
+                <p class="sucursal-direccion">
+                  <span class="info-icon-sm" set:html={ICONOS.pin} />
+                  {sucursal.direccion}
+                </p>
+                <ul class="sucursal-horario">
+                  {sucursal.horario.map((linea) => (
+                    <li>{linea}</li>
+                  ))}
+                </ul>
+                <a
+                  class="btn btn-outline btn-block"
+                  href={sucursal.mapsUrl}
+                  target="_blank"
+                  rel="noopener"
+                >
+                  Cómo llegar
+                </a>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="dudas">
+    <div class="container">
+      <div class="form-container">
+        <h2>¿Tienes alguna duda?</h2>
+        <p class="form-desc">
+          Mándanos tu consulta y te respondemos a la brevedad.
+        </p>
+
+        <form id="form-dudas">
+          <div class="form-group">
+            <label for="duda-nombre" class="form-label">Nombre</label>
+            <input
+              type="text"
+              id="duda-nombre"
+              name="nombre"
+              class="form-control"
+              placeholder="Ej. Juan Pérez"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="duda-correo" class="form-label"
+              >Correo electrónico</label
+            >
+            <input
+              type="email"
+              id="duda-correo"
+              name="correo"
+              class="form-control"
+              placeholder="ejemplo@correo.com"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="duda-mensaje" class="form-label">Mensaje</label>
+            <textarea
+              id="duda-mensaje"
+              name="mensaje"
+              class="form-control"
+              rows="4"
+              placeholder="Cuéntanos en qué te podemos ayudar"
+              required
+            ></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block">
+            Enviar mensaje
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<script is:inline>
+  const form = document.getElementById("form-dudas");
+  form?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    alert("Gracias por escribirnos. Te responderemos pronto.");
+    form.reset();
+  });
+</script>
+
+<style>
+  /* --- Patrón de fondo compartido (hero + sección de dudas) --- */
+  .contacto-hero,
+  .dudas {
+    position: relative;
+    background-color: var(--text-main);
+    background-image:
+      radial-gradient(
+        circle at 1px 1px,
+        rgba(246, 173, 85, 0.18) 1.5px,
+        transparent 0
+      );
+    background-size: 22px 22px;
+  }
+
+  .contacto-hero {
+    color: var(--text-light);
+    padding: var(--space-xl) 0 var(--space-lg);
+    text-align: center;
+  }
+
+  .contacto-hero h1 {
+    color: var(--brand-primary);
+    font-size: 3rem;
+    font-weight: 800;
+  }
+
+  .hero-acento {
+    display: block;
+    width: 72px;
+    height: 4px;
+    margin: var(--space-sm) auto;
+    background-color: var(--brand-secondary);
+    border-radius: 999px;
+  }
+
+  .contacto-hero p {
+    max-width: 600px;
+    margin: 0 auto;
+    color: #e2e8f0;
+    font-size: 1.1rem;
+  }
+
+  /* --- Info directa (whatsapp / correo / redes) --- */
+  .info-directa {
+    padding: var(--space-lg) 0 var(--space-md);
+  }
+
+  .grid-info {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+
+  .info-card {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    background-color: var(--bg-surface);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    padding: var(--space-md);
+    text-decoration: none;
+    color: inherit;
+    transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+  }
+
+  .info-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .info-icon {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 999px;
+    background-color: var(--bg-surface-alt);
+    color: var(--brand-primary);
+  }
+
+  .info-card h3 {
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .info-card p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    word-break: break-word;
+  }
+
+  .redes {
+    margin-top: var(--space-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+  }
+
+  .redes-label {
+    font-weight: 600;
+    color: var(--text-muted);
+  }
+
+  .redes-lista {
+    display: flex;
+    gap: var(--space-xs);
+  }
+
+  .red-icono {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 999px;
+    background-color: var(--brand-primary);
+    color: var(--text-light);
+    transition: background-color var(--transition-speed), transform var(--transition-speed);
+  }
+
+  .red-icono:hover {
+    background-color: var(--brand-primary-hover);
+    transform: translateY(-2px);
+  }
+
+  /* --- Sucursales --- */
+  .sucursales {
+    padding: var(--space-lg) 0;
+  }
+
+  .sucursal-card {
+    background-color: var(--bg-surface);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+  }
+
+  .sucursal-mapa {
+    width: 100%;
+    height: 220px;
+    border: 0;
+    display: block;
+  }
+
+  .sucursal-body {
+    padding: var(--space-md);
+  }
+
+  .sucursal-body h3 {
+    color: var(--brand-primary);
+    margin-bottom: var(--space-xs);
+    font-size: 1.4rem;
+  }
+
+  .sucursal-direccion {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.4rem;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin-bottom: var(--space-sm);
+  }
+
+  .info-icon-sm {
+    flex-shrink: 0;
+    color: var(--brand-primary);
+    margin-top: 2px;
+  }
+
+  .sucursal-horario {
+    list-style: none;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-bottom: var(--space-md);
+  }
+
+  .sucursal-horario li {
+    padding: 0.15rem 0;
+  }
+
+  /* --- Formulario de dudas --- */
+  .dudas {
+    padding: var(--space-lg) 0;
+  }
+
+  .dudas .form-container {
+    background-color: var(--bg-surface);
+    padding: var(--space-md) var(--space-lg);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .dudas .form-container h2 {
+    text-align: center;
+    margin-bottom: var(--space-xs);
+    font-size: 1.8rem;
+  }
+
+  .dudas .form-desc {
+    text-align: center;
+    color: var(--text-muted);
+    margin-bottom: var(--space-md);
+    font-size: 0.95rem;
+  }
+
+  .form-group {
+    margin-bottom: var(--space-sm);
+  }
+
+  .form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+
+  .form-control {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    font-family: var(--font-family-body);
+    font-size: 1rem;
+    transition: border-color var(--transition-speed);
+    resize: vertical;
+  }
+
+  .form-control:focus {
+    outline: none;
+    border-color: var(--brand-primary);
+    box-shadow: 0 0 0 3px rgba(192, 86, 33, 0.1);
+  }
+
+  @media (max-width: 600px) {
+    .contacto-hero h1 {
+      font-size: 2.2rem;
+    }
+
+    .dudas .form-container {
+      padding: var(--space-md) var(--space-sm);
+    }
+  }
+</style>
 </file>
 
 <file path="tsconfig.json">
@@ -1450,372 +1957,125 @@ const anioActual = new Date().getFullYear();
 </style>
 </file>
 
-<file path="src/components/FormularioInscripcion.astro">
+<file path="src/components/TarjetaCategoria.astro">
 ---
-// src/components/talleres/FormularioInscripcion.astro
-import type { CollectionEntry } from "astro:content";
+import type { Categoria } from "../data/categorias";
+import { contenidoPorCategoria } from "../data/content";
 
 interface Props {
-  // Para el formulario general (index): recibe todos los talleres para el <select>
-  talleres?: CollectionEntry<"talleres">[];
-  // Para la página de detalle: el taller ya viene fijo, sin <select>
-  tallerPreseleccionado?: CollectionEntry<"talleres">;
-}
-
-const { talleres, tallerPreseleccionado } = Astro.props;
----
-
-<section id="registration" class="registration-section">
-  <div class="container">
-    <div class="form-container">
-      <h3>Reserva tu espacio</h3>
-      <p class="form-desc">
-        Llena este formulario sin compromiso para separar tu cupo. Un asesor se
-        comunicará contigo para confirmar los detalles y finalizar la
-        inscripción.
-      </p>
-
-      <form id="form-preinscripcion">
-        <div class="form-group">
-          <label for="name" class="form-label">Nombre Completo</label>
-          <input
-            type="text"
-            id="name"
-            name="nombre"
-            class="form-control"
-            placeholder="Ej. Juan Pérez"
-            required
-          />
-        </div>
-
-        <div class="form-group">
-          <label for="email" class="form-label">Correo Electrónico</label>
-          <input
-            type="email"
-            id="email"
-            name="correo"
-            class="form-control"
-            placeholder="ejemplo@correo.com"
-            required
-          />
-        </div>
-
-        <div class="form-group">
-          <label for="phone" class="form-label">Teléfono / WhatsApp</label>
-          <input
-            type="tel"
-            id="phone"
-            name="telefono"
-            class="form-control"
-            placeholder="Ej. 7000-0000"
-            required
-          />
-        </div>
-
-        {
-          tallerPreseleccionado ? (
-            <div class="form-group">
-              <span class="form-label">Taller de Interés</span>
-              <div class="form-control form-control-static">
-                {tallerPreseleccionado.data.nombre}
-              </div>
-              <input
-                type="hidden"
-                name="taller"
-                value={tallerPreseleccionado.id}
-              />
-            </div>
-          ) : (
-            <div class="form-group">
-              <label for="workshop-select" class="form-label">
-                Taller de Interés
-              </label>
-              <select
-                id="workshop-select"
-                name="taller"
-                class="form-control"
-                required
-              >
-                <option value="" disabled selected>
-                  Selecciona un taller...
-                </option>
-                {talleres?.map((taller) => (
-                  <option value={taller.id}>
-                    {taller.data.nombre} —{" "}
-                    {taller.data.fecha.toLocaleDateString("es-SV", {
-                      day: "numeric",
-                      month: "short",
-                    })}
-                  </option>
-                ))}
-              </select>
-            </div>
-          )
-        }
-
-        <button
-          type="submit"
-          class="btn btn-primary btn-block"
-          style="margin-top: 1rem;"
-        >
-          Solicitar Pre-inscripción
-        </button>
-        <p class="form-note">
-          *El pago y confirmación final se gestionan de forma directa con
-          nuestro equipo comercial.
-        </p>
-      </form>
-    </div>
-  </div>
-</section>
-
-<style>
-  .registration-section {
-    background-color: var(--bg-surface-alt);
-    padding: var(--space-lg) 0;
-    border-top: 1px solid var(--border-light);
-  }
-
-  .form-container {
-    background-color: var(--bg-surface);
-    padding: var(--space-md) var(--space-lg);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-md);
-    /* max-width: 600px; */
-    margin: 0 auto;
-  }
-
-  .form-container h3 {
-    margin-bottom: var(--space-xs);
-    text-align: center;
-    font-size: 1.8rem;
-  }
-
-  .form-desc {
-    text-align: center;
-    color: var(--text-muted);
-    margin-bottom: var(--space-md);
-    font-size: 0.95rem;
-  }
-
-  .form-group {
-    margin-bottom: var(--space-sm);
-  }
-
-  .form-label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: 600;
-    font-size: 0.95rem;
-  }
-
-  .form-control {
-    width: 100%;
-    padding: 0.75rem;
-    border: 1px solid var(--border-light);
-    border-radius: var(--radius-md);
-    font-family: var(--font-family-body);
-    font-size: 1rem;
-    transition: border-color var(--transition-speed);
-  }
-
-  .form-control:focus {
-    outline: none;
-    border-color: var(--brand-primary);
-    box-shadow: 0 0 0 3px rgba(192, 86, 33, 0.1);
-  }
-
-  .form-control-static {
-    background-color: var(--bg-surface-alt);
-    font-weight: 600;
-    color: var(--text-main);
-  }
-
-  .form-note {
-    text-align: center;
-    font-size: 0.8rem;
-    color: var(--text-muted);
-    margin-top: 1rem;
-  }
-  @media (max-width: 600px) {
-    .form-container {
-      padding: var(--space-md) var(--space-sm);
-    }
-  }
-</style>
-
-<script>
-  // Envío mock por ahora — se conecta a Power Automate + Zoho Sheet más adelante.
-  const form = document.getElementById(
-    "form-preinscripcion",
-  ) as HTMLFormElement | null;
-
-  form?.addEventListener("submit", (e) => {
-    e.preventDefault();
-    alert(
-      "Gracias por tu preinscripción. Un asesor se comunicará contigo pronto.",
-    );
-    form.reset();
-  });
-
-  // Pre-selección vía query param (?taller=slug), usado desde TarjetaTaller
-  // cuando el formulario general (con <select>) está en la misma página.
-  const params = new URLSearchParams(window.location.search);
-  const tallerParam = params.get("taller");
-  const select = document.getElementById(
-    "workshop-select",
-  ) as HTMLSelectElement | null;
-  if (tallerParam && select) {
-    select.value = tallerParam;
-  }
-</script>
-</file>
-
-<file path="src/components/Hero.astro">
----
-// src/components/talleres/Hero.astro
-interface Props {
-  titulo: string;
-  descripcion: string;
-  textoBoton: string;
-  anclaBoton: string;
-  imagenesFondo: string[];
-}
-const { titulo, descripcion, textoBoton, anclaBoton, imagenesFondo } =
-  Astro.props;
----
-
-<section class="hero">
-  {
-    imagenesFondo.map((img, i) => (
-      <div
-        class="hero-bg-slide"
-        class:list={{ activa: i === 0 }}
-        style={`background-image: url('${img}')`}
-      />
-    ))
-  }
-  <div class="container hero-content">
-    <h1>{titulo}</h1>
-    <p>{descripcion}</p>
-    <!-- <a href={anclaBoton} class="btn btn-primary">{textoBoton}</a> -->
-  </div>
-</section>
-
-<style>
-  .hero {
-    position: relative;
-    background-color: var(--text-main);
-    color: var(--text-light);
-    padding: var(--space-xl) 0;
-    overflow: hidden;
-    text-align: center;
-  }
-
-  .hero::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8));
-    z-index: 1;
-  }
-
-  .hero-bg-slide {
-    position: absolute;
-    inset: 0;
-    background-size: cover;
-    background-position: center;
-    opacity: 0;
-    transition: opacity 1.5s ease-in-out;
-    z-index: 0;
-  }
-
-  .hero-bg-slide.activa {
-    opacity: 1;
-  }
-
-  .hero-content {
-    position: relative;
-    z-index: 2;
-    max-width: 800px;
-    margin: 0 auto;
-  }
-
-  .hero h1 {
-    color: var(--text-light);
-    font-size: 3rem;
-    margin-bottom: var(--space-sm);
-  }
-
-  .hero p {
-    font-size: 1.25rem;
-    margin-bottom: var(--space-md);
-    color: #e2e8f0;
-  }
-
-  @media (max-width: 768px) {
-    .hero h1 {
-      font-size: 2.2rem;
-    }
-  }
-</style>
-<script is:inline>
-  document.querySelectorAll('.hero').forEach((hero) => {
-    const slides = hero.querySelectorAll('.hero-bg-slide');
-    if (slides.length <= 1) return; // nada que rotar con 1 sola imagen
-
-    let actual = 0;
-    setInterval(() => {
-      slides[actual].classList.remove('activa');
-      actual = (actual + 1) % slides.length;
-      slides[actual].classList.add('activa');
-    }, 5000); // cambia cada 5 segundos
-  });
-</script>
-</file>
-
-<file path="src/components/ListadoTalleres.astro">
----
-// src/components/talleres/ListadoTalleres.astro
-import { getCollection } from "astro:content";
-import TarjetaTaller from "./TarjetaTaller.astro";
-
-interface Props {
-  categoria: string;
+    categoria: Categoria;
 }
 
 const { categoria } = Astro.props;
-
-const talleresEntries = await getCollection(
-  "talleres",
-  ({ data }) => data.categoria === categoria,
-);
-
-const talleresOrdenados = talleresEntries.sort(
-  (a, b) => a.data.fecha.valueOf() - b.data.fecha.valueOf(),
-);
+const base = import.meta.env.BASE_URL;
+const disponible = !!contenidoPorCategoria[categoria.id];
 ---
 
-<section id="workshops" class="workshops-section">
-  <div class="container">
-    <div class="section-header">
-      <h2>Cartelera de Talleres</h2>
-      <p>
-        Grupos reducidos para garantizar atención personalizada y uso práctico
-        de todos nuestros equipos en exhibición.
-      </p>
+<a
+    href={`${base}talleres/${categoria.id}/`}
+    class="tarjeta-categoria"
+    style={`--color-cat: ${categoria.colorAcento}`}
+>
+    <div class="tarjeta-img-wrap">
+        <img src={categoria.imagen} alt={categoria.nombre} />
+        {!disponible && <span class="badge-proximamente">Próximamente</span>}
     </div>
-
-    <div class="grid">
-      {talleresOrdenados.map((taller) => <TarjetaTaller taller={taller} />)}
+    <div class="tarjeta-body">
+        <h3>{categoria.nombre}</h3>
+        <p>{categoria.descripcionCorta}</p>
+        <span class="tarjeta-cta">
+            Ver talleres
+            <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            >
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+        </span>
     </div>
-  </div>
-</section>
+</a>
 
 <style>
-  .workshops-section {
-    padding: var(--space-lg) 0;
-  }
+    .tarjeta-categoria {
+        display: block;
+        background-color: var(--bg-surface);
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+        box-shadow: var(--shadow-md);
+        text-decoration: none;
+        color: inherit;
+        transition:
+            transform var(--transition-speed),
+            box-shadow var(--transition-speed);
+        border-top: 4px solid var(--color-cat);
+    }
+
+    .tarjeta-categoria:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-lg);
+    }
+
+    .tarjeta-categoria:hover .tarjeta-cta {
+        background-color: var(--brand-primary-hover);
+    }
+
+    .tarjeta-img-wrap {
+        position: relative;
+        height: 180px;
+    }
+
+    .tarjeta-img-wrap img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .badge-proximamente {
+        position: absolute;
+        top: var(--space-xs);
+        right: var(--space-xs);
+        background-color: var(--text-main);
+        color: var(--text-light);
+        padding: 0.25rem 0.75rem;
+        border-radius: 999px;
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
+
+    .tarjeta-body {
+        padding: var(--space-md);
+    }
+
+    .tarjeta-body h3 {
+        color: var(--color-cat);
+        margin-bottom: var(--space-xs);
+        font-size: 1.4rem;
+    }
+
+    .tarjeta-body p {
+        color: var(--text-muted);
+        font-size: 0.95rem;
+        margin-bottom: var(--space-sm);
+    }
+
+    .tarjeta-cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background-color: var(--brand-accent);
+        color: var(--text-light);
+        font-weight: 700;
+        padding: 0.65rem 1.25rem;
+        border-radius: var(--radius-md);
+        transition: background-color var(--transition-speed);
+    }
 </style>
 </file>
 
@@ -2006,76 +2266,410 @@ const iframeSrcBase = `${formUrlBase}/${formPerma}?zf_rszfm=1`;
 </script>
 </file>
 
-<file path="src/data/categorias.ts">
-// src/data/categorias.ts
+<file path="src/components/FormularioInscripcion.astro">
+---
+// src/components/talleres/FormularioInscripcion.astro
+import type { CollectionEntry } from "astro:content";
 
-export interface Categoria {
-  id: string;              // usado en la URL: /talleres/[id]/ y en el campo "categoria" de cada taller
-  nombre: string;          // texto visible
-  colorAcento: string;     // hex, se inyecta como CSS variable por página
-  descripcionCorta: string; // usada en la tarjeta del hub y en el Hero de la categoría
-  imagen: string;          // portada para la tarjeta del hub
+interface Props {
+  // Para el formulario general (index): recibe todos los talleres para el <select>
+  talleres?: CollectionEntry<"talleres">[];
+  // Para la página de detalle: el taller ya viene fijo, sin <select>
+  tallerPreseleccionado?: CollectionEntry<"talleres">;
 }
 
-export interface Menu {
-  id: string;              // usado en la URL: /talleres/[id]/ y en el campo "categoria" de cada taller
-  nombre: string;           // portada para la tarjeta del hub
-  tag: string;
+const { talleres, tallerPreseleccionado } = Astro.props;
+---
+
+<section id="registration" class="registration-section">
+  <div class="container">
+    <div class="form-container">
+      <h3>Reserva tu espacio</h3>
+      <p class="form-desc">
+        Llena este formulario sin compromiso para separar tu cupo. Un asesor se
+        comunicará contigo para confirmar los detalles y finalizar la
+        inscripción.
+      </p>
+
+      <form id="form-preinscripcion">
+        <div class="form-group">
+          <label for="name" class="form-label">Nombre Completo</label>
+          <input
+            type="text"
+            id="name"
+            name="nombre"
+            class="form-control"
+            placeholder="Ej. Juan Pérez"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="email" class="form-label">Correo Electrónico</label>
+          <input
+            type="email"
+            id="email"
+            name="correo"
+            class="form-control"
+            placeholder="ejemplo@correo.com"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="phone" class="form-label">Teléfono / WhatsApp</label>
+          <input
+            type="tel"
+            id="phone"
+            name="telefono"
+            class="form-control"
+            placeholder="Ej. 7000-0000"
+            required
+          />
+        </div>
+
+        {
+          tallerPreseleccionado ? (
+            <div class="form-group">
+              <span class="form-label">Taller de Interés</span>
+              <div class="form-control form-control-static">
+                {tallerPreseleccionado.data.nombre}
+              </div>
+              <input
+                type="hidden"
+                name="taller"
+                value={tallerPreseleccionado.id}
+              />
+            </div>
+          ) : (
+            <div class="form-group">
+              <label for="workshop-select" class="form-label">
+                Taller de Interés
+              </label>
+              <select
+                id="workshop-select"
+                name="taller"
+                class="form-control"
+                required
+              >
+                <option value="" disabled selected>
+                  Selecciona un taller...
+                </option>
+                {talleres?.map((taller) => (
+                  <option value={taller.id}>
+                    {taller.data.nombre} —{" "}
+                    {taller.data.fecha.toLocaleDateString("es-SV", {
+                      day: "numeric",
+                      month: "short",
+                    })}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )
+        }
+
+        <button
+          type="submit"
+          class="btn btn-primary btn-block"
+          style="margin-top: 1rem;"
+        >
+          Solicitar Pre-inscripción
+        </button>
+        <p class="form-note">
+          *El pago y confirmación final se gestionan de forma directa con
+          nuestro equipo comercial.
+        </p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<style>
+  .registration-section {
+    position: relative;
+    background-color: var(--bg-surface-alt);
+    background-image:
+      radial-gradient(
+        circle at 1px 1px,
+        rgba(192, 86, 33, 0.16) 1.5px,
+        transparent 0
+      );
+    background-size: 22px 22px;
+    padding: var(--space-lg) 0;
+    border-top: 1px solid var(--border-light);
+  }
+
+  .form-container {
+    background-color: var(--bg-surface);
+    padding: var(--space-md) var(--space-lg);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    /* max-width: 600px; */
+    margin: 0 auto;
+  }
+
+  .form-container h3 {
+    margin-bottom: var(--space-xs);
+    text-align: center;
+    font-size: 1.8rem;
+  }
+
+  .form-desc {
+    text-align: center;
+    color: var(--text-muted);
+    margin-bottom: var(--space-md);
+    font-size: 0.95rem;
+  }
+
+  .form-group {
+    margin-bottom: var(--space-sm);
+  }
+
+  .form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+
+  .form-control {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    font-family: var(--font-family-body);
+    font-size: 1rem;
+    transition: border-color var(--transition-speed);
+  }
+
+  .form-control:focus {
+    outline: none;
+    border-color: var(--brand-primary);
+    box-shadow: 0 0 0 3px rgba(192, 86, 33, 0.1);
+  }
+
+  .form-control-static {
+    background-color: var(--bg-surface-alt);
+    font-weight: 600;
+    color: var(--text-main);
+  }
+
+  .form-note {
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-top: 1rem;
+  }
+  @media (max-width: 600px) {
+    .form-container {
+      padding: var(--space-md) var(--space-sm);
+    }
+  }
+</style>
+
+<script>
+  // Envío mock por ahora — se conecta a Power Automate + Zoho Sheet más adelante.
+  const form = document.getElementById(
+    "form-preinscripcion",
+  ) as HTMLFormElement | null;
+
+  form?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    alert(
+      "Gracias por tu preinscripción. Un asesor se comunicará contigo pronto.",
+    );
+    form.reset();
+  });
+
+  // Pre-selección vía query param (?taller=slug), usado desde TarjetaTaller
+  // cuando el formulario general (con <select>) está en la misma página.
+  const params = new URLSearchParams(window.location.search);
+  const tallerParam = params.get("taller");
+  const select = document.getElementById(
+    "workshop-select",
+  ) as HTMLSelectElement | null;
+  if (tallerParam && select) {
+    select.value = tallerParam;
+  }
+</script>
+</file>
+
+<file path="src/components/Hero.astro">
+---
+// src/components/talleres/Hero.astro
+interface Props {
+  titulo: string;
+  descripcion: string;
+  textoBoton: string;
+  anclaBoton: string;
+  imagenesFondo: string[];
+}
+const { titulo, descripcion, textoBoton, anclaBoton, imagenesFondo } =
+  Astro.props;
+---
+
+<section class="hero">
+  {
+    imagenesFondo.map((img, i) => (
+      <div
+        class="hero-bg-slide"
+        class:list={{ activa: i === 0 }}
+        style={`background-image: url('${img}')`}
+      />
+    ))
+  }
+  <div class="container hero-content">
+    <h1>{titulo}</h1>
+    <span class="hero-acento" aria-hidden="true"></span>
+    <p>{descripcion}</p>
+    <!-- <a href={anclaBoton} class="btn btn-primary">{textoBoton}</a> -->
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    background-color: var(--text-main);
+    color: var(--text-light);
+    padding: var(--space-xl) 0;
+    overflow: hidden;
+    text-align: center;
+  }
+
+  .hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.85));
+    z-index: 1;
+  }
+
+  .hero-bg-slide {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out;
+    z-index: 0;
+  }
+
+  .hero-bg-slide.activa {
+    opacity: 1;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .hero h1 {
+    color: var(--brand-primary);
+    font-size: 3.4rem;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    text-shadow: 0 4px 24px rgba(0, 0, 0, 0.45);
+    margin-bottom: 0;
+  }
+
+  .hero-acento {
+    display: block;
+    width: 72px;
+    height: 4px;
+    margin: var(--space-sm) auto;
+    background-color: var(--brand-secondary);
+    border-radius: 999px;
+  }
+
+  .hero p {
+    font-size: 1.25rem;
+    margin-bottom: var(--space-md);
+    color: #e2e8f0;
+  }
+
+  @media (max-width: 768px) {
+    .hero h1 {
+      font-size: 2.3rem;
+    }
+
+    .hero-acento {
+      width: 56px;
+    }
+  }
+</style>
+<script is:inline>
+  document.querySelectorAll('.hero').forEach((hero) => {
+    const slides = hero.querySelectorAll('.hero-bg-slide');
+    if (slides.length <= 1) return; // nada que rotar con 1 sola imagen
+
+    let actual = 0;
+    setInterval(() => {
+      slides[actual].classList.remove('activa');
+      actual = (actual + 1) % slides.length;
+      slides[actual].classList.add('activa');
+    }, 5000); // cambia cada 5 segundos
+  });
+</script>
+</file>
+
+<file path="src/components/ListadoTalleres.astro">
+---
+// src/components/talleres/ListadoTalleres.astro
+import { getCollection } from "astro:content";
+import TarjetaTaller from "./TarjetaTaller.astro";
+
+interface Props {
+  categoria: string;
 }
 
-export const categorias: Categoria[] = [
-  {
-    id: 'panaderia',
-    nombre: 'Panadería',
-    colorAcento: '#C05621',
-    descripcionCorta: 'Hornos, amasadoras y laminadoras para dominar el pan artesanal e industrial.',
-    imagen: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-  },
-  {
-    id: 'pasteleria',
-    nombre: 'Pastelería y Repostería',
-    colorAcento: '#B83280',
-    descripcionCorta: 'Batidoras, exhibidores y técnicas de decoración para repostería comercial.',
-    imagen: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-  },
-  {
-    id: 'carniceria',
-    nombre: 'Carnicería',
-    colorAcento: '#9B2C2C',
-    descripcionCorta: 'Molinos, sierras y cortadoras para procesamiento profesional de carnes.',
-    imagen: 'https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-  },
-  {
-    id: 'cocina',
-    nombre: 'Cocina y Restaurante',
-    colorAcento: '#2C7A7B',
-    descripcionCorta: 'Freidoras, licuadoras y procesadores para equipar tu cocina profesional.',
-    imagen: 'https://images.unsplash.com/photo-1556910103-1c02745aae4d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-  },
-];
+const { categoria } = Astro.props;
 
-export const menu: Menu[] = [
-  {
-    id: 'talleres',
-    nombre: 'Talleres',
-    tag: 'workshops',
-  },
-  {
-    id: 'formulario',
-    nombre: 'Formulario',
-    tag: 'registration',
-  },
-  {
-    id: 'talleres-anteriores',
-    nombre: 'Talleres Anteriores',
-    tag: 'talleres-anteriores',
-  },
-  {
-    id: 'faq',
-    nombre: 'Preguntas Frecuentes',
-    tag: 'faq',
-  },
-];
+const talleresEntries = await getCollection(
+  "talleres",
+  ({ data }) => data.categoria === categoria,
+);
+
+const talleresOrdenados = talleresEntries.sort(
+  (a, b) => a.data.fecha.valueOf() - b.data.fecha.valueOf(),
+);
+---
+
+<section id="workshops" class="workshops-section">
+  <div class="container">
+    <div class="section-header">
+      <h2>Cartelera de Talleres</h2>
+      <p>
+        Descubre nuestros próximos talleres prácticos y reserva tu espacio.
+        Trabajamos con grupos reducidos para que puedas participar en las
+        preparaciones, resolver tus dudas y conocer de cerca el
+        funcionamiento de maquinaria profesional.
+      </p>
+      <p class="subtexto-destacado">
+        Elige el taller que más se adapte a lo que quieres aprender o
+        incorporar a tu emprendimiento.
+      </p>
+    </div>
+
+    <div class="grid">
+      {talleresOrdenados.map((taller) => <TarjetaTaller taller={taller} />)}
+    </div>
+  </div>
+</section>
+
+<style>
+  .workshops-section {
+    padding: var(--space-lg) 0;
+  }
+
+  .subtexto-destacado {
+    font-weight: 700;
+    color: var(--brand-primary);
+    margin-top: var(--space-xs);
+  }
+</style>
 </file>
 
 <file path="src/content.config.ts">
@@ -2145,67 +2739,217 @@ const base = import.meta.env.BASE_URL;
 </html>
 </file>
 
-<file path="src/pages/index.astro">
+<file path="package.json">
+{
+  "name": "talleres-panaderia",
+  "type": "module",
+  "version": "0.0.1",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "build:test": "cross-env SITE=https://landing.mequipo.com BASE=/landings/eyp-talleres/ astro build"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.3",
+    "astro": "^7.1.3",
+    "cross-env": "^10.1.0"
+  }
+}
+</file>
+
+<file path="src/data/categorias.ts">
+// src/data/categorias.ts
+
+export interface Categoria {
+  id: string;              // usado en la URL: /talleres/[id]/ y en el campo "categoria" de cada taller
+  nombre: string;          // texto visible
+  colorAcento: string;     // hex, se inyecta como CSS variable por página
+  descripcionCorta: string; // usada en la tarjeta del hub y en el Hero de la categoría
+  imagen: string;          // portada para la tarjeta del hub
+  activa: boolean;         // controla si aparece en el hub (/) — las rutas siguen existiendo aunque esté en false
+}
+
+export interface Menu {
+  id: string;              // usado en la URL: /talleres/[id]/ y en el campo "categoria" de cada taller
+  nombre: string;           // portada para la tarjeta del hub
+  tag: string;
+}
+
+export const categorias: Categoria[] = [
+  {
+    id: 'panaderia',
+    nombre: 'Panadería',
+    colorAcento: '#FD7A18',
+    descripcionCorta: 'Aprende nuevas preparaciones de forma práctica y conoce maquinaria profesional que puede ayudarte a hacer más eficiente tu producción.',
+    imagen: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    activa: true,
+  },
+  // {
+  //   id: 'pasteleria',
+  //   nombre: 'Pastelería y Repostería',
+  //   colorAcento: '#B83280',
+  //   descripcionCorta: 'Batidoras, exhibidores y técnicas de decoración para repostería comercial.',
+  //   imagen: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+  //   activa: false,
+  // },
+  // {
+  //   id: 'carniceria',
+  //   nombre: 'Carnicería',
+  //   colorAcento: '#9B2C2C',
+  //   descripcionCorta: 'Molinos, sierras y cortadoras para procesamiento profesional de carnes.',
+  //   imagen: 'https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+  //   activa: false,
+  // },
+  // {
+  //   id: 'cocina',
+  //   nombre: 'Cocina y Restaurante',
+  //   colorAcento: '#2C7A7B',
+  //   descripcionCorta: 'Freidoras, licuadoras y procesadores para equipar tu cocina profesional.',
+  //   imagen: 'https://images.unsplash.com/photo-1556910103-1c02745aae4d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+  //   activa: false,
+  // },
+];
+
+export const menu: Menu[] = [
+  {
+    id: 'talleres',
+    nombre: 'Talleres',
+    tag: 'workshops',
+  },
+  {
+    id: 'formulario',
+    nombre: 'Formulario',
+    tag: 'registration',
+  },
+  {
+    id: 'talleres-anteriores',
+    nombre: 'Talleres Anteriores',
+    tag: 'talleres-anteriores',
+  },
+  {
+    id: 'faq',
+    nombre: 'Preguntas Frecuentes',
+    tag: 'faq',
+  },
+];
+</file>
+
+<file path="src/pages/[slug].astro">
 ---
-// src/pages/index.astro — hub principal
+// src/pages/[slug].astro
+import { getCollection, render } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
-import TarjetaCategoria from '../components/TarjetaCategoria.astro';
-import { categorias } from '../data/categorias';
+import ZohoFormularioHTML from '../components/ZohoFormularioHTML.astro';
+
+export async function getStaticPaths() {
+  const talleres = await getCollection('talleres');
+  return talleres.map((taller) => ({
+    params: { slug: taller.id },
+    props: { taller },
+  }));
+}
+
+const { taller } = Astro.props;
+const { Content } = await render(taller);
+
+const {
+  nombre, fecha, horarioInicio, horarioFin, instructor, instructorGenero,
+  nivel, cuposDisponibles, cuposTotales, precio, imagen, imagenAlt,
+} = taller.data;
+
+const etiquetaInstructor = instructorGenero === 'f' ? 'Chef Instructora' : 'Chef Instructor';
+const fechaFormateada = fecha.toLocaleDateString('es-SV', { weekday: 'long', day: 'numeric', month: 'long' });
+const precioFormateado = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(precio);
+
+const base = import.meta.env.BASE_URL;
 ---
 
 <Layout
-  title="Talleres Profesionales | Equipo y Partes El Salvador"
-  description="Talleres prácticos con equipo profesional: panadería, pastelería, carnicería y cocina. Elegí tu categoría e inscribite hoy."
+  title={`${nombre} | Talleres | Equipo y Partes El Salvador`}
+  description={`Taller de ${nombre}, impartido por ${instructor}. ${cuposDisponibles} cupos disponibles.`}
 >
-  <section class="hub-hero">
+  <article class="detalle-taller">
     <div class="container">
-      <h1>Domina Nuevas Técnicas con Equipamiento Profesional</h1>
-      <p>
-        Elegí la categoría de taller que más se ajusta a tu negocio o pasión. Grupos reducidos,
-        instructores expertos y uso práctico de equipo industrial real.
-      </p>
-    </div>
-  </section>
+      <a href={base} class="volver">&larr; Volver a Talleres</a>
 
-  <section class="hub-categorias">
-    <div class="container">
-      <div class="grid">
-        {categorias.map((categoria) => (
-          <TarjetaCategoria categoria={categoria} />
-        ))}
+      <div class="detalle-header">
+        <img src={imagen} alt={imagenAlt} class="detalle-imagen" />
+        <div>
+          <span class="badge">Nivel: {nivel}</span>
+          <h1>{nombre}</h1>
+          <p class="detalle-instructor">{etiquetaInstructor}: {instructor}</p>
+          <ul class="detalle-datos">
+            <li><span>Fecha:</span> <span>{fechaFormateada}</span></li>
+            <li><span>Horario:</span> <span>{horarioInicio} - {horarioFin}</span></li>
+            <li><span>Cupos:</span> <span>{cuposDisponibles} de {cuposTotales} disponibles</span></li>
+            <li><span>Precio:</span> <span class="detalle-precio">{precioFormateado}</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="detalle-contenido">
+        <Content />
       </div>
     </div>
-  </section>
+  </article>
+
+  <ZohoFormularioHTML tallerPreseleccionado={taller} />
 </Layout>
 
 <style>
-  .hub-hero {
-    background-color: var(--text-main);
-    color: var(--text-light);
-    padding: var(--space-xl) 0 var(--space-lg);
-    text-align: center;
+  .detalle-taller { padding: var(--space-lg) 0; }
+  .volver { display: inline-block; margin-bottom: var(--space-md); color: var(--text-muted); }
+
+  .detalle-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-lg);
+    align-items: center;
+    margin-bottom: var(--space-lg);
   }
 
-  .hub-hero h1 {
-    color: var(--text-light);
-    font-size: 2.8rem;
-    max-width: 800px;
-    margin: 0 auto var(--space-sm);
+  .detalle-imagen {
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
   }
 
-  .hub-hero p {
-    color: #E2E8F0;
-    max-width: 600px;
-    margin: 0 auto;
-    font-size: 1.1rem;
+  .detalle-instructor {
+    color: var(--text-muted);
+    margin: var(--space-xs) 0 var(--space-sm);
   }
 
-  .hub-categorias {
-    padding: var(--space-lg) 0;
+  .detalle-datos { list-style: none; }
+  .detalle-datos li {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .detalle-precio { font-weight: 700; color: var(--brand-primary); }
+
+  .detalle-contenido {
+    /* max-width: 700px; */
+    margin: 0 auto var(--space-lg);
+  }
+
+  .detalle-contenido :global(h2) {
+    color: var(--brand-primary);
+    margin-top: var(--space-md);
+    margin-bottom: var(--space-xs);
+  }
+  .detalle-contenido :global(ul) {
+    padding-left: var(--space-md);
+    margin-bottom: var(--space-sm);
   }
 
   @media (max-width: 768px) {
-    .hub-hero h1 { font-size: 2rem; }
+    .detalle-header { grid-template-columns: 1fr; }
   }
 </style>
 </file>
@@ -2259,6 +3003,9 @@ const precioFormateado = new Intl.NumberFormat("en-US", {
   style: "currency",
   currency: "USD",
 }).format(precio);
+
+const ICONO_CHEF =
+  '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8"/><path d="M9 21v-5.5"/><path d="M15 21v-5.5"/><path d="M6 10a4 4 0 0 1 1.5-7.7A4.5 4.5 0 0 1 12 2a4.5 4.5 0 0 1 4.5.3A4 4 0 0 1 18 10c1.1 0 2 .9 2 2 0 1.7-1.3 3-3 3H7c-1.7 0-3-1.3-3-3 0-1.1.9-2 2-2z"/></svg>';
 ---
 
 <Layout
@@ -2276,63 +3023,72 @@ const precioFormateado = new Intl.NumberFormat("en-US", {
         <a href={`${base}talleres/${categoria}/`} class="volver"
           >&larr; Volver a {categoriaInfo?.nombre ?? "Talleres"}</a
         >
+      </div>
 
-        <div class="detalle-header">
-          <img src={imagen} alt={imagenAlt} class="detalle-imagen" />
-          <div>
-            <span class="badge badge-nivel">
-              <svg
-                width="14"
-                height="14"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2.5"
-                stroke-linecap="round"
-              >
-                <line x1="4" y1="20" x2="4" y2="14"></line>
-                <line x1="12" y1="20" x2="12" y2="9"></line>
-                <line x1="20" y1="20" x2="20" y2="4"></line>
-              </svg>
-              {nivel}
-            </span>
-            <h1>{nombre}</h1>
-            <p class="detalle-instructor">{etiquetaInstructor}: {instructor}</p>
-            <ul class="detalle-datos">
-              <li><span>Fecha:</span> <span>{fechaFormateada}</span></li>
-              <li>
-                <span>Horario:</span>
-                <span>{horarioInicio} - {horarioFin}</span>
-              </li>
-              <li>
-                <span>Cupos:</span>
-                <span class="detalle-cupos">
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
-                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                    <circle cx="9" cy="7" r="4"></circle>
-                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                  </svg>
-                  {cuposDisponibles} de {cuposTotales}
-                </span>
-              </li>
-              <li>
-                <span>Precio:</span>
-                <span class="detalle-precio">{precioFormateado}</span>
-              </li>
-            </ul>
-          </div>
+      <section
+        class="detalle-hero"
+        role="img"
+        aria-label={imagenAlt}
+        style={`background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.75)), url('${imagen}');`}
+      >
+        <div class="container detalle-hero-content">
+          <span class="badge badge-nivel">
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+            >
+              <line x1="4" y1="20" x2="4" y2="14"></line>
+              <line x1="12" y1="20" x2="12" y2="9"></line>
+              <line x1="20" y1="20" x2="20" y2="4"></line>
+            </svg>
+            {nivel}
+          </span>
+          <h1>{nombre}</h1>
+          <p class="detalle-instructor">
+            <span class="icono-chef" set:html={ICONO_CHEF} />
+            {etiquetaInstructor}: {instructor}
+          </p>
+          <ul class="detalle-datos">
+            <li><span>Fecha:</span> <span>{fechaFormateada}</span></li>
+            <li>
+              <span>Horario:</span>
+              <span>{horarioInicio} - {horarioFin}</span>
+            </li>
+            <li>
+              <span>Cupos:</span>
+              <span class="detalle-cupos">
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="9" cy="7" r="4"></circle>
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+                {cuposDisponibles} de {cuposTotales}
+              </span>
+            </li>
+            <li>
+              <span>Precio:</span>
+              <span class="detalle-precio">{precioFormateado}</span>
+            </li>
+          </ul>
         </div>
+      </section>
 
+      <div class="container">
         <div class="detalle-contenido">
           <Content />
         </div>
@@ -2345,33 +3101,55 @@ const precioFormateado = new Intl.NumberFormat("en-US", {
 
 <style>
   .detalle-taller {
-    padding: var(--space-lg) 0;
+    padding-bottom: var(--space-lg);
   }
   .volver {
     display: inline-block;
-    margin-bottom: var(--space-md);
+    margin: var(--space-md) 0;
     color: var(--text-muted);
   }
 
-  .detalle-header {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-lg);
-    align-items: center;
+  /* --- Hero de ancho completo (mismo tratamiento que Hero.astro) --- */
+  .detalle-hero {
+    background-color: var(--text-main);
+    background-size: cover;
+    background-position: center;
+    color: var(--text-light);
+    padding: var(--space-xl) 0;
     margin-bottom: var(--space-lg);
   }
 
-  .detalle-imagen {
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-md);
+  .detalle-hero-content h1 {
+    color: var(--text-light);
+    font-size: 2.6rem;
+    font-weight: 800;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    margin: var(--space-sm) 0 var(--space-xs);
   }
+
+  .detalle-hero .badge-nivel {
+    background-color: rgba(255, 255, 255, 0.15);
+    color: var(--text-light);
+    backdrop-filter: blur(2px);
+  }
+
   .detalle-instructor {
-    color: var(--text-muted);
-    margin: var(--space-xs) 0 var(--space-sm);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: #e2e8f0;
+    margin: 0 0 var(--space-sm);
+    font-size: 1.05rem;
+  }
+
+  .icono-chef {
+    display: inline-flex;
+    color: var(--brand-primary);
   }
 
   .detalle-datos {
     list-style: none;
+    max-width: 480px;
   }
 
   .detalle-cupos {
@@ -2385,16 +3163,18 @@ const precioFormateado = new Intl.NumberFormat("en-US", {
     display: flex;
     justify-content: space-between;
     padding: 0.5rem 0;
-    border-bottom: 1px solid var(--border-light);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    color: #e2e8f0;
   }
 
   .detalle-precio {
     font-weight: 700;
     color: var(--brand-primary);
   }
+
   .detalle-contenido {
     max-width: 700px;
-    margin: 0 auto var(--space-lg);
+    margin: 0 0 var(--space-lg);
   }
 
   .detalle-contenido :global(h2) {
@@ -2408,9 +3188,106 @@ const precioFormateado = new Intl.NumberFormat("en-US", {
   }
 
   @media (max-width: 768px) {
-    .detalle-header {
-      grid-template-columns: 1fr;
+    .detalle-hero-content h1 {
+      font-size: 2rem;
     }
+  }
+</style>
+</file>
+
+<file path="src/pages/talleres/[categoria]/index.astro">
+---
+// src/pages/talleres/[categoria]/index.astro
+import { getCollection } from 'astro:content';
+import Layout from '../../../layouts/Layout.astro';
+import Hero from '../../../components/Hero.astro';
+import ListadoTalleres from '../../../components/ListadoTalleres.astro';
+import TalleresAnteriores from '../../../components/TalleresAnteriores.astro';
+import Testimonios from '../../../components/Testimonios.astro';
+import FAQ from '../../../components/FAQ.astro';
+import ZohoFormularioHTML from '../../../components/ZohoFormularioHTML.astro';
+import { categorias } from '../../../data/categorias';
+import { contenidoPorCategoria } from '../../../data/content';
+import ZohoFormulario from '../../../components/ZohoFormulario.astro';
+
+export async function getStaticPaths() {
+  return categorias.map((categoria) => ({
+    params: { categoria: categoria.id },
+    props: { categoria },
+  }));
+}
+
+const { categoria } = Astro.props;
+const contenido = contenidoPorCategoria[categoria.id]; // undefined si aún no hay contenido cargado
+
+const talleresDeCategoria = contenido
+  ? await getCollection('talleres', ({ data }) => data.categoria === categoria.id)
+  : [];
+---
+
+<Layout
+  title={`Talleres de ${categoria.nombre} | Equipo y Partes El Salvador`}
+  description={categoria.descripcionCorta}
+>
+  <div class="categoria-scope" style={`--brand-primary: ${categoria.colorAcento}; --brand-primary-hover: color-mix(in srgb, ${categoria.colorAcento} 80%, black);`}>
+    {contenido ? (
+      <>
+        <Hero
+          titulo={contenido.heroTitulo}
+          descripcion={contenido.heroDescripcion}
+          textoBoton={`Conoce nuestros talleres de ${categoria.nombre}`}
+          anclaBoton="#workshops"
+          imagenesFondo={contenido.heroImagenesFondo}
+        />
+        <ListadoTalleres categoria={categoria.id} />
+        <ZohoFormularioHTML talleres={talleresDeCategoria} />
+        {/* <ZohoFormulario formPerma="uM5jTSyZQ1nZD8qY9C1ClM9xsGZJGDX7VEfXTWBfcZI" /> */}
+        <TalleresAnteriores items={contenido.talleresAnteriores} />
+        {/* <Testimonios items={contenido.testimonios} /> */}
+        <FAQ items={contenido.faq} />
+      </>
+    ) : (
+      <section class="proximamente">
+        <div class="container">
+          <img src={categoria.imagen} alt={categoria.nombre} class="proximamente-img" />
+          <h1>Talleres de {categoria.nombre}</h1>
+          <p>{categoria.descripcionCorta}</p>
+          <p class="proximamente-aviso">Muy pronto vas a poder inscribirte a talleres de esta categoría. ¡Volvé pronto!</p>
+          <a href={`${import.meta.env.BASE_URL}`} class="btn btn-outline">Ver otras categorías</a>
+        </div>
+      </section>
+    )}
+  </div>
+</Layout>
+
+<style>
+  .proximamente {
+    padding: var(--space-xl) 0;
+    text-align: center;
+  }
+
+  .proximamente-img {
+    max-width: 300px;
+    border-radius: var(--radius-lg);
+    margin: 0 auto var(--space-md);
+    box-shadow: var(--shadow-md);
+  }
+
+  .proximamente h1 {
+    font-size: 2.2rem;
+    color: var(--brand-primary);
+    margin-bottom: var(--space-xs);
+  }
+
+  .proximamente p {
+    color: var(--text-muted);
+    max-width: 500px;
+    margin: 0 auto var(--space-sm);
+  }
+
+  .proximamente-aviso {
+    font-weight: 600;
+    color: var(--text-main);
   }
 </style>
 </file>
@@ -2420,16 +3297,17 @@ const precioFormateado = new Intl.NumberFormat("en-US", {
    Design tokens — actualizar cuando Marketing confirme el Manual de Marca. */
 
 :root {
-  /* Paleta de Colores (Temática cálida, panadería profesional) */
-  --brand-primary: #C05621;
-  --brand-primary-hover: #9C4221;
-  --brand-secondary: #F6AD55;
+  /* Paleta de Colores — oficial, del Manual de Marca (EYP_MANUAL_DE_MARCA) */
+  --brand-primary: #FD7A18;       /* Color Secundario del manual: títulos, botones CTA */
+  --brand-primary-hover: #D9660C;
+  --brand-secondary: #FEB92D;      /* Color Principal del manual: fondos, acentos */
+  --brand-accent: #FD9B4B;         /* Color de Acento del manual: CTA, precios, números */
 
   --bg-page: #FAF5F0;
   --bg-surface: #FFFFFF;
   --bg-surface-alt: #F3EAE1;
 
-  --text-main: #2D3748;
+  --text-main: #232426;            /* Color secundario oscuro del manual */
   --text-muted: #718096;
   --text-light: #F7FAFC;
 
@@ -2603,319 +3481,6 @@ img {
 }
 </file>
 
-<file path="package.json">
-{
-  "name": "talleres-panaderia",
-  "type": "module",
-  "version": "0.0.1",
-  "engines": {
-    "node": ">=22.12.0"
-  },
-  "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
-    "astro": "astro",
-    "build:test": "cross-env SITE=https://landing.mequipo.com BASE=/landings/eyp-talleres/ astro build"
-  },
-  "dependencies": {
-    "@astrojs/sitemap": "^3.7.3",
-    "astro": "^7.1.3",
-    "cross-env": "^10.1.0"
-  }
-}
-</file>
-
-<file path="src/components/Header.astro">
----
-import { Image } from "astro:assets";
-import logo from "../assets/editable-logo-equipoypartes.webp";
-import { menu } from "../data/categorias";
-import { contenidoPorCategoria } from "../data/content";
-
-interface Props {
-  nombreEmpresa: string;
-}
-
-const { nombreEmpresa } = Astro.props;
-const base = import.meta.env.BASE_URL;
----
-
-<header id="site-header">
-  <div class="container header-content">
-    <div class="header-top">
-      <button
-        id="nav-toggle"
-        class="nav-toggle"
-        aria-label="Abrir menú"
-        aria-expanded="false"
-      >
-        <span></span><span></span><span></span>
-      </button>
-
-      <a href={base} class="logo">
-        <Image
-          src={logo}
-          alt={nombreEmpresa}
-          width={200}
-          height={184}
-          class="navbar__logo-img"
-        />
-      </a>
-    </div>
-
-    <nav id="main-nav" class="main-nav">
-      <ul>
-        {
-          menu.map((cat) => {
-            //const disponible = !!contenidoPorCategoria[cat.id];
-            const href = `${base}#${cat.tag}`;
-            const activo = Astro.url.pathname.startsWith(href);
-            return (
-              <li>                
-                  <a href={href} class:list={["nav-link", { activo }]}>
-                    {cat.nombre}
-                  </a>
-              </li>
-            );
-          })
-        }
-      </ul>
-    </nav>
-  </div>
-</header>
-
-<style>
-  header {
-    background-color: var(--bg-surface);
-    padding: var(--space-sm) 0;
-    box-shadow: var(--shadow-sm);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    transition: padding 0.3s ease;
-  }
-
-  header.scrolled {
-    padding: 0;
-  }
-
-  .header-content {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .header-top {
-    position: relative;
-    width: 100%;
-    max-height: 9rem;
-    min-height: 3.5rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    transition: max-height 0.3s ease, min-height 0.3s ease;
-  }
-
-  .logo {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    opacity: 1;
-    transform: translateY(0) scale(1);
-    transition:
-      opacity 0.2s ease,
-      transform 0.2s ease;
-  }
-
-  .navbar__logo-img {
-    display: block;
-    height: 7rem;
-    width: auto;
-  }
-
-  /* --- Estado "scrolled": el header se comprime al mínimo indispensable --- */
-  header.scrolled .header-top {
-    max-height: 2.75rem;
-    min-height: 2.75rem;
-  }
-
-  header.scrolled .logo {
-    opacity: 0;
-    transform: translateY(-12px) scale(0.9);
-    pointer-events: none;
-  }
-
-  .nav-toggle {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0.5rem;
-    position: absolute;
-    top: 50%;
-    left: 0.5rem;
-    transform: translateY(-50%);
-    z-index: 10;
-  }
-
-  .nav-toggle span {
-    width: 24px;
-    height: 2px;
-    background-color: var(--text-main);
-  }
-
-  /* --- El menú es un dropdown flotante en mobile: no empuja el contenido --- */
-  .main-nav {
-    display: none;
-  }
-
-  .main-nav.open {
-    display: block;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    background: var(--bg-surface);
-    box-shadow: var(--shadow-md, 0 8px 20px rgba(0, 0, 0, 0.15));
-    padding: var(--space-md);
-    z-index: 99;
-    border-top: 1px solid var(--border, rgba(0, 0, 0, 0.08));
-  }
-
-  .main-nav.open ul {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--space-sm);
-    list-style: none;
-  }
-
-  .nav-link {
-    color: var(--text-main);
-    text-decoration: none;
-    font-weight: 600;
-    padding: 0.4rem 0;
-    border-bottom: 2px solid transparent;
-    transition:
-      border-color var(--transition-speed),
-      color var(--transition-speed);
-  }
-
-  .nav-link:hover {
-    color: var(--brand-primary);
-  }
-
-  .nav-link.activo {
-    color: var(--brand-primary);
-    border-bottom-color: var(--brand-primary);
-  }
-
-  .nav-link--disabled {
-    color: var(--text-muted);
-    cursor: default;
-  }
-
-  .nav-link--disabled small {
-    font-size: 0.75em;
-  }
-
-  /* --- Desktop: logo arriba, nav horizontal debajo, sin hamburguesa --- */
-  @media (min-width: 768px) {
-    .nav-toggle {
-      display: none;
-    }
-
-    .header-top {
-      min-height: auto;
-    }
-
-    .main-nav {
-      display: block; /* ya no depende de .open */
-      position: static;
-      width: auto;
-      background: none;
-      box-shadow: none;
-      padding: var(--space-sm, 0.75rem) 0 0;
-      border-top: none;
-      margin-top: var(--space-xs, 0.5rem);
-      transition: padding 0.3s ease, margin 0.3s ease;
-    }
-
-    .main-nav ul {
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-      align-items: center;
-      gap: var(--space-md, 1.5rem);
-      list-style: none;
-    }
-
-    header.scrolled .main-nav {
-      padding-top: 0.25rem;
-      margin-top: 0;
-    }
-  }
-</style>
-<script is:inline>
-  const header = document.getElementById("site-header");
-  const toggle = document.getElementById("nav-toggle");
-  const nav = document.getElementById("main-nav");
-
-  toggle?.addEventListener("click", () => {
-    if (!nav) return;
-    const isOpen = nav.classList.toggle("open");
-    toggle.setAttribute("aria-expanded", String(isOpen));
-  });
-
-  document.addEventListener("click", (e) => {
-    if (!nav || !nav.classList.contains("open")) return;
-    const target = e.target;
-    if (!(target instanceof Node)) return;
-    if (nav.contains(target) || toggle?.contains(target)) return;
-    nav.classList.remove("open");
-    toggle?.setAttribute("aria-expanded", "false");
-  });
-
-  // Histéresis: el rango entre ENTER y EXIT debe ser mayor que el salto de
-  // altura que produce el header al encogerse (9rem -> 3.5rem ≈ 88px),
-  // para que el cambio de scrollY causado por el propio colapso no pueda
-  // cruzar ambos umbrales y generar un loop de parpadeo.
-  const SCROLL_ENTER = 220;
-  const SCROLL_EXIT = 20;
-  let ticking = false;
-
-  function updateHeaderState() {
-    if (!header) return;
-    const y = window.scrollY;
-    if (y > SCROLL_ENTER) {
-      header.classList.add("scrolled");
-    } else if (y < SCROLL_EXIT) {
-      header.classList.remove("scrolled");
-    }
-    ticking = false;
-  }
-
-  window.addEventListener(
-    "scroll",
-    () => {
-      if (!ticking) {
-        requestAnimationFrame(updateHeaderState);
-        ticking = true;
-      }
-    },
-    { passive: true }
-  );
-
-  updateHeaderState();
-</script>
-</file>
-
 <file path="src/components/TalleresAnteriores.astro">
 ---
 import type { TallerAnterior } from "../data/content";
@@ -2928,10 +3493,11 @@ const { items } = Astro.props;
 <section id="talleres-anteriores" class="galeria-section">
   <div class="container">
     <div class="section-header">
-      <h2>Talleres Anteriores</h2>
+      <span class="eyebrow">Así se viven nuestros talleres</span>
+      <h2>Aprende haciendo y conoce equipos profesionales</h2>
       <p>
-        Un vistazo a nuestras sesiones pasadas y el ambiente práctico de cada
-        taller.
+        Vive una experiencia práctica donde aprenderás nuevas preparaciones
+        mientras conoces maquinaria que facilita y agiliza el trabajo.
       </p>
     </div>
 
@@ -2939,7 +3505,12 @@ const { items } = Astro.props;
       {
         items.map((item) => (
           <figure class="galeria-item">
-            <img src={item.imagen} alt={item.titulo} />
+            <div
+              class="galeria-imagen-wrap"
+              style={`background-image: url('${item.imagen}');`}
+            >
+              <img src={item.imagen} alt={item.titulo} loading="lazy" />
+            </div>
             <figcaption>{item.titulo}</figcaption>
           </figure>
         ))
@@ -2951,6 +3522,16 @@ const { items } = Astro.props;
 <style>
   .galeria-section {
     padding: var(--space-lg) 0;
+  }
+
+  .eyebrow {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--brand-primary);
+    margin-bottom: var(--space-xs);
   }
 
   .galeria-grid {
@@ -2967,9 +3548,39 @@ const { items } = Astro.props;
   }
 
   .galeria-item img {
+    position: relative;
+    z-index: 1;
+    max-height: 220px;
+    max-width: 100%;
+    width: auto;
+    height: auto;
+    margin: 0 auto;
+    object-fit: contain;
+    display: block;
+  }
+
+  .galeria-imagen-wrap {
+    position: relative;
     height: 220px;
     flex-shrink: 0;
-    object-fit: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+  }
+
+  .galeria-imagen-wrap::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: inherit;
+    background-size: cover;
+    background-position: center;
+    filter: blur(14px) brightness(0.7);
+    transform: scale(1.15); /* evita bordes borrosos visibles por el blur */
+    z-index: 0;
   }
 
   .galeria-item figcaption {
@@ -3225,216 +3836,384 @@ const base = import.meta.env.BASE_URL;
 </style>
 </file>
 
-<file path="src/pages/[slug].astro">
+<file path="src/pages/index.astro">
 ---
-// src/pages/[slug].astro
-import { getCollection, render } from 'astro:content';
+// src/pages/index.astro — hub principal
 import Layout from '../layouts/Layout.astro';
-import ZohoFormularioHTML from '../components/ZohoFormularioHTML.astro';
+import TarjetaCategoria from '../components/TarjetaCategoria.astro';
+import { categorias } from '../data/categorias';
 
-export async function getStaticPaths() {
-  const talleres = await getCollection('talleres');
-  return talleres.map((taller) => ({
-    params: { slug: taller.id },
-    props: { taller },
-  }));
-}
-
-const { taller } = Astro.props;
-const { Content } = await render(taller);
-
-const {
-  nombre, fecha, horarioInicio, horarioFin, instructor, instructorGenero,
-  nivel, cuposDisponibles, cuposTotales, precio, imagen, imagenAlt,
-} = taller.data;
-
-const etiquetaInstructor = instructorGenero === 'f' ? 'Chef Instructora' : 'Chef Instructor';
-const fechaFormateada = fecha.toLocaleDateString('es-SV', { weekday: 'long', day: 'numeric', month: 'long' });
-const precioFormateado = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(precio);
-
-const base = import.meta.env.BASE_URL;
+const categoriasVisibles = categorias.filter((categoria) => categoria.activa);
 ---
 
 <Layout
-  title={`${nombre} | Talleres | Equipo y Partes El Salvador`}
-  description={`Taller de ${nombre}, impartido por ${instructor}. ${cuposDisponibles} cupos disponibles.`}
+  title="Talleres Profesionales | Equipo y Partes El Salvador"
+  description="Talleres prácticos con equipo profesional: panadería, pastelería, carnicería y cocina. Elegí tu categoría e inscribite hoy."
 >
-  <article class="detalle-taller">
+  <section class="hub-hero">
+    <div class="hub-hero-glow" aria-hidden="true"></div>
+    <div class="hub-hero-dots" aria-hidden="true"></div>
+    <div class="hub-hero-arco" aria-hidden="true"></div>
+    <div class="container hub-hero-content">
+      <h1>
+        Aprende, practica y lleva <span class="destacado">nuevas ideas</span> a
+        tu negocio
+      </h1>
+      <p>
+        Talleres prácticos pensados para emprendedores y personas que quieren
+        aprender nuevas preparaciones utilizando maquinaria profesional que
+        facilita y agiliza el trabajo.
+      </p>
+    </div>
+  </section>
+
+  <section class="hub-categorias">
     <div class="container">
-      <a href={base} class="volver">&larr; Volver a Talleres</a>
-
-      <div class="detalle-header">
-        <img src={imagen} alt={imagenAlt} class="detalle-imagen" />
-        <div>
-          <span class="badge">Nivel: {nivel}</span>
-          <h1>{nombre}</h1>
-          <p class="detalle-instructor">{etiquetaInstructor}: {instructor}</p>
-          <ul class="detalle-datos">
-            <li><span>Fecha:</span> <span>{fechaFormateada}</span></li>
-            <li><span>Horario:</span> <span>{horarioInicio} - {horarioFin}</span></li>
-            <li><span>Cupos:</span> <span>{cuposDisponibles} de {cuposTotales} disponibles</span></li>
-            <li><span>Precio:</span> <span class="detalle-precio">{precioFormateado}</span></li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="detalle-contenido">
-        <Content />
+      <div class="grid">
+        {categoriasVisibles.map((categoria) => (
+          <TarjetaCategoria categoria={categoria} />
+        ))}
       </div>
     </div>
-  </article>
-
-  <ZohoFormularioHTML tallerPreseleccionado={taller} />
+  </section>
 </Layout>
 
 <style>
-  .detalle-taller { padding: var(--space-lg) 0; }
-  .volver { display: inline-block; margin-bottom: var(--space-md); color: var(--text-muted); }
-
-  .detalle-header {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-lg);
-    align-items: center;
-    margin-bottom: var(--space-lg);
+  .hub-hero {
+    position: relative;
+    background-color: var(--text-main);
+    color: var(--text-light);
+    padding: var(--space-xl) 0 var(--space-lg);
+    text-align: center;
+    overflow: hidden;
   }
 
-  .detalle-imagen {
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-md);
+  /* Glow naranja, esquina inferior izquierda */
+  .hub-hero-glow {
+    position: absolute;
+    left: -160px;
+    bottom: -160px;
+    width: 480px;
+    height: 480px;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      rgba(253, 122, 24, 0.45) 0%,
+      transparent 70%
+    );
+    filter: blur(20px);
+    z-index: 0;
   }
 
-  .detalle-instructor {
-    color: var(--text-muted);
-    margin: var(--space-xs) 0 var(--space-sm);
+  /* Arco decorativo, esquina inferior izquierda */
+  .hub-hero-arco {
+    position: absolute;
+    left: -140px;
+    bottom: -140px;
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    border: 1px solid rgba(253, 122, 24, 0.4);
+    z-index: 0;
   }
 
-  .detalle-datos { list-style: none; }
-  .detalle-datos li {
-    display: flex;
-    justify-content: space-between;
-    padding: 0.5rem 0;
-    border-bottom: 1px solid var(--border-light);
+  /* Patrón de puntos, esquina superior derecha */
+  .hub-hero-dots {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 280px;
+    height: 280px;
+    background-image: radial-gradient(
+      circle at 1px 1px,
+      rgba(253, 155, 75, 0.55) 1.5px,
+      transparent 0
+    );
+    background-size: 18px 18px;
+    -webkit-mask-image: radial-gradient(
+      circle at top right,
+      black 0%,
+      transparent 75%
+    );
+    mask-image: radial-gradient(circle at top right, black 0%, transparent 75%);
+    z-index: 0;
   }
 
-  .detalle-precio { font-weight: 700; color: var(--brand-primary); }
-
-  .detalle-contenido {
-    /* max-width: 700px; */
-    margin: 0 auto var(--space-lg);
+  .hub-hero-content {
+    position: relative;
+    z-index: 1;
   }
 
-  .detalle-contenido :global(h2) {
+  .hub-hero h1 {
+    color: var(--text-light);
+    font-size: 2.8rem;
+    max-width: 800px;
+    margin: 0 auto var(--space-sm);
+  }
+
+  .hub-hero h1 .destacado {
     color: var(--brand-primary);
-    margin-top: var(--space-md);
-    margin-bottom: var(--space-xs);
   }
-  .detalle-contenido :global(ul) {
-    padding-left: var(--space-md);
-    margin-bottom: var(--space-sm);
+
+  .hub-hero p {
+    color: #E2E8F0;
+    max-width: 600px;
+    margin: 0 auto;
+    font-size: 1.1rem;
+  }
+
+  .hub-categorias {
+    padding: var(--space-lg) 0;
+  }
+
+  /* Con pocas categorías activas (ej. solo Panadería), evita que .grid
+     (auto-fit + 1fr) estire las tarjetas a todo el ancho del contenedor. */
+  .hub-categorias .grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 360px));
+    justify-content: center;
   }
 
   @media (max-width: 768px) {
-    .detalle-header { grid-template-columns: 1fr; }
+    .hub-hero h1 { font-size: 2rem; }
   }
 </style>
 </file>
 
-<file path="src/pages/talleres/[categoria]/index.astro">
+<file path="src/components/Header.astro">
 ---
-// src/pages/talleres/[categoria]/index.astro
-import { getCollection } from 'astro:content';
-import Layout from '../../../layouts/Layout.astro';
-import Hero from '../../../components/Hero.astro';
-import ListadoTalleres from '../../../components/ListadoTalleres.astro';
-import TalleresAnteriores from '../../../components/TalleresAnteriores.astro';
-import Testimonios from '../../../components/Testimonios.astro';
-import FAQ from '../../../components/FAQ.astro';
-import ZohoFormularioHTML from '../../../components/ZohoFormularioHTML.astro';
-import { categorias } from '../../../data/categorias';
-import { contenidoPorCategoria } from '../../../data/content';
-import ZohoFormulario from '../../../components/ZohoFormulario.astro';
+import { Image } from "astro:assets";
+import logo from "../assets/editable-logo-equipoypartes.webp";
+import { menu, categorias } from "../data/categorias";
 
-export async function getStaticPaths() {
-  return categorias.map((categoria) => ({
-    params: { categoria: categoria.id },
-    props: { categoria },
-  }));
+interface Props {
+  nombreEmpresa: string;
 }
 
-const { categoria } = Astro.props;
-const contenido = contenidoPorCategoria[categoria.id]; // undefined si aún no hay contenido cargado
+const { nombreEmpresa } = Astro.props;
+const base = import.meta.env.BASE_URL;
 
-const talleresDeCategoria = contenido
-  ? await getCollection('talleres', ({ data }) => data.categoria === categoria.id)
-  : [];
+// En la raíz (el hub) mostramos las categorías activas + Contacto.
+// Dentro de una categoría (o de un taller) mostramos las anclas de esa
+// página (Formulario, Talleres Anteriores, FAQ) + Contacto, como antes.
+const esRaiz = Astro.url.pathname === base;
+const categoriasActivas = categorias.filter((categoria) => categoria.activa);
+
+const contactoHref = `${base}contacto/`;
+const contactoActivo = Astro.url.pathname.startsWith(contactoHref);
 ---
 
-<Layout
-  title={`Talleres de ${categoria.nombre} | Equipo y Partes El Salvador`}
-  description={categoria.descripcionCorta}
->
-  <div class="categoria-scope" style={`--brand-primary: ${categoria.colorAcento}; --brand-primary-hover: color-mix(in srgb, ${categoria.colorAcento} 80%, black);`}>
-    {contenido ? (
-      <>
-        <Hero
-          titulo={contenido.heroTitulo}
-          descripcion={contenido.heroDescripcion}
-          textoBoton={`Conoce nuestros talleres de ${categoria.nombre}`}
-          anclaBoton="#workshops"
-          imagenesFondo={contenido.heroImagenesFondo}
+<header id="site-header">
+  <div class="container header-content">
+    <div class="header-top">
+      <button
+        id="nav-toggle"
+        class="nav-toggle"
+        aria-label="Abrir menú"
+        aria-expanded="false"
+      >
+        <span></span><span></span><span></span>
+      </button>
+
+      <a href={base} class="logo">
+        <Image
+          src={logo}
+          alt={nombreEmpresa}
+          width={200}
+          height={184}
+          class="navbar__logo-img"
         />
-        <ListadoTalleres categoria={categoria.id} />
-        <ZohoFormularioHTML talleres={talleresDeCategoria} />
-        {/* <ZohoFormulario formPerma="uM5jTSyZQ1nZD8qY9C1ClM9xsGZJGDX7VEfXTWBfcZI" /> */}
-        <TalleresAnteriores items={contenido.talleresAnteriores} />
-        {/* <Testimonios items={contenido.testimonios} /> */}
-        <FAQ items={contenido.faq} />
-      </>
-    ) : (
-      <section class="proximamente">
-        <div class="container">
-          <img src={categoria.imagen} alt={categoria.nombre} class="proximamente-img" />
-          <h1>Talleres de {categoria.nombre}</h1>
-          <p>{categoria.descripcionCorta}</p>
-          <p class="proximamente-aviso">Muy pronto vas a poder inscribirte a talleres de esta categoría. ¡Volvé pronto!</p>
-          <a href={`${import.meta.env.BASE_URL}`} class="btn btn-outline">Ver otras categorías</a>
-        </div>
-      </section>
-    )}
+      </a>
+    </div>
+
+    <nav id="main-nav" class="main-nav">
+      <ul>
+        {
+          esRaiz
+            ? categoriasActivas.map((categoria) => {
+                const href = `${base}talleres/${categoria.id}/`;
+                return (
+                  <li>
+                    <a href={href} class="nav-link">
+                      {categoria.nombre}
+                    </a>
+                  </li>
+                );
+              })
+            : menu.map((cat) => {
+                const href = `${base}#${cat.tag}`;
+                const activo = Astro.url.pathname.startsWith(href);
+                return (
+                  <li>
+                    <a href={href} class:list={["nav-link", { activo }]}>
+                      {cat.nombre}
+                    </a>
+                  </li>
+                );
+              })
+        }
+        <li>
+          <a
+            href={contactoHref}
+            class:list={["nav-link", { activo: contactoActivo }]}
+          >
+            Contacto
+          </a>
+        </li>
+      </ul>
+    </nav>
   </div>
-</Layout>
+</header>
 
 <style>
-  .proximamente {
-    padding: var(--space-xl) 0;
-    text-align: center;
+  header {
+    background-color: var(--bg-surface);
+    padding: var(--space-xs) 0;
+    box-shadow: var(--shadow-sm);
+    position: sticky;
+    top: 0;
+    z-index: 100;
   }
 
-  .proximamente-img {
-    max-width: 300px;
-    border-radius: var(--radius-lg);
-    margin: 0 auto var(--space-md);
-    box-shadow: var(--shadow-md);
+  .header-content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
-  .proximamente h1 {
-    font-size: 2.2rem;
-    color: var(--brand-primary);
-    margin-bottom: var(--space-xs);
+  .header-top {
+    position: relative;
+    width: 100%;
+    height: 9.25rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
-  .proximamente p {
-    color: var(--text-muted);
-    max-width: 500px;
-    margin: 0 auto var(--space-sm);
+  .logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
-  .proximamente-aviso {
-    font-weight: 600;
+  .navbar__logo-img {
+    display: block;
+    height: 8.75rem;
+    width: auto;
+  }
+
+  .nav-toggle {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    position: absolute;
+    top: 50%;
+    left: 0.5rem;
+    transform: translateY(-50%);
+    z-index: 10;
+  }
+
+  .nav-toggle span {
+    width: 24px;
+    height: 2px;
+    background-color: var(--text-main);
+  }
+
+  /* --- El menú es un dropdown flotante en mobile: no empuja el contenido --- */
+  .main-nav {
+    display: none;
+  }
+
+  .main-nav.open {
+    display: block;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: var(--bg-surface);
+    box-shadow: var(--shadow-md, 0 8px 20px rgba(0, 0, 0, 0.15));
+    padding: var(--space-md);
+    z-index: 99;
+    border-top: 1px solid var(--border, rgba(0, 0, 0, 0.08));
+  }
+
+  .main-nav.open ul {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-sm);
+    list-style: none;
+  }
+
+  .nav-link {
     color: var(--text-main);
+    text-decoration: none;
+    font-weight: 600;
+    padding: 0.4rem 0;
+    border-bottom: 2px solid transparent;
+    transition:
+      border-color var(--transition-speed),
+      color var(--transition-speed);
+  }
+
+  .nav-link:hover {
+    color: var(--brand-primary);
+  }
+
+  .nav-link.activo {
+    color: var(--brand-primary);
+    border-bottom-color: var(--brand-primary);
+  }
+
+  /* --- Desktop: logo arriba, nav horizontal debajo, sin hamburguesa --- */
+  @media (min-width: 768px) {
+    .nav-toggle {
+      display: none;
+    }
+
+    .main-nav {
+      display: block; /* ya no depende de .open */
+      position: static;
+      width: auto;
+      background: none;
+      box-shadow: none;
+      padding: var(--space-xs, 0.5rem) 0 0;
+      border-top: none;
+    }
+
+    .main-nav ul {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      gap: var(--space-md, 1.5rem);
+      list-style: none;
+    }
   }
 </style>
+<script is:inline>
+  const toggle = document.getElementById("nav-toggle");
+  const nav = document.getElementById("main-nav");
+
+  toggle?.addEventListener("click", () => {
+    if (!nav) return;
+    const isOpen = nav.classList.toggle("open");
+    toggle.setAttribute("aria-expanded", String(isOpen));
+  });
+
+  document.addEventListener("click", (e) => {
+    if (!nav || !nav.classList.contains("open")) return;
+    const target = e.target;
+    if (!(target instanceof Node)) return;
+    if (nav.contains(target) || toggle?.contains(target)) return;
+    nav.classList.remove("open");
+    toggle?.setAttribute("aria-expanded", "false");
+  });
+</script>
 </file>
 
 <file path="src/data/content.ts">
@@ -3483,9 +4262,9 @@ export interface ContenidoCategoria {
 
 export const contenidoPorCategoria: Record<string, ContenidoCategoria> = {
   panaderia: {
-    heroTitulo: "Domina la Alta Panadería con Equipamiento Profesional",
+    heroTitulo: "Aprende, Emprende y Crece con Nuestros Talleres Prácticos",
     heroDescripcion:
-      "Nuestros talleres prácticos son el espacio ideal para perfeccionar tu técnica. Guiados por instructores expertos, descubrirás cómo el uso de maquinaria e insumos de alto rendimiento transforma tus recetas en obras maestras.",
+      "Talleres prácticos creados para emprendedores y personas que quieren aprender nuevas preparaciones utilizando maquinaria profesional. Aprende haciendo y descubre cómo los equipos adecuados pueden ayudarte a agilizar procesos, facilitar el trabajo y llevar nuevas ideas a tu negocio.",
     heroImagenesFondo: [
       "https://images.unsplash.com/photo-1509440159596-0249088772ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
       "https://images.unsplash.com/photo-1779006887705-5cf0e2794e08?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
@@ -3493,24 +4272,16 @@ export const contenidoPorCategoria: Record<string, ContenidoCategoria> = {
     ],
     faq: [
       {
-        pregunta: "¿Necesito experiencia previa en panadería?",
-        respuesta: "No. La mayoría de nuestros talleres están diseñados para todo público, salvo los marcados como 'Intermedio' o 'Avanzado', donde sí se recomienda conocimiento básico de amasado.",
+        pregunta: "¿Qué incluye el precio del taller?",
+        respuesta: "Incluye los ingredientes y materiales utilizados durante la actividad, uso de maquinaria profesional y utensilios, hoja impresa con ingredientes y procedimiento de la receta, degustación de los productos preparados y diploma de participación.",
       },
       {
-        pregunta: "¿Qué incluye el precio del taller?",
-        respuesta: "Materia prima completa, uso de delantal y herramientas, degustación, material impreso y diploma de participación firmado por el instructor.",
+        pregunta: "¿Los talleres son prácticos?",
+        respuesta: "Sí. Queremos que aprendas haciendo. Durante nuestros talleres podrás participar en las preparaciones y conocer cómo utilizar maquinaria profesional que ayuda a agilizar y facilitar diferentes procesos de producción.",
       },
       {
         pregunta: "¿Puedo cancelar o cambiar mi inscripción?",
-        respuesta: "Sí, contáctanos con al menos 48 horas de anticipación para reprogramar tu cupo sin costo adicional a otro taller disponible.",
-      },
-      {
-        pregunta: "¿Hay restricción de edad?",
-        respuesta: "Nuestros talleres están dirigidos a mayores de 16 años, dado el uso de equipo industrial como hornos y amasadoras.",
-      },
-      {
-        pregunta: "¿Cómo se confirma mi pago?",
-        respuesta: "El formulario en esta página solo reserva tu espacio. Un asesor comercial te contactará directamente para gestionar el pago y confirmar los detalles finales.",
+        respuesta: "Si cancelas tu participación o no puedes asistir al taller, no se realizan devoluciones de dinero en efectivo. El monto pagado se entregará como nota de crédito válida exclusivamente para la compra de materias primas en Equipo y Partes.",
       },
     ],
     testimonios: [
@@ -3565,19 +4336,28 @@ import type { CollectionEntry } from "astro:content";
 interface Props {
   talleres?: CollectionEntry<"talleres">[];
   tallerPreseleccionado?: CollectionEntry<"talleres">;
+  patronFondo?: string; // data-URI de un SVG, para tematizar el fondo por categoría
 }
 
-const { talleres, tallerPreseleccionado } = Astro.props;
+// Patrón default: espigas de trigo, temática de Panadería.
+// Para otra categoría, pasa tu propio SVG por la prop `patronFondo`
+// (ej. un cupcake para Pastelería, un cuchillo para Carnicería, etc.)
+const PATRON_TRIGO =
+  "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56' viewBox='0 0 56 56'%3E%3Cg fill='none' stroke='%23C05621' stroke-width='1.4' stroke-linecap='round' opacity='0.4' transform='rotate(15 28 28)'%3E%3Cline x1='28' y1='10' x2='28' y2='46'/%3E%3Cpath d='M28 15 L22 20 M28 15 L34 20'/%3E%3Cpath d='M28 22 L22 27 M28 22 L34 27'/%3E%3Cpath d='M28 29 L22 34 M28 29 L34 34'/%3E%3Cpath d='M28 36 L22 41 M28 36 L34 41'/%3E%3C/g%3E%3C/svg%3E\")";
+
+const { talleres, tallerPreseleccionado, patronFondo = PATRON_TRIGO } =
+  Astro.props;
 ---
 
-<section id="registration" class="registration-section">
+<section id="registration" class="registration-section" style={`--patron-fondo: ${patronFondo};`}>
   <div class="container">
     <div class="form-container">
       <h3>Reserva tu espacio</h3>
       <p class="form-desc">
-        Llena este formulario sin compromiso para separar tu cupo. Un asesor se
-        comunicará contigo para confirmar los detalles y finalizar la
-        inscripción.
+        ¿Encontraste el taller ideal para ti? Completa el formulario para
+        solicitar tu preinscripción. Nuestro equipo se pondrá en contacto
+        contigo para confirmar disponibilidad, brindarte los detalles de pago
+        y finalizar tu inscripción.
       </p>
 
       <!-- Change or deletion of the name attributes in the input tags will lead to empty values on record submission -->
@@ -3750,7 +4530,11 @@ const { talleres, tallerPreseleccionado } = Astro.props;
 
 <style>
   .registration-section {
+    position: relative;
     background-color: var(--bg-surface-alt);
+    background-image: var(--patron-fondo);
+    background-repeat: repeat;
+    background-size: 56px 56px;
     padding: var(--space-lg) 0;
     border-top: 1px solid var(--border-light);
   }

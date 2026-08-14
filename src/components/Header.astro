@@ -13,11 +13,30 @@ const base = import.meta.env.BASE_URL;
 // En la raíz (el hub) mostramos las categorías activas + Contacto.
 // Dentro de una categoría (o de un taller) mostramos las anclas de esa
 // página (Formulario, Talleres Anteriores, FAQ) + Contacto, como antes.
-const esRaiz = Astro.url.pathname === base;
+
+// Normalizamos ambos lados quitando la barra final, para que la comparación
+// no falle por diferencias de trailing slash.
+const normalizar = (p: string) => (p.endsWith("/") ? p.slice(0, -1) : p);
+const pathnameActual = Astro.url.pathname;
+const contactoHref = `${base}contacto/`;
+const contactoActivo = normalizar(pathnameActual).startsWith(
+  normalizar(contactoHref),
+);
+
+const esRaiz = normalizar(pathnameActual) === normalizar(base);
+
+// La página de Contacto tampoco tiene las anclas (#formulario,
+// #talleres-anteriores, #faq) — esas solo existen dentro de una página de
+// categoría o de un taller. Así que en Contacto debe mostrarse la misma
+// lista de categorías que en la raíz, no el menú de anclas (que ahí
+// apuntaría a secciones inexistentes).
+const mostrarCategorias = esRaiz || contactoActivo;
+
 const categoriasActivas = categorias.filter((categoria) => categoria.activa);
 
-const contactoHref = `${base}contacto/`;
-const contactoActivo = Astro.url.pathname.startsWith(contactoHref);
+// El estado "activo" de un ancla se determina por el hash actual de la URL,
+// no por el pathname (el pathname nunca contiene el fragmento #...).
+const hashActual = Astro.url.hash; // ej: "#formulario" o ""
 ---
 
 <header id="site-header">
@@ -28,6 +47,7 @@ const contactoActivo = Astro.url.pathname.startsWith(contactoHref);
         class="nav-toggle"
         aria-label="Abrir menú"
         aria-expanded="false"
+        aria-controls="main-nav"
       >
         <span></span><span></span><span></span>
       </button>
@@ -46,7 +66,7 @@ const contactoActivo = Astro.url.pathname.startsWith(contactoHref);
     <nav id="main-nav" class="main-nav">
       <ul>
         {
-          esRaiz
+          mostrarCategorias
             ? categoriasActivas.map((categoria) => {
                 const href = `${base}talleres/${categoria.id}/`;
                 return (
@@ -58,8 +78,10 @@ const contactoActivo = Astro.url.pathname.startsWith(contactoHref);
                 );
               })
             : menu.map((cat) => {
-                const href = `${base}#${cat.tag}`;
-                const activo = Astro.url.pathname.startsWith(href);
+                // El ancla apunta a la página ACTUAL (categoría o taller),
+                // no siempre a la raíz del sitio.
+                const href = `${pathnameActual}#${cat.tag}`;
+                const activo = hashActual === `#${cat.tag}`;
                 return (
                   <li>
                     <a href={href} class:list={["nav-link", { activo }]}>
@@ -90,6 +112,8 @@ const contactoActivo = Astro.url.pathname.startsWith(contactoHref);
     position: sticky;
     top: 0;
     z-index: 100;
+    transition: box-shadow var(--transition-speed);
+    overflow-anchor: none;
   }
 
   .header-content {
@@ -102,21 +126,36 @@ const contactoActivo = Astro.url.pathname.startsWith(contactoHref);
   .header-top {
     position: relative;
     width: 100%;
-    height: 3.25rem;
+    height: 9.25rem;
     display: flex;
     justify-content: center;
     align-items: center;
+    transition: height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .logo {
     display: flex;
     align-items: center;
     justify-content: center;
+    transition:
+      opacity 0.3s ease,
+      transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: center top;
+  }
+
+  #site-header.header--compact .header-top {
+    height: 2.0rem;
+  }
+
+  #site-header.header--compact .logo {
+    opacity: 0;
+    transform: scale(0.55) translateY(-8px);
+    pointer-events: none;
   }
 
   .navbar__logo-img {
     display: block;
-    height: 2.75rem;
+    height: 8.75rem;
     width: auto;
   }
 
@@ -231,4 +270,45 @@ const contactoActivo = Astro.url.pathname.startsWith(contactoHref);
     nav.classList.remove("open");
     toggle?.setAttribute("aria-expanded", "false");
   });
+  // --- Ocultar el logo al hacer scroll hacia abajo, mostrarlo al subir ---
+  // Usamos posición absoluta de scroll con histéresis (dos umbrales distintos
+  // para entrar y salir del modo compacto) en vez de acumular delta. El delta
+  // por evento de scroll no es limpio (momentum scrolling, trackpads) y
+  // reiniciar el acumulado en cada micro-cambio de dirección producía
+  // parpadeo: la clase se agregaba y quitaba varias veces por segundo,
+  // cortando la transición CSS a mitad de camino cada vez.
+  const header = document.getElementById("site-header");
+
+  if (header) {
+    const ENTRAR_COMPACTO = 160; // px de scroll para colapsar el logo
+    const SALIR_COMPACTO = 80; // px de scroll para volver a mostrarlo (< ENTRAR_COMPACTO a propósito)
+
+    let compacto = false;
+    let ticking = false;
+
+    const actualizarHeader = () => {
+      const y = window.scrollY;
+
+      if (!compacto && y > ENTRAR_COMPACTO) {
+        compacto = true;
+        header.classList.add("header--compact");
+      } else if (compacto && y < SALIR_COMPACTO) {
+        compacto = false;
+        header.classList.remove("header--compact");
+      }
+
+      ticking = false;
+    };
+
+    window.addEventListener(
+      "scroll",
+      () => {
+        if (!ticking) {
+          requestAnimationFrame(actualizarHeader);
+          ticking = true;
+        }
+      },
+      { passive: true },
+    );
+  }
 </script>

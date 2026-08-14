@@ -23,9 +23,9 @@ const { items } = Astro.props;
           <figure class="galeria-item">
             <div
               class="galeria-imagen-wrap"
-              style={`background-image: url('${item.imagen}');`}
+              style={`background-image: url('${item.imagen.src}');`}
             >
-              <img src={item.imagen} alt={item.titulo} loading="lazy" />
+              <img src={item.imagen.src} alt={item.titulo} loading="lazy" />
             </div>
             <figcaption>{item.titulo}</figcaption>
           </figure>

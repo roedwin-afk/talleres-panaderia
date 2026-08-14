@@ -27,9 +27,20 @@ export interface Testimonio {
   imagen: string;
 }
 
+import type { ImageMetadata } from "astro";
+
+import tallerPizzaCalzone from "../assets/taller-pizza-calzone.jpg";
+import tallerPizzaCalzone2 from "../assets/taller-pizza-calzone-2.jpg";
+import tallerPizzaCalzone3 from "../assets/taller-pizza-calzone-3.jpg";
+import tallerAlfajores from "../assets/taller-alfajores.jpg";
+import tallerAlfajores2 from "../assets/taller-alfajores-2.jpg";
+import tallerPostresHojaldre from "../assets/taller-postres-hojaldre.jpg";
+import tallerPostresHojaldre2 from "../assets/taller-postres-hojaldre-2.jpg";
+
 export interface TallerAnterior {
   titulo: string;
-  imagen: string;
+  imagen: ImageMetadata;
+  imagenes?: ImageMetadata[];
 }
 
 export interface ContenidoCategoria {
@@ -87,20 +98,19 @@ export const contenidoPorCategoria: Record<string, ContenidoCategoria> = {
     ],
     talleresAnteriores: [
       {
-        titulo: "Amasado profesional en vivo",
-        imagen: "https://images.unsplash.com/photo-1509440159596-0249088772ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+        titulo: "Taller de masa de pizza y calzone",
+        imagen: tallerPizzaCalzone,
+        imagenes: [tallerPizzaCalzone, tallerPizzaCalzone2, tallerPizzaCalzone3],
       },
       {
-        titulo: "Demostración de hornos rotativos",
-        imagen: "https://images.unsplash.com/photo-1738846258491-442902625fdb?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+        titulo: "Taller de alfajores",
+        imagen: tallerAlfajores,
+        imagenes: [tallerAlfajores, tallerAlfajores2],
       },
       {
-        titulo: "Grupo taller de pastelería",
-        imagen: "https://images.unsplash.com/photo-1556910103-1c02745aae4d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-      },
-      {
-        titulo: "Entrega de diplomas",
-        imagen: "https://images.unsplash.com/photo-1759142016096-a9d1a5ebcc09?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+        titulo: "Taller de postres con masa de hojaldre",
+        imagen: tallerPostresHojaldre,
+        imagenes: [tallerPostresHojaldre, tallerPostresHojaldre2],
       },
     ],
   },
