@@ -43,25 +43,23 @@ const galerias = await Promise.all(
               data-imagenes={JSON.stringify(galerias[i])}
               aria-label={`Ver galería de ${item.titulo}`}
             >
-              <div
-                class="galeria-imagen-wrap"
-                style={`background-image: url('${item.imagen.src}');`}
-              >
+              <div class="galeria-imagen-wrap">
                 <Image
                   src={item.imagen}
                   alt={item.titulo}
                   width={480}
-                  height={220}
+                  height={320}
                   loading="lazy"
                 />
+                <div class="galeria-overlay" aria-hidden="true" />
                 {galerias[i].length > 1 && (
                   <span class="galeria-badge">+{galerias[i].length} fotos</span>
                 )}
                 {galerias[i].length === 1 && (
                   <span class="galeria-badge">Ver foto</span>
                 )}
+                <figcaption>{item.titulo}</figcaption>
               </div>
-              <figcaption>{item.titulo}</figcaption>
             </button>
           </figure>
         ))
@@ -114,56 +112,281 @@ const galerias = await Promise.all(
     border-radius: var(--radius-lg);
     overflow: hidden;
     box-shadow: var(--shadow-sm);
-    display: flex;
-    flex-direction: column;
-    height: 100%;
+    transition: transform var(--transition-speed), box-shadow var(--transition-speed);
   }
 
-  .galeria-item img {
-    position: relative;
-    z-index: 1;
-    max-height: 220px;
-    max-width: 100%;
-    width: auto;
-    height: auto;
-    margin: 0 auto;
-    object-fit: contain;
+  .galeria-item:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .galeria-trigger {
     display: block;
+    width: 100%;
+    padding: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
   }
 
   .galeria-imagen-wrap {
     position: relative;
-    height: 220px;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    height: 260px;
     overflow: hidden;
-    background-size: cover;
-    background-position: center;
   }
 
-  .galeria-imagen-wrap::before {
-    content: "";
+  .galeria-imagen-wrap :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 25%; /* un poco más de contexto que "top" puro, menos zoom */
+    display: block;
+    transition: transform 0.35s ease;
+  }
+
+  .galeria-trigger:hover .galeria-imagen-wrap :global(img) {
+    transform: scale(1.05);
+  }
+
+  .galeria-overlay {
     position: absolute;
     inset: 0;
-    background: inherit;
-    background-size: cover;
-    background-position: center;
-    filter: blur(14px) brightness(0.7);
-    transform: scale(1.15); /* evita bordes borrosos visibles por el blur */
-    z-index: 0;
+    background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.8) 0%,
+      rgba(0, 0, 0, 0.25) 45%,
+      transparent 70%
+    );
   }
 
   .galeria-item figcaption {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
     padding: var(--space-sm);
-    background-color: var(--bg-surface);
-    font-weight: 600;
+    color: var(--text-light);
+    font-weight: 700;
     font-size: 0.95rem;
+    text-align: left;
+  }
+
+  .galeria-badge {
+    position: absolute;
+    top: var(--space-xs);
+    right: var(--space-xs);
+    background-color: rgba(0, 0, 0, 0.55);
+    color: var(--text-light);
+    padding: 0.3rem 0.7rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    backdrop-filter: blur(2px);
+  }
+
+  /* --- Modal / Lightbox --- */
+  .galeria-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-md);
+  }
+
+  .galeria-modal[hidden] {
+    display: none;
+  }
+
+  .galeria-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+  }
+
+  .galeria-modal-content {
+    position: relative;
+    z-index: 1;
+    max-width: min(92vw, 900px);
+    max-height: 90vh;
+  }
+
+  .galeria-modal-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-xs);
+  }
+
+  #galeria-modal-img {
+    display: block;
+    max-width: 100%;
+    max-height: 72vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg, 0 20px 40px rgba(0, 0, 0, 0.4));
+  }
+
+  .galeria-modal-titulo {
+    color: var(--text-light);
+    font-weight: 700;
     text-align: center;
-    flex-grow: 1;
+  }
+
+  .galeria-modal-counter {
+    color: rgba(255, 255, 255, 0.65);
+    font-size: 0.85rem;
+  }
+
+  .galeria-modal-close {
+    position: fixed;
+    top: var(--space-sm);
+    right: var(--space-sm);
+    z-index: 2;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: var(--text-light);
+    font-size: 1.8rem;
+    line-height: 1;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 50%;
+    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
   }
+
+  .galeria-modal-close:hover {
+    background: rgba(255, 255, 255, 0.25);
+  }
+
+  .galeria-modal-nav {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: var(--text-light);
+    font-size: 2rem;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .galeria-modal-nav:hover {
+    background: rgba(255, 255, 255, 0.25);
+  }
+
+  .galeria-modal-nav[hidden] {
+    display: none;
+  }
+
+  .galeria-modal-prev {
+    left: var(--space-sm);
+  }
+
+  .galeria-modal-next {
+    right: var(--space-sm);
+  }
+
+  @media (max-width: 640px) {
+    .galeria-modal-nav {
+      width: 2.5rem;
+      height: 2.5rem;
+      font-size: 1.5rem;
+    }
+  }
 </style>
+
+<script is:inline>
+  const modal = document.getElementById("galeria-modal");
+  const modalImg = document.getElementById("galeria-modal-img");
+  const modalTitulo = document.getElementById("galeria-modal-titulo");
+  const modalCounter = document.getElementById("galeria-modal-counter");
+  const btnClose = document.querySelectorAll("[data-close]");
+  const btnPrev = document.querySelector(".galeria-modal-prev");
+  const btnNext = document.querySelector(".galeria-modal-next");
+  const triggers = document.querySelectorAll(".galeria-trigger");
+
+  let imagenesActuales = [];
+  let tituloActual = "";
+  let indiceActual = 0;
+  let triggerQueAbrio = null;
+
+  function render() {
+    if (!modalImg || !modalTitulo || !modalCounter) return;
+    modalImg.src = imagenesActuales[indiceActual];
+    modalImg.alt = tituloActual;
+    modalTitulo.textContent = tituloActual;
+    const multiple = imagenesActuales.length > 1;
+    modalCounter.textContent = multiple
+      ? `${indiceActual + 1} / ${imagenesActuales.length}`
+      : "";
+    btnPrev?.toggleAttribute("hidden", !multiple);
+    btnNext?.toggleAttribute("hidden", !multiple);
+  }
+
+  function abrirModal(imagenes, titulo, trigger) {
+    imagenesActuales = imagenes;
+    tituloActual = titulo;
+    indiceActual = 0;
+    triggerQueAbrio = trigger ?? null;
+    render();
+    modal?.removeAttribute("hidden");
+    document.body.style.overflow = "hidden";
+  }
+
+  function cerrarModal() {
+    modal?.setAttribute("hidden", "");
+    document.body.style.overflow = "";
+    triggerQueAbrio?.focus();
+    triggerQueAbrio = null;
+  }
+
+  function irAnterior() {
+    if (!imagenesActuales.length) return;
+    indiceActual =
+      (indiceActual - 1 + imagenesActuales.length) % imagenesActuales.length;
+    render();
+  }
+
+  function irSiguiente() {
+    if (!imagenesActuales.length) return;
+    indiceActual = (indiceActual + 1) % imagenesActuales.length;
+    render();
+  }
+
+  triggers.forEach((trigger) => {
+    trigger.addEventListener("click", () => {
+      let imagenes = [];
+      try {
+        imagenes = JSON.parse(trigger.getAttribute("data-imagenes") || "[]");
+      } catch {
+        imagenes = [];
+      }
+      const titulo = trigger.getAttribute("data-titulo") || "";
+      if (!imagenes.length) return;
+      abrirModal(imagenes, titulo, trigger);
+    });
+  });
+
+  btnClose.forEach((btn) => btn.addEventListener("click", cerrarModal));
+  btnPrev?.addEventListener("click", irAnterior);
+  btnNext?.addEventListener("click", irSiguiente);
+
+  document.addEventListener("keydown", (e) => {
+    if (modal?.hasAttribute("hidden")) return;
+    if (e.key === "Escape") cerrarModal();
+    if (e.key === "ArrowLeft") irAnterior();
+    if (e.key === "ArrowRight") irSiguiente();
+  });
+</script>

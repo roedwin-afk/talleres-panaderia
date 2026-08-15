@@ -36,6 +36,7 @@ import tallerAlfajores from "../assets/taller-alfajores.jpg";
 import tallerAlfajores2 from "../assets/taller-alfajores-2.jpg";
 import tallerPostresHojaldre from "../assets/taller-postres-hojaldre.jpg";
 import tallerPostresHojaldre2 from "../assets/taller-postres-hojaldre-2.jpg";
+import tallerCrepasWaffles from "../assets/taller-crepas-waffles.jpg";
 
 export interface TallerAnterior {
   titulo: string;
@@ -111,6 +112,11 @@ export const contenidoPorCategoria: Record<string, ContenidoCategoria> = {
         titulo: "Taller de postres con masa de hojaldre",
         imagen: tallerPostresHojaldre,
         imagenes: [tallerPostresHojaldre, tallerPostresHojaldre2],
+      },
+      {
+        titulo: "Taller de crepas y waffles",
+        imagen: tallerCrepasWaffles,
+        imagenes: [tallerCrepasWaffles],
       },
     ],
   },
