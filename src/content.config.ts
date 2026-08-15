@@ -16,6 +16,9 @@ const talleres = defineCollection({
     cuposDisponibles: z.number().int().nonnegative(),
     cuposTotales: z.number().int().positive(),
     precio: z.number().positive(),
+    // Precio de preventa: aplica SOLO si se paga el taller completo (100%) al reservar.
+    // Si la reserva se hace con el 50%, el descuento no aplica y el precio sigue siendo `precio`.
+    precioPreventa: z.number().positive().optional(),
     imagen: z.string(),
     imagenAlt: z.string(),
     destacado: z.boolean().default(false),

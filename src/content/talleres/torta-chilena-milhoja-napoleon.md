@@ -10,6 +10,7 @@ nivel: "Todo público"
 cuposDisponibles: 10
 cuposTotales: 10
 precio: 35.00
+precioPreventa: 30.00
 imagen: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
 imagenAlt: "Torta Chilena y Milhoja Napoleón"
 destacado: false

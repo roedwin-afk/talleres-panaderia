@@ -18,6 +18,7 @@ const {
     nivel,
     cuposDisponibles,
     precio,
+    precioPreventa,
     imagen,
     imagenAlt,
 } = taller.data;
@@ -32,10 +33,14 @@ const fechaFormateada = fecha.toLocaleDateString("es-SV", {
     month: "long",
 });
 
-const precioFormateado = new Intl.NumberFormat("en-US", {
+const formateadorUSD = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
-}).format(precio);
+});
+const precioFormateado = formateadorUSD.format(precio);
+const precioPreventaFormateado = precioPreventa
+    ? formateadorUSD.format(precioPreventa)
+    : null;
 
 const etiquetaInstructor =
     instructorGenero === "f" ? "Instructora" : "Instructor";
@@ -117,7 +122,23 @@ const base = import.meta.env.BASE_URL;
             </li>
         </ul>
 
-        <div class="card-price">{precioFormateado}</div>
+        <div class="card-price-block">
+            {
+                precioPreventaFormateado ? (
+                    <>
+                        <span class="card-price-preventa">
+                            {precioPreventaFormateado}
+                            <span class="badge-preventa">Preventa</span>
+                        </span>
+                        <span class="card-price-regular">
+                            {precioFormateado} reservando con el 50%
+                        </span>
+                    </>
+                ) : (
+                    <span class="card-price-preventa">{precioFormateado}</span>
+                )
+            }
+        </div>
 
         <div class="card-actions">
             <a
@@ -213,12 +234,36 @@ const base = import.meta.env.BASE_URL;
         text-align: right;
     }
 
-    .card-price {
+    .card-price-block {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        margin-bottom: var(--space-sm);
+    }
+
+    .card-price-preventa {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
         font-size: 1.5rem;
         font-weight: 700;
         color: var(--brand-primary);
-        text-align: right;
-        margin-bottom: var(--space-sm);
+    }
+
+    .badge-preventa {
+        font-size: 0.65rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+        color: #fff;
+        background-color: var(--status-available);
+        padding: 0.15rem 0.4rem;
+        border-radius: var(--radius-md);
+    }
+
+    .card-price-regular {
+        font-size: 0.8rem;
+        color: var(--text-muted);
     }
 
     .card-actions {
