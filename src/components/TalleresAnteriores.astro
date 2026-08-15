@@ -1,9 +1,23 @@
 ---
+import { Image, getImage } from "astro:assets";
 import type { TallerAnterior } from "../data/content";
+
 interface Props {
   items: TallerAnterior[];
 }
 const { items } = Astro.props;
+
+// Pre-generamos versiones optimizadas (más grandes) de cada foto para el modal,
+// en build time. El thumbnail usa <Image /> directamente más abajo.
+const galerias = await Promise.all(
+  items.map(async (item) => {
+    const fotos = item.imagenes?.length ? item.imagenes : [item.imagen];
+    const optimizadas = await Promise.all(
+      fotos.map((foto) => getImage({ src: foto, width: 1200, format: "webp" }))
+    );
+    return optimizadas.map((img) => img.src);
+  })
+);
 ---
 
 <section id="talleres-anteriores" class="galeria-section">
@@ -19,18 +33,60 @@ const { items } = Astro.props;
 
     <div class="grid galeria-grid">
       {
-        items.map((item) => (
+        items.map((item, i) => (
           <figure class="galeria-item">
-            <div
-              class="galeria-imagen-wrap"
-              style={`background-image: url('${item.imagen.src}');`}
+            <button
+              type="button"
+              class="galeria-trigger"
+              data-index={i}
+              data-titulo={item.titulo}
+              data-imagenes={JSON.stringify(galerias[i])}
+              aria-label={`Ver galería de ${item.titulo}`}
             >
-              <img src={item.imagen.src} alt={item.titulo} loading="lazy" />
-            </div>
-            <figcaption>{item.titulo}</figcaption>
+              <div
+                class="galeria-imagen-wrap"
+                style={`background-image: url('${item.imagen.src}');`}
+              >
+                <Image
+                  src={item.imagen}
+                  alt={item.titulo}
+                  width={480}
+                  height={220}
+                  loading="lazy"
+                />
+                {galerias[i].length > 1 && (
+                  <span class="galeria-badge">+{galerias[i].length} fotos</span>
+                )}
+                {galerias[i].length === 1 && (
+                  <span class="galeria-badge">Ver foto</span>
+                )}
+              </div>
+              <figcaption>{item.titulo}</figcaption>
+            </button>
           </figure>
         ))
       }
+    </div>
+  </div>
+
+  <!-- Modal / Lightbox (sin cambios respecto a la versión anterior) -->
+  <div id="galeria-modal" class="galeria-modal" hidden>
+    <div class="galeria-modal-backdrop" data-close></div>
+    <div class="galeria-modal-content" role="dialog" aria-modal="true" aria-label="Galería de fotos">
+      <button type="button" class="galeria-modal-close" data-close aria-label="Cerrar">
+        &times;
+      </button>
+      <button type="button" class="galeria-modal-nav galeria-modal-prev" aria-label="Foto anterior">
+        &#8249;
+      </button>
+      <div class="galeria-modal-body">
+        <img id="galeria-modal-img" src="" alt="" />
+        <p id="galeria-modal-titulo" class="galeria-modal-titulo"></p>
+        <p id="galeria-modal-counter" class="galeria-modal-counter"></p>
+      </div>
+      <button type="button" class="galeria-modal-nav galeria-modal-next" aria-label="Foto siguiente">
+        &#8250;
+      </button>
     </div>
   </div>
 </section>

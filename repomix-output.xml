@@ -45,7 +45,6 @@ The content is organized as follows:
 AGENTS.md
 astro.config.mjs
 CLAUDE.md
-landing_page_talleres.html
 package.json
 public/editable-logo-equipoypartes.webp
 public/favicon.ico
@@ -56,9 +55,16 @@ README.md
 src/assets/editable-logo-equipoypartes.webp
 src/assets/favicon.png
 src/assets/logo-alargado.png
+src/assets/taller-alfajores-2.jpg
+src/assets/taller-alfajores.jpg
+src/assets/taller-crepas-waffles.jpg
+src/assets/taller-pizza-calzone-2.jpg
+src/assets/taller-pizza-calzone-3.jpg
+src/assets/taller-pizza-calzone.jpg
+src/assets/taller-postres-hojaldre-2.jpg
+src/assets/taller-postres-hojaldre.jpg
 src/components/FAQ.astro
 src/components/Footer.astro
-src/components/FormularioInscripcion.astro
 src/components/Header.astro
 src/components/Hero.astro
 src/components/ListadoTalleres.astro
@@ -66,7 +72,6 @@ src/components/TalleresAnteriores.astro
 src/components/TarjetaCategoria.astro
 src/components/TarjetaTaller.astro
 src/components/Testimonios.astro
-src/components/ZohoFormulario.astro
 src/components/ZohoFormularioHTML.astro
 src/content.config.ts
 src/content/decoración-de-pasteles.md
@@ -259,810 +264,6 @@ Consult these guides before working on related tasks:
 - [Adding or managing content](https://docs.astro.build/en/guides/content-collections/)
 - [Adding styles or using Tailwind](https://docs.astro.build/en/guides/styling/)
 - [Supporting multiple languages](https://docs.astro.build/en/guides/internationalization/)
-</file>
-
-<file path="landing_page_talleres.html">
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Talleres Prácticos | Equipo y Partes El Salvador</title>
-    <style>
-        /* ==========================================================================
-           1. CSS VARIABLES (DESIGN TOKENS)
-           ========================================================================== 
-           Actualizar estos valores cuando Marketing defina el Manual de Marca.
-        */
-        :root {
-            /* Paleta de Colores (Temática cálida, panadería profesional) */
-            --brand-primary: #C05621; /* Naranja/Tostado oscuro */
-            --brand-primary-hover: #9C4221;
-            --brand-secondary: #F6AD55; /* Trigo/Dorado */
-            
-            --bg-page: #FAF5F0; /* Fondo principal (blanco hueso cálido) */
-            --bg-surface: #FFFFFF; /* Fondo de tarjetas y contenedores */
-            --bg-surface-alt: #F3EAE1; /* Fondo secundario para contrastar secciones */
-            
-            --text-main: #2D3748; /* Texto principal (gris muy oscuro) */
-            --text-muted: #718096; /* Texto secundario (gris medio) */
-            --text-light: #F7FAFC; /* Texto sobre fondos oscuros */
-            
-            --border-light: #E2E8F0;
-            --status-available: #38A169; /* Verde para cupos disponibles */
-            --status-few: #DD6B20; /* Naranja para pocos cupos */
-
-            /* Tipografía */
-            --font-family-headings: 'Georgia', serif; /* Provisional: elegante/clásica para gastronomía */
-            --font-family-body: 'System-UI', -apple-system, sans-serif; /* Provisional: limpia y legible */
-            
-            /* Espaciado */
-            --space-xs: 0.5rem;
-            --space-sm: 1rem;
-            --space-md: 2rem;
-            --space-lg: 4rem;
-            --space-xl: 6rem;
-
-            /* Bordes y Sombras */
-            --radius-md: 8px;
-            --radius-lg: 12px;
-            --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
-            --shadow-md: 0 4px 6px rgba(0,0,0,0.05), 0 10px 15px rgba(0,0,0,0.1);
-            --shadow-lg: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
-            
-            /* Transiciones */
-            --transition-speed: 0.3s ease;
-        }
-
-        /* ==========================================================================
-           2. BASE STYLES & RESET
-           ========================================================================== */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: var(--font-family-body);
-            color: var(--text-main);
-            background-color: var(--bg-page);
-            line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        h1, h2, h3, h4 {
-            font-family: var(--font-family-headings);
-            font-weight: 700;
-            line-height: 1.2;
-            color: var(--text-main);
-        }
-
-        a {
-            text-decoration: none;
-            color: var(--brand-primary);
-            transition: color var(--transition-speed);
-        }
-
-        a:hover {
-            color: var(--brand-primary-hover);
-        }
-
-        img {
-            max-width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 var(--space-sm);
-        }
-
-        /* ==========================================================================
-           3. COMPONENTS
-           ========================================================================== */
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0.75rem 1.5rem;
-            font-family: var(--font-family-body);
-            font-weight: 600;
-            border-radius: var(--radius-md);
-            cursor: pointer;
-            border: none;
-            transition: all var(--transition-speed);
-            text-align: center;
-            font-size: 1rem;
-        }
-
-        .btn-primary {
-            background-color: var(--brand-primary);
-            color: var(--text-light);
-            box-shadow: var(--shadow-md);
-        }
-
-        .btn-primary:hover {
-            background-color: var(--brand-primary-hover);
-            transform: translateY(-2px);
-            color: var(--text-light);
-        }
-
-        .btn-outline {
-            background-color: transparent;
-            color: var(--brand-primary);
-            border: 2px solid var(--brand-primary);
-        }
-
-        .btn-outline:hover {
-            background-color: var(--brand-primary);
-            color: var(--text-light);
-        }
-
-        .btn-block {
-            width: 100%;
-        }
-
-        .badge {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
-            font-size: 0.85rem;
-            font-weight: 600;
-            border-radius: 999px;
-            background-color: var(--bg-surface-alt);
-            color: var(--text-muted);
-        }
-
-        .badge.available {
-            background-color: rgba(56, 161, 105, 0.1);
-            color: var(--status-available);
-        }
-        
-        .badge.few {
-            background-color: rgba(221, 107, 32, 0.1);
-            color: var(--status-few);
-        }
-
-        /* ==========================================================================
-           4. LAYOUT SECTIONS
-           ========================================================================== */
-        /* Header */
-        header {
-            background-color: var(--bg-surface);
-            padding: var(--space-sm) 0;
-            box-shadow: var(--shadow-sm);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-family: var(--font-family-headings);
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--brand-primary);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        /* Hero Section */
-        .hero {
-            position: relative;
-            background-color: var(--text-main);
-            color: var(--text-light);
-            padding: var(--space-xl) 0;
-            overflow: hidden;
-            text-align: center;
-        }
-
-        /* Decorative background overlay (simulating image) */
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)), 
-                        url('https://images.unsplash.com/photo-1509440159596-0249088772ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover;
-            z-index: 0;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 1;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .hero h1 {
-            color: var(--text-light);
-            font-size: 3rem;
-            margin-bottom: var(--space-sm);
-        }
-
-        .hero p {
-            font-size: 1.25rem;
-            margin-bottom: var(--space-md);
-            color: #E2E8F0;
-        }
-
-        /* Workshops Section */
-        .workshops-section {
-            padding: var(--space-lg) 0;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: var(--space-lg);
-        }
-
-        .section-header h2 {
-            font-size: 2.5rem;
-            margin-bottom: var(--space-xs);
-            color: var(--brand-primary);
-        }
-
-        .section-header p {
-            color: var(--text-muted);
-            font-size: 1.1rem;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: var(--space-md);
-        }
-
-        /* Workshop Card */
-        .card {
-            background-color: var(--bg-surface);
-            border-radius: var(--radius-lg);
-            overflow: hidden;
-            box-shadow: var(--shadow-md);
-            transition: transform var(--transition-speed), box-shadow var(--transition-speed);
-            display: flex;
-            flex-direction: column;
-            border: 1px solid var(--border-light);
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .card-img-placeholder {
-            height: 200px;
-            background-color: var(--bg-surface-alt);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-muted);
-            font-weight: 500;
-            position: relative;
-        }
-        
-        .card-img-placeholder img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .card-content {
-            padding: var(--space-md);
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
-        }
-
-        .card-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: var(--space-xs);
-        }
-
-        .card-title {
-            font-size: 1.5rem;
-            margin-bottom: var(--space-xs);
-        }
-
-        .card-instructor {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            margin-bottom: var(--space-sm);
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .card-details-list {
-            list-style: none;
-            margin-bottom: var(--space-md);
-            padding-top: var(--space-sm);
-            border-top: 1px solid var(--border-light);
-        }
-
-        .card-details-list li {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 0.5rem;
-            font-size: 0.95rem;
-        }
-
-        .card-details-list li span:first-child {
-            color: var(--text-muted);
-        }
-
-        .card-details-list li span:last-child {
-            font-weight: 600;
-            text-align: right;
-        }
-
-        .card-price {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--brand-primary);
-            text-align: right;
-            margin-bottom: var(--space-sm);
-        }
-
-        .card-actions {
-            margin-top: auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: var(--space-xs);
-        }
-
-        /* Registration Form Section */
-        .registration-section {
-            background-color: var(--bg-surface-alt);
-            padding: var(--space-lg) 0;
-            border-top: 1px solid var(--border-light);
-        }
-
-        .form-container {
-            background-color: var(--bg-surface);
-            padding: var(--space-md) var(--space-lg);
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-md);
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .form-container h3 {
-            margin-bottom: var(--space-xs);
-            text-align: center;
-            font-size: 1.8rem;
-        }
-        
-        .form-container p.form-desc {
-            text-align: center;
-            color: var(--text-muted);
-            margin-bottom: var(--space-md);
-            font-size: 0.95rem;
-        }
-
-        .form-group {
-            margin-bottom: var(--space-sm);
-        }
-
-        .form-label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            font-size: 0.95rem;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid var(--border-light);
-            border-radius: var(--radius-md);
-            font-family: var(--font-family-body);
-            font-size: 1rem;
-            transition: border-color var(--transition-speed);
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: var(--brand-primary);
-            box-shadow: 0 0 0 3px rgba(192, 86, 33, 0.1);
-        }
-
-        /* Footer */
-        footer {
-            background-color: var(--text-main);
-            color: var(--text-light);
-            padding: var(--space-md) 0;
-            text-align: center;
-        }
-        
-        footer p {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-
-        /* ==========================================================================
-           5. MODAL (Detail View)
-           ========================================================================== */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(4px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-            padding: var(--space-sm);
-        }
-
-        .modal-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .modal-content {
-            background-color: var(--bg-surface);
-            border-radius: var(--radius-lg);
-            width: 100%;
-            max-width: 700px;
-            max-height: 90vh;
-            overflow-y: auto;
-            transform: translateY(20px);
-            transition: transform 0.3s ease;
-            position: relative;
-        }
-
-        .modal-overlay.active .modal-content {
-            transform: translateY(0);
-        }
-
-        .modal-header {
-            padding: var(--space-md);
-            border-bottom: 1px solid var(--border-light);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            background: var(--bg-surface);
-            z-index: 2;
-        }
-
-        .btn-close {
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--text-muted);
-            line-height: 1;
-        }
-
-        .modal-body {
-            padding: var(--space-md);
-        }
-
-        .modal-body h4 {
-            margin-top: var(--space-sm);
-            margin-bottom: var(--space-xs);
-            color: var(--brand-primary);
-        }
-
-        .modal-body p, .modal-body ul {
-            margin-bottom: var(--space-sm);
-            color: var(--text-main);
-        }
-
-        .modal-body ul {
-            padding-left: var(--space-md);
-        }
-        
-        .modal-footer {
-            padding: var(--space-md);
-            border-top: 1px solid var(--border-light);
-            display: flex;
-            justify-content: flex-end;
-            gap: var(--space-sm);
-        }
-
-        /* Responsiveness */
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 2.2rem; }
-            .card-actions { grid-template-columns: 1fr; }
-            .form-container { padding: var(--space-sm); }
-        }
-    </style>
-</head>
-<body>
-
-    <!-- Encabezado -->
-    <header>
-        <div class="container header-content">
-            <div class="logo">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-                Equipo y Partes El Salvador
-            </div>
-            <nav>
-                <a href="#workshops" class="btn btn-outline" style="padding: 0.5rem 1rem;">Ver Talleres</a>
-            </nav>
-        </div>
-    </header>
-
-    <main>
-        <!-- Sección Hero -->
-        <section class="hero">
-            <div class="container hero-content">
-                <h1>Domina la Alta Panadería con Equipamiento Profesional</h1>
-                <p>Nuestros talleres prácticos son el espacio ideal para perfeccionar tu técnica. Guiados por chefs expertos, descubrirás cómo el uso de maquinaria e insumos de alto rendimiento transforma tus recetas en obras maestras.</p>
-                <a href="#workshops" class="btn btn-primary">Conoce nuestros próximos talleres</a>
-            </div>
-        </section>
-
-        <!-- Grid de Talleres -->
-        <section id="workshops" class="workshops-section">
-            <div class="container">
-                <div class="section-header">
-                    <h2>Cartelera de Talleres</h2>
-                    <p>Grupos reducidos para garantizar atención personalizada y uso práctico de todos nuestros equipos en exhibición.</p>
-                </div>
-
-                <div class="grid">
-                    
-                    <!-- Tarjeta Taller 1 -->
-                    <article class="card">
-                        <div class="card-img-placeholder">
-                            <img src="https://images.unsplash.com/photo-1549931319-a545dcf3bc73?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Masa Madre">
-                        </div>
-                        <div class="card-content">
-                            <div class="card-meta">
-                                <span class="badge">Nivel: Intermedio</span>
-                                <span class="badge available">8 Cupos disponibles</span>
-                            </div>
-                            <h3 class="card-title">Masa Madre y Panes Rústicos de Alta Hidratación</h3>
-                            <div class="card-instructor">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                                Chef Instructor: Carlos Mendoza
-                            </div>
-                            
-                            <ul class="card-details-list">
-                                <li><span>Fecha:</span> <span>Sáb, 15 de Noviembre</span></li>
-                                <li><span>Horario:</span> <span>09:00 AM - 01:00 PM</span></li>
-                            </ul>
-
-                            <div class="card-price">$45.00</div>
-                            
-                            <div class="card-actions">
-                                <button class="btn btn-outline" onclick="openDetailModal('taller-1')">Ver detalles</button>
-                                <button class="btn btn-primary" onclick="scrollToForm('Masa Madre y Panes Rústicos')">Inscribirme</button>
-                            </div>
-                        </div>
-                    </article>
-
-                    <!-- Tarjeta Taller 2 -->
-                    <article class="card">
-                        <div class="card-img-placeholder">
-                            <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Pastelería">
-                        </div>
-                        <div class="card-content">
-                            <div class="card-meta">
-                                <span class="badge">Nivel: Principiante</span>
-                                <span class="badge few">¡Solo 3 cupos!</span>
-                            </div>
-                            <h3 class="card-title">Fundamentos de Pastelería Francesa Comercial</h3>
-                            <div class="card-instructor">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                                Chef Instructora: Ana Sofía Ríos
-                            </div>
-                            
-                            <ul class="card-details-list">
-                                <li><span>Fecha:</span> <span>Jue, 20 de Noviembre</span></li>
-                                <li><span>Horario:</span> <span>02:00 PM - 06:00 PM</span></li>
-                            </ul>
-
-                            <div class="card-price">$55.00</div>
-                            
-                            <div class="card-actions">
-                                <button class="btn btn-outline" onclick="openDetailModal('taller-2')">Ver detalles</button>
-                                <button class="btn btn-primary" onclick="scrollToForm('Fundamentos de Pastelería')">Inscribirme</button>
-                            </div>
-                        </div>
-                    </article>
-
-                    <!-- Tarjeta Taller 3 -->
-                    <article class="card">
-                        <div class="card-img-placeholder">
-                            <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Pizza">
-                        </div>
-                        <div class="card-content">
-                            <div class="card-meta">
-                                <span class="badge">Nivel: Todo público</span>
-                                <span class="badge available">12 Cupos disponibles</span>
-                            </div>
-                            <h3 class="card-title">Pizzas Artesanales y Uso de Hornos de Piso</h3>
-                            <div class="card-instructor">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                                Chef Instructor: Carlos Mendoza
-                            </div>
-                            
-                            <ul class="card-details-list">
-                                <li><span>Fecha:</span> <span>Sáb, 29 de Noviembre</span></li>
-                                <li><span>Horario:</span> <span>10:00 AM - 02:00 PM</span></li>
-                            </ul>
-
-                            <div class="card-price">$40.00</div>
-                            
-                            <div class="card-actions">
-                                <button class="btn btn-outline" onclick="openDetailModal('taller-3')">Ver detalles</button>
-                                <button class="btn btn-primary" onclick="scrollToForm('Pizzas Artesanales')">Inscribirme</button>
-                            </div>
-                        </div>
-                    </article>
-
-                </div>
-            </div>
-        </section>
-
-        <!-- Formulario de Pre-inscripción -->
-        <section id="registration" class="registration-section">
-            <div class="container">
-                <div class="form-container">
-                    <h3>Reserva tu espacio</h3>
-                    <p class="form-desc">Llena este formulario sin compromiso para separar tu cupo. Un asesor se comunicará contigo para confirmar los detalles y finalizar la inscripción.</p>
-                    
-                    <form action="#" method="POST" onsubmit="event.preventDefault(); alert('Este es un mockup. El formulario enviaría los datos al CRM/Correo de la empresa.');">
-                        <div class="form-group">
-                            <label for="name" class="form-label">Nombre Completo</label>
-                            <input type="text" id="name" class="form-control" placeholder="Ej. Juan Pérez" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="email" class="form-label">Correo Electrónico</label>
-                            <input type="email" id="email" class="form-control" placeholder="ejemplo@correo.com" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="phone" class="form-label">Teléfono / WhatsApp</label>
-                            <input type="tel" id="phone" class="form-control" placeholder="Ej. 7000-0000" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="workshop-select" class="form-label">Taller de Interés</label>
-                            <select id="workshop-select" class="form-control" required>
-                                <option value="" disabled selected>Selecciona un taller...</option>
-                                <option value="Masa Madre y Panes Rústicos">Masa Madre y Panes Rústicos de Alta Hidratación - 15 Nov</option>
-                                <option value="Fundamentos de Pastelería">Fundamentos de Pastelería Francesa Comercial - 20 Nov</option>
-                                <option value="Pizzas Artesanales">Pizzas Artesanales y Uso de Hornos de Piso - 29 Nov</option>
-                            </select>
-                        </div>
-
-                        <button type="submit" class="btn btn-primary btn-block" style="margin-top: 1rem;">Solicitar Pre-inscripción</button>
-                        <p style="text-align: center; font-size: 0.8rem; color: var(--text-muted); margin-top: 1rem;">*El pago y confirmación final se gestionan de forma directa con nuestro equipo comercial.</p>
-                    </form>
-                </div>
-            </div>
-        </section>
-
-    </main>
-
-    <footer>
-        <div class="container">
-            <p>&copy; 2026 Equipo y Partes El Salvador (Grupo Promaica). Todos los derechos reservados.</p>
-        </div>
-    </footer>
-
-    <!-- Modal de Detalles del Taller -->
-    <div id="detail-modal" class="modal-overlay">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 id="modal-title">Detalle del Taller</h3>
-                <button class="btn-close" onclick="closeDetailModal()">&times;</button>
-            </div>
-            <div class="modal-body">
-                <!-- Contenido dinámico (placeholder para el mockup) -->
-                <h4>¿Qué aprenderás?</h4>
-                <p>En este taller intensivo dominarás los procesos fundamentales de preparación, leudado y horneado. Nuestro enfoque es 100% práctico.</p>
-                
-                <h4>Temario / Actividades:</h4>
-                <ul>
-                    <li>Fundamentos teóricos y formulación de recetas.</li>
-                    <li>Técnicas correctas de amasado y control de temperatura.</li>
-                    <li><strong>Demostración de Equipo:</strong> Pruebas de rendimiento usando nuestras amasadoras orbitales de grado industrial (Serie PRO-Mix).</li>
-                    <li>Técnicas de horneado aprovechando la inyección de vapor de nuestros hornos rotativos.</li>
-                </ul>
-
-                <h4>Incluye:</h4>
-                <ul>
-                    <li>Materia prima completa.</li>
-                    <li>Uso de delantal y herramientas.</li>
-                    <li>Degustación y material impreso.</li>
-                    <li>Diploma de participación firmado por nuestro Chef Instructor.</li>
-                </ul>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-outline" onclick="closeDetailModal()">Cerrar</button>
-                <button class="btn btn-primary" onclick="closeModalAndScroll()">Inscribirme ahora</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Funcionalidad básica JS (Interacciones UI) -->
-    <script>
-        const modal = document.getElementById('detail-modal');
-        const modalTitle = document.getElementById('modal-title');
-        const workshopSelect = document.getElementById('workshop-select');
-        let currentSelectedWorkshop = "";
-
-        // Títulos de mapeo simple para el mockup
-        const workshopTitles = {
-            'taller-1': 'Masa Madre y Panes Rústicos',
-            'taller-2': 'Fundamentos de Pastelería',
-            'taller-3': 'Pizzas Artesanales'
-        };
-
-        function openDetailModal(workshopId) {
-            currentSelectedWorkshop = workshopTitles[workshopId];
-            modalTitle.innerText = "Detalles: " + currentSelectedWorkshop;
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden'; // Evitar scroll de fondo
-        }
-
-        function closeDetailModal() {
-            modal.classList.remove('active');
-            document.body.style.overflow = 'auto';
-        }
-
-        function scrollToForm(workshopName) {
-            // Pre-seleccionar el taller en el formulario
-            if (workshopName) {
-                Array.from(workshopSelect.options).forEach(option => {
-                    if (option.value === workshopName) {
-                        option.selected = true;
-                    }
-                });
-            }
-            
-            // Hacer scroll suave hacia la sección
-            document.getElementById('registration').scrollIntoView({ 
-                behavior: 'smooth' 
-            });
-        }
-
-        function closeModalAndScroll() {
-            closeDetailModal();
-            setTimeout(() => {
-                scrollToForm(currentSelectedWorkshop);
-            }, 300); // Esperar a que cierre el modal
-        }
-
-        // Cerrar modal al hacer clic fuera del contenido
-        modal.addEventListener('click', function(e) {
-            if (e.target === modal) {
-                closeDetailModal();
-            }
-        });
-    </script>
-</body>
-</html>
 </file>
 
 <file path="public/favicon.svg">
@@ -2155,346 +1356,6 @@ const { items } = Astro.props;
 </style>
 </file>
 
-<file path="src/components/ZohoFormulario.astro">
----
-// src/components/ZohoFormulario.astro
-interface Props {
-  formPerma: string;
-  formUrlBase?: string;
-  ariaLabel?: string;
-  height?: string;
-  width?: string;
-}
-
-const {
-  formPerma,
-  formUrlBase = 'https://forms.zoho.com/promaica/form/TestRegistrodetalleresdepanaderia/formperma',
-  // formUrlBase = 'https://forms.zohopublic.com/promaica/form/RegistrodeTalleresdePanadera/formperma',
-  ariaLabel = 'Registro de Talleres de Panadería',
-  height = '784px',
-  width = '90%',
-} = Astro.props;
-
-const divId = `zf_div_${formPerma}`;
-const iframeSrcBase = `${formUrlBase}/${formPerma}?zf_rszfm=1`;
----
-
-<div id={divId}></div>
-
-<script is:inline define:vars={{ divId, iframeSrcBase, ariaLabel, height, width }}>
-  (function () {
-    try {
-      var f = document.createElement('iframe');
-      var ifrmSrc = iframeSrcBase;
-
-      try {
-        if (typeof ZFAdvLead != 'undefined' && typeof zfutm_zfAdvLead != 'undefined') {
-          for (var i = 0; i < ZFAdvLead.utmPNameArr.length; i++) {
-            var utmPm = ZFAdvLead.utmPNameArr[i];
-            utmPm = (ZFAdvLead.isSameDomian && ZFAdvLead.utmcustPNameArr.indexOf(utmPm) == -1) ? 'zf_' + utmPm : utmPm;
-            var utmVal = zfutm_zfAdvLead.zfautm_gC_enc(ZFAdvLead.utmPNameArr[i]);
-            if (typeof utmVal !== 'undefined' && utmVal != '') {
-              ifrmSrc += (ifrmSrc.indexOf('?') > 0 ? '&' : '?') + utmPm + '=' + utmVal;
-            }
-          }
-        }
-        if (typeof ZFLead !== 'undefined' && typeof zfutm_zfLead !== 'undefined') {
-          for (var j = 0; j < ZFLead.utmPNameArr.length; j++) {
-            var utmPm2 = ZFLead.utmPNameArr[j];
-            var utmVal2 = zfutm_zfLead.zfutm_gC_enc(ZFLead.utmPNameArr[j]);
-            if (typeof utmVal2 !== 'undefined' && utmVal2 != '') {
-              ifrmSrc += (ifrmSrc.indexOf('?') > 0 ? '&' : '?') + utmPm2 + '=' + utmVal2;
-            }
-          }
-        }
-        if (!/[?&]referrername=/.test(ifrmSrc)) {
-          var rfr = window.location.href;
-          try {
-            rfr = window.self !== window.top
-              ? window.top.location.href
-              : (/^https?:\/\/[\w.-]+\.[a-zA-Z]{2,}/i.test(rfr) ? rfr : '');
-          } catch (e) {}
-          if (rfr && rfr !== '') {
-            if (rfr.length > 1800) {
-              var qi = rfr.indexOf('?');
-              if (qi > -1) rfr = rfr.substring(0, qi);
-              if (rfr.length > 1800) rfr = rfr.substring(0, 1800);
-            }
-            ifrmSrc += (ifrmSrc.indexOf('?') > 0 ? '&' : '?') + 'referrername=' + encodeURIComponent(rfr);
-          }
-        }
-      } catch (e) {}
-
-      f.src = ifrmSrc;
-      f.style.border = 'none';
-      f.style.height = height;
-      f.style.width = width;
-      f.style.transition = 'all 0.5s ease';
-      f.setAttribute('aria-label', ariaLabel);
-
-      var d = document.getElementById(divId);
-      d.appendChild(f);
-
-      window.addEventListener('message', function (event) {
-        var evntData = event.data;
-        if (evntData && evntData.constructor == String) {
-          var parts = evntData.split('|');
-          if (parts.length == 2 || parts.length == 3) {
-            var zfPerma = parts[0];
-            var newHeight = (parseInt(parts[1], 10) + 15) + 'px';
-            var iframe = document.getElementById(divId).getElementsByTagName('iframe')[0];
-            if (iframe.src.indexOf('formperma') > 0 && iframe.src.indexOf(zfPerma) > 0) {
-              var prevHeight = iframe.style.height;
-              var scrollTo = false;
-              if (parts.length == 3) {
-                iframe.scrollIntoView();
-                scrollTo = true;
-              }
-              if (prevHeight != newHeight) {
-                if (scrollTo) {
-                  setTimeout(function () { iframe.style.height = newHeight; }, 500);
-                } else {
-                  iframe.style.height = newHeight;
-                }
-              }
-            }
-          }
-        }
-      }, false);
-    } catch (e) {}
-  })();
-</script>
-</file>
-
-<file path="src/components/FormularioInscripcion.astro">
----
-// src/components/talleres/FormularioInscripcion.astro
-import type { CollectionEntry } from "astro:content";
-
-interface Props {
-  // Para el formulario general (index): recibe todos los talleres para el <select>
-  talleres?: CollectionEntry<"talleres">[];
-  // Para la página de detalle: el taller ya viene fijo, sin <select>
-  tallerPreseleccionado?: CollectionEntry<"talleres">;
-}
-
-const { talleres, tallerPreseleccionado } = Astro.props;
----
-
-<section id="registration" class="registration-section">
-  <div class="container">
-    <div class="form-container">
-      <h3>Reserva tu espacio</h3>
-      <p class="form-desc">
-        Llena este formulario sin compromiso para separar tu cupo. Un asesor se
-        comunicará contigo para confirmar los detalles y finalizar la
-        inscripción.
-      </p>
-
-      <form id="form-preinscripcion">
-        <div class="form-group">
-          <label for="name" class="form-label">Nombre Completo</label>
-          <input
-            type="text"
-            id="name"
-            name="nombre"
-            class="form-control"
-            placeholder="Ej. Juan Pérez"
-            required
-          />
-        </div>
-
-        <div class="form-group">
-          <label for="email" class="form-label">Correo Electrónico</label>
-          <input
-            type="email"
-            id="email"
-            name="correo"
-            class="form-control"
-            placeholder="ejemplo@correo.com"
-            required
-          />
-        </div>
-
-        <div class="form-group">
-          <label for="phone" class="form-label">Teléfono / WhatsApp</label>
-          <input
-            type="tel"
-            id="phone"
-            name="telefono"
-            class="form-control"
-            placeholder="Ej. 7000-0000"
-            required
-          />
-        </div>
-
-        {
-          tallerPreseleccionado ? (
-            <div class="form-group">
-              <span class="form-label">Taller de Interés</span>
-              <div class="form-control form-control-static">
-                {tallerPreseleccionado.data.nombre}
-              </div>
-              <input
-                type="hidden"
-                name="taller"
-                value={tallerPreseleccionado.id}
-              />
-            </div>
-          ) : (
-            <div class="form-group">
-              <label for="workshop-select" class="form-label">
-                Taller de Interés
-              </label>
-              <select
-                id="workshop-select"
-                name="taller"
-                class="form-control"
-                required
-              >
-                <option value="" disabled selected>
-                  Selecciona un taller...
-                </option>
-                {talleres?.map((taller) => (
-                  <option value={taller.id}>
-                    {taller.data.nombre} —{" "}
-                    {taller.data.fecha.toLocaleDateString("es-SV", {
-                      day: "numeric",
-                      month: "short",
-                    })}
-                  </option>
-                ))}
-              </select>
-            </div>
-          )
-        }
-
-        <button
-          type="submit"
-          class="btn btn-primary btn-block"
-          style="margin-top: 1rem;"
-        >
-          Solicitar Pre-inscripción
-        </button>
-        <p class="form-note">
-          *El pago y confirmación final se gestionan de forma directa con
-          nuestro equipo comercial.
-        </p>
-      </form>
-    </div>
-  </div>
-</section>
-
-<style>
-  .registration-section {
-    position: relative;
-    background-color: var(--bg-surface-alt);
-    background-image:
-      radial-gradient(
-        circle at 1px 1px,
-        rgba(192, 86, 33, 0.16) 1.5px,
-        transparent 0
-      );
-    background-size: 22px 22px;
-    padding: var(--space-lg) 0;
-    border-top: 1px solid var(--border-light);
-  }
-
-  .form-container {
-    background-color: var(--bg-surface);
-    padding: var(--space-md) var(--space-lg);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-md);
-    /* max-width: 600px; */
-    margin: 0 auto;
-  }
-
-  .form-container h3 {
-    margin-bottom: var(--space-xs);
-    text-align: center;
-    font-size: 1.8rem;
-  }
-
-  .form-desc {
-    text-align: center;
-    color: var(--text-muted);
-    margin-bottom: var(--space-md);
-    font-size: 0.95rem;
-  }
-
-  .form-group {
-    margin-bottom: var(--space-sm);
-  }
-
-  .form-label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: 600;
-    font-size: 0.95rem;
-  }
-
-  .form-control {
-    width: 100%;
-    padding: 0.75rem;
-    border: 1px solid var(--border-light);
-    border-radius: var(--radius-md);
-    font-family: var(--font-family-body);
-    font-size: 1rem;
-    transition: border-color var(--transition-speed);
-  }
-
-  .form-control:focus {
-    outline: none;
-    border-color: var(--brand-primary);
-    box-shadow: 0 0 0 3px rgba(192, 86, 33, 0.1);
-  }
-
-  .form-control-static {
-    background-color: var(--bg-surface-alt);
-    font-weight: 600;
-    color: var(--text-main);
-  }
-
-  .form-note {
-    text-align: center;
-    font-size: 0.8rem;
-    color: var(--text-muted);
-    margin-top: 1rem;
-  }
-  @media (max-width: 600px) {
-    .form-container {
-      padding: var(--space-md) var(--space-sm);
-    }
-  }
-</style>
-
-<script>
-  // Envío mock por ahora — se conecta a Power Automate + Zoho Sheet más adelante.
-  const form = document.getElementById(
-    "form-preinscripcion",
-  ) as HTMLFormElement | null;
-
-  form?.addEventListener("submit", (e) => {
-    e.preventDefault();
-    alert(
-      "Gracias por tu preinscripción. Un asesor se comunicará contigo pronto.",
-    );
-    form.reset();
-  });
-
-  // Pre-selección vía query param (?taller=slug), usado desde TarjetaTaller
-  // cuando el formulario general (con <select>) está en la misma página.
-  const params = new URLSearchParams(window.location.search);
-  const tallerParam = params.get("taller");
-  const select = document.getElementById(
-    "workshop-select",
-  ) as HTMLSelectElement | null;
-  if (tallerParam && select) {
-    select.value = tallerParam;
-  }
-</script>
-</file>
-
 <file path="src/components/Hero.astro">
 ---
 // src/components/talleres/Hero.astro
@@ -3481,122 +2342,6 @@ img {
 }
 </file>
 
-<file path="src/components/TalleresAnteriores.astro">
----
-import type { TallerAnterior } from "../data/content";
-interface Props {
-  items: TallerAnterior[];
-}
-const { items } = Astro.props;
----
-
-<section id="talleres-anteriores" class="galeria-section">
-  <div class="container">
-    <div class="section-header">
-      <span class="eyebrow">Así se viven nuestros talleres</span>
-      <h2>Aprende haciendo y conoce equipos profesionales</h2>
-      <p>
-        Vive una experiencia práctica donde aprenderás nuevas preparaciones
-        mientras conoces maquinaria que facilita y agiliza el trabajo.
-      </p>
-    </div>
-
-    <div class="grid galeria-grid">
-      {
-        items.map((item) => (
-          <figure class="galeria-item">
-            <div
-              class="galeria-imagen-wrap"
-              style={`background-image: url('${item.imagen}');`}
-            >
-              <img src={item.imagen} alt={item.titulo} loading="lazy" />
-            </div>
-            <figcaption>{item.titulo}</figcaption>
-          </figure>
-        ))
-      }
-    </div>
-  </div>
-</section>
-
-<style>
-  .galeria-section {
-    padding: var(--space-lg) 0;
-  }
-
-  .eyebrow {
-    display: block;
-    font-size: 0.85rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--brand-primary);
-    margin-bottom: var(--space-xs);
-  }
-
-  .galeria-grid {
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  }
-
-  .galeria-item {
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-    box-shadow: var(--shadow-sm);
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-  }
-
-  .galeria-item img {
-    position: relative;
-    z-index: 1;
-    max-height: 220px;
-    max-width: 100%;
-    width: auto;
-    height: auto;
-    margin: 0 auto;
-    object-fit: contain;
-    display: block;
-  }
-
-  .galeria-imagen-wrap {
-    position: relative;
-    height: 220px;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    background-size: cover;
-    background-position: center;
-  }
-
-  .galeria-imagen-wrap::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: inherit;
-    background-size: cover;
-    background-position: center;
-    filter: blur(14px) brightness(0.7);
-    transform: scale(1.15); /* evita bordes borrosos visibles por el blur */
-    z-index: 0;
-  }
-
-  .galeria-item figcaption {
-    padding: var(--space-sm);
-    background-color: var(--bg-surface);
-    font-weight: 600;
-    font-size: 0.95rem;
-    text-align: center;
-    flex-grow: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-</style>
-</file>
-
 <file path="src/components/TarjetaTaller.astro">
 ---
 // src/components/talleres/TarjetaTaller.astro
@@ -3979,6 +2724,178 @@ const categoriasVisibles = categorias.filter((categoria) => categoria.activa);
 </style>
 </file>
 
+<file path="src/components/TalleresAnteriores.astro">
+---
+import { Image, getImage } from "astro:assets";
+import type { TallerAnterior } from "../data/content";
+
+interface Props {
+  items: TallerAnterior[];
+}
+const { items } = Astro.props;
+
+// Pre-generamos versiones optimizadas (más grandes) de cada foto para el modal,
+// en build time. El thumbnail usa <Image /> directamente más abajo.
+const galerias = await Promise.all(
+  items.map(async (item) => {
+    const fotos = item.imagenes?.length ? item.imagenes : [item.imagen];
+    const optimizadas = await Promise.all(
+      fotos.map((foto) => getImage({ src: foto, width: 1200, format: "webp" }))
+    );
+    return optimizadas.map((img) => img.src);
+  })
+);
+---
+
+<section id="talleres-anteriores" class="galeria-section">
+  <div class="container">
+    <div class="section-header">
+      <span class="eyebrow">Así se viven nuestros talleres</span>
+      <h2>Aprende haciendo y conoce equipos profesionales</h2>
+      <p>
+        Vive una experiencia práctica donde aprenderás nuevas preparaciones
+        mientras conoces maquinaria que facilita y agiliza el trabajo.
+      </p>
+    </div>
+
+    <div class="grid galeria-grid">
+      {
+        items.map((item, i) => (
+          <figure class="galeria-item">
+            <button
+              type="button"
+              class="galeria-trigger"
+              data-index={i}
+              data-titulo={item.titulo}
+              data-imagenes={JSON.stringify(galerias[i])}
+              aria-label={`Ver galería de ${item.titulo}`}
+            >
+              <div
+                class="galeria-imagen-wrap"
+                style={`background-image: url('${item.imagen.src}');`}
+              >
+                <Image
+                  src={item.imagen}
+                  alt={item.titulo}
+                  width={480}
+                  height={220}
+                  loading="lazy"
+                />
+                {galerias[i].length > 1 && (
+                  <span class="galeria-badge">+{galerias[i].length} fotos</span>
+                )}
+                {galerias[i].length === 1 && (
+                  <span class="galeria-badge">Ver foto</span>
+                )}
+              </div>
+              <figcaption>{item.titulo}</figcaption>
+            </button>
+          </figure>
+        ))
+      }
+    </div>
+  </div>
+
+  <!-- Modal / Lightbox (sin cambios respecto a la versión anterior) -->
+  <div id="galeria-modal" class="galeria-modal" hidden>
+    <div class="galeria-modal-backdrop" data-close></div>
+    <div class="galeria-modal-content" role="dialog" aria-modal="true" aria-label="Galería de fotos">
+      <button type="button" class="galeria-modal-close" data-close aria-label="Cerrar">
+        &times;
+      </button>
+      <button type="button" class="galeria-modal-nav galeria-modal-prev" aria-label="Foto anterior">
+        &#8249;
+      </button>
+      <div class="galeria-modal-body">
+        <img id="galeria-modal-img" src="" alt="" />
+        <p id="galeria-modal-titulo" class="galeria-modal-titulo"></p>
+        <p id="galeria-modal-counter" class="galeria-modal-counter"></p>
+      </div>
+      <button type="button" class="galeria-modal-nav galeria-modal-next" aria-label="Foto siguiente">
+        &#8250;
+      </button>
+    </div>
+  </div>
+</section>
+
+<style>
+  .galeria-section {
+    padding: var(--space-lg) 0;
+  }
+
+  .eyebrow {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--brand-primary);
+    margin-bottom: var(--space-xs);
+  }
+
+  .galeria-grid {
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  }
+
+  .galeria-item {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .galeria-item img {
+    position: relative;
+    z-index: 1;
+    max-height: 220px;
+    max-width: 100%;
+    width: auto;
+    height: auto;
+    margin: 0 auto;
+    object-fit: contain;
+    display: block;
+  }
+
+  .galeria-imagen-wrap {
+    position: relative;
+    height: 220px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+  }
+
+  .galeria-imagen-wrap::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: inherit;
+    background-size: cover;
+    background-position: center;
+    filter: blur(14px) brightness(0.7);
+    transform: scale(1.15); /* evita bordes borrosos visibles por el blur */
+    z-index: 0;
+  }
+
+  .galeria-item figcaption {
+    padding: var(--space-sm);
+    background-color: var(--bg-surface);
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-align: center;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+</style>
+</file>
+
 <file path="src/components/Header.astro">
 ---
 import { Image } from "astro:assets";
@@ -3995,11 +2912,30 @@ const base = import.meta.env.BASE_URL;
 // En la raíz (el hub) mostramos las categorías activas + Contacto.
 // Dentro de una categoría (o de un taller) mostramos las anclas de esa
 // página (Formulario, Talleres Anteriores, FAQ) + Contacto, como antes.
-const esRaiz = Astro.url.pathname === base;
+
+// Normalizamos ambos lados quitando la barra final, para que la comparación
+// no falle por diferencias de trailing slash.
+const normalizar = (p: string) => (p.endsWith("/") ? p.slice(0, -1) : p);
+const pathnameActual = Astro.url.pathname;
+const contactoHref = `${base}contacto/`;
+const contactoActivo = normalizar(pathnameActual).startsWith(
+  normalizar(contactoHref),
+);
+
+const esRaiz = normalizar(pathnameActual) === normalizar(base);
+
+// La página de Contacto tampoco tiene las anclas (#formulario,
+// #talleres-anteriores, #faq) — esas solo existen dentro de una página de
+// categoría o de un taller. Así que en Contacto debe mostrarse la misma
+// lista de categorías que en la raíz, no el menú de anclas (que ahí
+// apuntaría a secciones inexistentes).
+const mostrarCategorias = esRaiz || contactoActivo;
+
 const categoriasActivas = categorias.filter((categoria) => categoria.activa);
 
-const contactoHref = `${base}contacto/`;
-const contactoActivo = Astro.url.pathname.startsWith(contactoHref);
+// El estado "activo" de un ancla se determina por el hash actual de la URL,
+// no por el pathname (el pathname nunca contiene el fragmento #...).
+const hashActual = Astro.url.hash; // ej: "#formulario" o ""
 ---
 
 <header id="site-header">
@@ -4010,6 +2946,7 @@ const contactoActivo = Astro.url.pathname.startsWith(contactoHref);
         class="nav-toggle"
         aria-label="Abrir menú"
         aria-expanded="false"
+        aria-controls="main-nav"
       >
         <span></span><span></span><span></span>
       </button>
@@ -4028,7 +2965,7 @@ const contactoActivo = Astro.url.pathname.startsWith(contactoHref);
     <nav id="main-nav" class="main-nav">
       <ul>
         {
-          esRaiz
+          mostrarCategorias
             ? categoriasActivas.map((categoria) => {
                 const href = `${base}talleres/${categoria.id}/`;
                 return (
@@ -4040,8 +2977,10 @@ const contactoActivo = Astro.url.pathname.startsWith(contactoHref);
                 );
               })
             : menu.map((cat) => {
-                const href = `${base}#${cat.tag}`;
-                const activo = Astro.url.pathname.startsWith(href);
+                // El ancla apunta a la página ACTUAL (categoría o taller),
+                // no siempre a la raíz del sitio.
+                const href = `${pathnameActual}#${cat.tag}`;
+                const activo = hashActual === `#${cat.tag}`;
                 return (
                   <li>
                     <a href={href} class:list={["nav-link", { activo }]}>
@@ -4072,6 +3011,8 @@ const contactoActivo = Astro.url.pathname.startsWith(contactoHref);
     position: sticky;
     top: 0;
     z-index: 100;
+    transition: box-shadow var(--transition-speed);
+    overflow-anchor: none;
   }
 
   .header-content {
@@ -4088,12 +3029,27 @@ const contactoActivo = Astro.url.pathname.startsWith(contactoHref);
     display: flex;
     justify-content: center;
     align-items: center;
+    transition: height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .logo {
     display: flex;
     align-items: center;
     justify-content: center;
+    transition:
+      opacity 0.3s ease,
+      transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: center top;
+  }
+
+  #site-header.header--compact .header-top {
+    height: 2.0rem;
+  }
+
+  #site-header.header--compact .logo {
+    opacity: 0;
+    transform: scale(0.55) translateY(-8px);
+    pointer-events: none;
   }
 
   .navbar__logo-img {
@@ -4213,6 +3169,47 @@ const contactoActivo = Astro.url.pathname.startsWith(contactoHref);
     nav.classList.remove("open");
     toggle?.setAttribute("aria-expanded", "false");
   });
+  // --- Ocultar el logo al hacer scroll hacia abajo, mostrarlo al subir ---
+  // Usamos posición absoluta de scroll con histéresis (dos umbrales distintos
+  // para entrar y salir del modo compacto) en vez de acumular delta. El delta
+  // por evento de scroll no es limpio (momentum scrolling, trackpads) y
+  // reiniciar el acumulado en cada micro-cambio de dirección producía
+  // parpadeo: la clase se agregaba y quitaba varias veces por segundo,
+  // cortando la transición CSS a mitad de camino cada vez.
+  const header = document.getElementById("site-header");
+
+  if (header) {
+    const ENTRAR_COMPACTO = 160; // px de scroll para colapsar el logo
+    const SALIR_COMPACTO = 80; // px de scroll para volver a mostrarlo (< ENTRAR_COMPACTO a propósito)
+
+    let compacto = false;
+    let ticking = false;
+
+    const actualizarHeader = () => {
+      const y = window.scrollY;
+
+      if (!compacto && y > ENTRAR_COMPACTO) {
+        compacto = true;
+        header.classList.add("header--compact");
+      } else if (compacto && y < SALIR_COMPACTO) {
+        compacto = false;
+        header.classList.remove("header--compact");
+      }
+
+      ticking = false;
+    };
+
+    window.addEventListener(
+      "scroll",
+      () => {
+        if (!ticking) {
+          requestAnimationFrame(actualizarHeader);
+          ticking = true;
+        }
+      },
+      { passive: true },
+    );
+  }
 </script>
 </file>
 
@@ -4246,9 +3243,20 @@ export interface Testimonio {
   imagen: string;
 }
 
+import type { ImageMetadata } from "astro";
+
+import tallerPizzaCalzone from "../assets/taller-pizza-calzone.jpg";
+import tallerPizzaCalzone2 from "../assets/taller-pizza-calzone-2.jpg";
+import tallerPizzaCalzone3 from "../assets/taller-pizza-calzone-3.jpg";
+import tallerAlfajores from "../assets/taller-alfajores.jpg";
+import tallerAlfajores2 from "../assets/taller-alfajores-2.jpg";
+import tallerPostresHojaldre from "../assets/taller-postres-hojaldre.jpg";
+import tallerPostresHojaldre2 from "../assets/taller-postres-hojaldre-2.jpg";
+
 export interface TallerAnterior {
   titulo: string;
-  imagen: string;
+  imagen: ImageMetadata;
+  imagenes?: ImageMetadata[];
 }
 
 export interface ContenidoCategoria {
@@ -4306,20 +3314,19 @@ export const contenidoPorCategoria: Record<string, ContenidoCategoria> = {
     ],
     talleresAnteriores: [
       {
-        titulo: "Amasado profesional en vivo",
-        imagen: "https://images.unsplash.com/photo-1509440159596-0249088772ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+        titulo: "Taller de masa de pizza y calzone",
+        imagen: tallerPizzaCalzone,
+        imagenes: [tallerPizzaCalzone, tallerPizzaCalzone2, tallerPizzaCalzone3],
       },
       {
-        titulo: "Demostración de hornos rotativos",
-        imagen: "https://images.unsplash.com/photo-1738846258491-442902625fdb?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+        titulo: "Taller de alfajores",
+        imagen: tallerAlfajores,
+        imagenes: [tallerAlfajores, tallerAlfajores2],
       },
       {
-        titulo: "Grupo taller de pastelería",
-        imagen: "https://images.unsplash.com/photo-1556910103-1c02745aae4d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-      },
-      {
-        titulo: "Entrega de diplomas",
-        imagen: "https://images.unsplash.com/photo-1759142016096-a9d1a5ebcc09?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+        titulo: "Taller de postres con masa de hojaldre",
+        imagen: tallerPostresHojaldre,
+        imagenes: [tallerPostresHojaldre, tallerPostresHojaldre2],
       },
     ],
   },
