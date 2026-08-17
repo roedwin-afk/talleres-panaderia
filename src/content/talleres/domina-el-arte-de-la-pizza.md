@@ -1,7 +1,7 @@
 ---
 nombre: Domina el Arte de la Pizza
 slug: domina-el-arte-de-la-pizza
-fecha: 2026-08-22T00:00:00.000Z
+fecha: 2026-08-29T00:00:00.000Z
 horarioInicio: '9:00 AM'
 horarioFin: '12:00 PM'
 instructor: Felipe Gonzalez

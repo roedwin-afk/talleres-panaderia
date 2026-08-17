@@ -1,7 +1,7 @@
 ---
 nombre: Torta Chilena y Milhoja Napoleón
 slug: torta-chilena-milhoja-napoleon
-fecha: 2026-08-29T00:00:00.000Z
+fecha: 2026-09-05T00:00:00.000Z
 horarioInicio: '9:00 AM'
 horarioFin: '12:00 PM'
 instructor: Felipe Gonzalez
