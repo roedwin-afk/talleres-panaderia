@@ -46,3 +46,7 @@ jobs:
           git commit -m "chore: actualizar disponibilidad de ${{ inputs.taller_slug }}"
           git pull --rebase origin main
           git push origin main
+      - name: Trigger deploy
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh workflow run "Deploy Astro to GitHub Pages" --ref main
