@@ -17,11 +17,25 @@ const {
     instructorGenero,
     nivel,
     cuposDisponibles,
+    cuposTotales,
     precio,
     precioPreventa,
     imagen,
     imagenAlt,
 } = taller.data;
+
+// Porcentaje de cupos disponibles respecto al total
+const porcentajeCupos = (cuposDisponibles / cuposTotales) * 100;
+
+// Umbrales: verde >50%, amarillo 30%-50%, rojo <30%
+let nivelDisponibilidad: "alto" | "medio" | "bajo";
+if (porcentajeCupos > 50) {
+    nivelDisponibilidad = "alto";
+} else if (porcentajeCupos >= 30) {
+    nivelDisponibilidad = "medio";
+} else {
+    nivelDisponibilidad = "bajo";
+}
 
 // Umbral de "pocos cupos": <= 5, coincide con el criterio del mockup original
 // (3 cupos = "pocos", 8 y 12 = "disponibles"). Ajustable si Marketing define otro criterio.
@@ -55,7 +69,7 @@ const base = import.meta.env.BASE_URL;
     <div class="card-content">
         <div class="card-meta">
             <span class="badge badge-nivel">
-                 <svg
+                <svg
                     width="14"
                     height="14"
                     viewBox="0 0 24 24"
@@ -64,35 +78,71 @@ const base = import.meta.env.BASE_URL;
                     stroke-width="2.5"
                     stroke-linecap="round"
                 >
-                     <line x1="4" y1="20" x2="4" y2="14"></line>
-                     <line x1="12" y1="20" x2="12" y2="9"></line>
-                     <line x1="20" y1="20" x2="20" y2="4"></line>
-                    
+                    <line x1="4" y1="20" x2="4" y2="14"></line>
+                    <line x1="12" y1="20" x2="12" y2="9"></line>
+                    <line x1="20" y1="20" x2="20" y2="4"></line>
                 </svg>
-                 {nivel}
-                
+                {nivel}
             </span>
+
             {
-                pocosCupos ? (
-                    <span class="badge few">
-         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-           <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-           <circle cx="9" cy="7" r="4" />
-           <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-          <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-         </svg>
-         ¡Solo {cuposDisponibles}!
-       </span>
+                nivelDisponibilidad === "bajo" ? (
+                    <span class="badge low">
+                        <svg
+                            width="14"
+                            height="14"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                            <circle cx="9" cy="7" r="4" />
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                        </svg>
+                        ¡Últimos {cuposDisponibles} cupos!
+                    </span>
+                ) : nivelDisponibilidad === "medio" ? (
+                    <span class="badge medium">
+                        <svg
+                            width="14"
+                            height="14"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                            <circle cx="9" cy="7" r="4" />
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                        </svg>
+                        Quedan {cuposDisponibles} cupos
+                    </span>
                 ) : (
-                    <span class="badge available">
-         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-           <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-           <circle cx="9" cy="7" r="4" />
-           <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-           <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-         </svg>
-         {cuposDisponibles} disponibles
-       </span>
+                    <span class="badge high">
+                        <svg
+                            width="14"
+                            height="14"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                            <circle cx="9" cy="7" r="4" />
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                        </svg>
+                        {cuposDisponibles} disponibles
+                    </span>
                 )
             }
         </div>
@@ -277,5 +327,19 @@ const base = import.meta.env.BASE_URL;
         .card-actions {
             grid-template-columns: 1fr;
         }
+    }
+        .badge.high {
+        background-color: rgba(34, 197, 94, 0.12);
+        color: #16a34a;
+    }
+
+    .badge.medium {
+        background-color: rgba(234, 179, 8, 0.14);
+        color: #b45309;
+    }
+
+    .badge.low {
+        background-color: rgba(239, 68, 68, 0.12);
+        color: #dc2626;
     }
 </style>
