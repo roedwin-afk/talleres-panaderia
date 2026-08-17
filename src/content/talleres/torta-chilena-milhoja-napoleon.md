@@ -1,13 +1,13 @@
 ---
-nombre: "Torta Chilena y Milhoja Napoleón"
-slug: "torta-chilena-milhoja-napoleon"
-fecha: 2026-08-29
-horarioInicio: "9:00 AM"
-horarioFin: "12:00 PM"
-instructor: "Felipe Gonzalez"
-instructorGenero: "m"
-nivel: "Todo público"
-cuposDisponibles: 10
+nombre: Torta Chilena y Milhoja Napoleón
+slug: torta-chilena-milhoja-napoleon
+fecha: 2026-08-29T00:00:00.000Z
+horarioInicio: '9:00 AM'
+horarioFin: '12:00 PM'
+instructor: Felipe Gonzalez
+instructorGenero: m
+nivel: Todo público
+cuposDisponibles: 9
 cuposTotales: 10
 precio: 35
 precioPreventa: 30
