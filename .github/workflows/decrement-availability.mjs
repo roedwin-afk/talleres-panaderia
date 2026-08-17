@@ -1,58 +1,40 @@
-import fs from 'node:fs';
-import path from 'node:path';
-import matter from 'gray-matter';
-
-// Ajusta esta ruta si tus talleres viven en otra carpeta de Content Collections
-const CONTENT_DIR = path.join(process.cwd(), 'src/content/talleres');
+import fs from "node:fs";
+import path from "node:path";
+import matter from "gray-matter";
 
 const slug = process.argv[2];
+
 if (!slug) {
-  console.error('❌ Falta el slug del taller (argumento requerido).');
+  console.error("❌ Error: debes pasar el slug del taller como argumento.");
   process.exit(1);
 }
 
-function findFile(dir) {
-  const entries = fs.readdirSync(dir, { withFileTypes: true });
-  for (const entry of entries) {
-    const fullPath = path.join(dir, entry.name);
-    if (entry.isDirectory()) {
-      const found = findFile(fullPath);
-      if (found) return found;
-    } else if (/\.mdx?$/.test(entry.name)) {
-      // Empareja por el campo "slug" del frontmatter (más confiable),
-      // con fallback al nombre del archivo por si algún taller no lo define.
-      const raw = fs.readFileSync(fullPath, 'utf8');
-      const { data } = matter(raw);
-      const fileSlug = data.slug || path.basename(entry.name, path.extname(entry.name));
-      if (fileSlug === slug) return fullPath;
-    }
-  }
-  return null;
-}
+const filePath = path.join("src", "content", "talleres", `${slug}.md`);
 
-if (!fs.existsSync(CONTENT_DIR)) {
-  console.error(`❌ No existe el directorio ${CONTENT_DIR}. Ajusta CONTENT_DIR en el script.`);
+if (!fs.existsSync(filePath)) {
+  console.error(`❌ Error: no se encontró el archivo ${filePath}`);
   process.exit(1);
 }
 
-const filePath = findFile(CONTENT_DIR);
-if (!filePath) {
-  console.error(`❌ No se encontró ningún taller con slug "${slug}" dentro de ${CONTENT_DIR}`);
+const raw = fs.readFileSync(filePath, "utf8");
+const parsed = matter(raw);
+
+const cuposActuales = parsed.data.cuposDisponibles;
+
+if (typeof cuposActuales !== "number") {
+  console.error(`❌ Error: el campo "cuposDisponibles" no existe o no es numérico en ${filePath}`);
   process.exit(1);
 }
 
-const raw = fs.readFileSync(filePath, 'utf8');
-const { data, content } = matter(raw);
-
-if (typeof data.cuposDisponibles !== 'number') {
-  console.error(`❌ El campo "cuposDisponibles" no existe o no es numérico en ${filePath}`);
-  process.exit(1);
+if (cuposActuales <= 0) {
+  console.log(`⚠️ El taller "${slug}" ya tiene 0 cupos disponibles. No se decrementa más.`);
+  process.exit(0);
 }
 
-const before = data.cuposDisponibles;
-data.cuposDisponibles = Math.max(0, data.cuposDisponibles - 1);
+parsed.data.cuposDisponibles = cuposActuales - 1;
 
-const updated = matter.stringify(content, data);
-fs.writeFileSync(filePath, updated);
+const nuevoContenido = matter.stringify(parsed.content, parsed.data);
 
-console.log(`✅ ${slug}: cuposDisponibles ${before} → ${data.cuposDisponibles} (${filePath})`);
+fs.writeFileSync(filePath, nuevoContenido, "utf8");
+
+console.log(`✅ Cupos actualizados para "${slug}": ${cuposActuales} → ${parsed.data.cuposDisponibles}`);
