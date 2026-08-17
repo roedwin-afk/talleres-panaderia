@@ -1,20 +1,21 @@
 ---
-nombre: "Domina el Arte de la Pizza"
-slug: "domina-el-arte-de-la-pizza"
-fecha: 2026-08-22
-horarioInicio: "9:00 AM"
-horarioFin: "12:00 PM"
-instructor: "Felipe Gonzalez"
-instructorGenero: "m"
-nivel: "Todo público"
-cuposDisponibles: 10
+nombre: Domina el Arte de la Pizza
+slug: domina-el-arte-de-la-pizza
+fecha: 2026-08-22T00:00:00.000Z
+horarioInicio: '9:00 AM'
+horarioFin: '12:00 PM'
+instructor: Felipe Gonzalez
+instructorGenero: m
+nivel: Todo público
+cuposDisponibles: 9
 cuposTotales: 10
-precio: 35.00
-precioPreventa: 30.00
-imagen: "https://images.unsplash.com/photo-1513104890138-7c749659a591?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
-imagenAlt: "Pizza artesanal recién horneada"
+precio: 35
+precioPreventa: 30
+imagen: >-
+  https://images.unsplash.com/photo-1513104890138-7c749659a591?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80
+imagenAlt: Pizza artesanal recién horneada
 destacado: false
-categoria: "panaderia"
+categoria: panaderia
 ---
 
 Aprende haciendo y descubre todo el proceso para preparar una deliciosa pizza. En este taller práctico participarás en la preparación mientras conoces las técnicas y maquinaria profesional que puede ayudarte a facilitar el trabajo y agilizar las diferentes etapas de producción.
