@@ -30,8 +30,9 @@ const { talleres, tallerPreseleccionado, patronFondo = PATRON_TRIGO } =
       </p>
 
       <!-- Change or deletion of the name attributes in the input tags will lead to empty values on record submission -->
+      <!-- action="https://forms.zohopublic.com/promaica/form/RegistrodeTalleresdePanadera/formperma/8Znatko58Yl6p6O17r3YomF3yP2d-ifDUGoJ42r0lTo/htmlRecords/submit"  -->
       <form
-        action="https://forms.zohopublic.com/promaica/form/RegistrodeTalleresdePanadera/formperma/8Znatko58Yl6p6O17r3YomF3yP2d-ifDUGoJ42r0lTo/htmlRecords/submit"
+        action="https://forms.zohopublic.com/promaica/form/TestRegistrodetalleresdepanaderia/formperma/2Nk8m2rKCbbMNYq0PRvvIOsgrQWgjyw3qDub5n600mU/htmlRecords/submit"
         name="form"
         id="zoho-form"
         method="POST"
@@ -152,16 +153,11 @@ const { talleres, tallerPreseleccionado, patronFondo = PATRON_TRIGO } =
                   Selecciona un taller...
                 </option>
                 {talleres?.map((taller) => (
+                  // <option value={taller.data.nombre}>
                   <option value={taller.data.nombre}>
                     {taller.data.nombre}
                   </option>
                 ))}
-                <option value="Panadería Básica">Panadería Básica</option>
-                <option value="Postres Avanzados">Postres Avanzados</option>
-                <option value="Pan Artesanal">Pan Artesanal</option>
-                <option value="Decoración de Pasteles">
-                  Decoración de Pasteles
-                </option>
               </select>
             </div>
           )
