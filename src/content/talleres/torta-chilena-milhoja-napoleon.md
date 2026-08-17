@@ -1,6 +1,6 @@
 ---
 nombre: "Torta Chilena y Milhoja Napoleón"
-slug: "torta-chilena-milhoja-napoleón"
+slug: "torta-chilena-milhoja-napoleon"
 fecha: 2026-08-29
 horarioInicio: "9:00 AM"
 horarioFin: "12:00 PM"
@@ -9,12 +9,13 @@ instructorGenero: "m"
 nivel: "Todo público"
 cuposDisponibles: 10
 cuposTotales: 10
-precio: 35.00
-precioPreventa: 30.00
-imagen: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
-imagenAlt: "Torta Chilena y Milhoja Napoleón"
+precio: 35
+precioPreventa: 30
+imagen: >-
+  https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80
+imagenAlt: Torta Chilena y Milhoja Napoleón
 destacado: false
-categoria: "panaderia"
+categoria: panaderia
 ---
 
 Aprende haciendo y descubre el proceso para preparar Torta Chilena y Milhoja Napoleón, dos deliciosas opciones de repostería que puedes incorporar a tu emprendimiento o negocio.
