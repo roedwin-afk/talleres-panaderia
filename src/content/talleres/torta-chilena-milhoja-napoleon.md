@@ -1,6 +1,6 @@
 ---
 nombre: "Torta Chilena y Milhoja Napoleón"
-slug: "torta-chilena-milhoja-napoleon"
+slug: "torta-chilena-milhoja-napoleón"
 fecha: 2026-08-29
 horarioInicio: "9:00 AM"
 horarioFin: "12:00 PM"
