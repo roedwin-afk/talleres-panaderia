@@ -8,14 +8,26 @@ import { sitio } from '../data/content';
 interface Props {
   title: string;
   description?: string;
+  image?: string; // ruta relativa a /public (ej. "/logo-alargado.png") o URL absoluta
+  type?: 'website' | 'article'; // 'article' para páginas de taller individual
 }
 
 const {
   title,
   description = 'Talleres prácticos de panadería con equipo y maquinaria profesional. Cupos limitados.',
+  image = "/og-image.png",
+  type = 'website',
 } = Astro.props;
 
 const base = import.meta.env.BASE_URL;
+
+// Imagen por defecto si la página no pasa una propia (ej. la foto del taller)
+const ogImageInput = image;
+
+// Astro.site viene de astro.config.mjs (SITE env var). Con esto generamos
+// URLs absolutas sin importar si estamos en producción o en el build de test.
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const ogImageURL = new URL(ogImageInput, Astro.site);
 ---
 
 <html lang="es">
@@ -24,7 +36,23 @@ const base = import.meta.env.BASE_URL;
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
     <link rel="icon" type="image/svg+xml" href={`${base}favicon.png`} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content={type} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImageURL} />
+    <meta property="og:locale" content="es_SV" />
+    <meta property="og:site_name" content={sitio.nombreEmpresa} />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageURL} />
   </head>
   <body>
     <Header
