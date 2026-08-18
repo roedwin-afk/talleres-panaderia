@@ -1,5 +1,4 @@
 name: Update Taller Availability
-
 on:
   workflow_dispatch:
     inputs:
@@ -7,33 +6,26 @@ on:
         description: 'Slug del taller (nombre del archivo sin extensión, ej: domina-arte-pizza)'
         required: true
         type: string
-
 permissions:
   contents: write
   actions: write
-
 concurrency:
   group: update-availability
   cancel-in-progress: false
-
 jobs:
   update:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 22
-
       - name: Install gray-matter
         run: npm install gray-matter --no-save
-
       - name: Decrement disponibles
         run: node .github/scripts/decrement-availability.mjs "${{ inputs.taller_slug }}"
-
       - name: Commit and push
         run: |
           git config user.name "github-actions[bot]"
@@ -49,4 +41,6 @@ jobs:
       - name: Trigger deploy
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh workflow run "Deploy Astro to GitHub Pages" --ref main
+        run: |
+          gh workflow run "Deploy Astro to GitHub Pages" --ref main
+          gh workflow run "Deploy Website via FTP" --ref main
