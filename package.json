@@ -10,7 +10,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "build:test": "cross-env SITE=https://landing.mequipo.com BASE=/landings/eyp-talleres/ astro build"
+    "build:test": "cross-env SITE=https://landing.mequipo.com BASE=/landings/eyp-talleres/ astro build",
+    "build:prod": "cross-env SITE=https://talleres.equipoypartes.com/ BASE=/ astro build"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",
