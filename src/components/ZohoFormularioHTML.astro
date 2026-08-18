@@ -14,19 +14,26 @@ interface Props {
 const PATRON_TRIGO =
   "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56' viewBox='0 0 56 56'%3E%3Cg fill='none' stroke='%23C05621' stroke-width='1.4' stroke-linecap='round' opacity='0.4' transform='rotate(15 28 28)'%3E%3Cline x1='28' y1='10' x2='28' y2='46'/%3E%3Cpath d='M28 15 L22 20 M28 15 L34 20'/%3E%3Cpath d='M28 22 L22 27 M28 22 L34 27'/%3E%3Cpath d='M28 29 L22 34 M28 29 L34 34'/%3E%3Cpath d='M28 36 L22 41 M28 36 L34 41'/%3E%3C/g%3E%3C/svg%3E\")";
 
-const { talleres, tallerPreseleccionado, patronFondo = PATRON_TRIGO } =
-  Astro.props;
+const {
+  talleres,
+  tallerPreseleccionado,
+  patronFondo = PATRON_TRIGO,
+} = Astro.props;
 ---
 
-<section id="registration" class="registration-section" style={`--patron-fondo: ${patronFondo};`}>
+<section
+  id="registration"
+  class="registration-section"
+  style={`--patron-fondo: ${patronFondo};`}
+>
   <div class="container">
     <div class="form-container">
       <h3>Reserva tu espacio</h3>
       <p class="form-desc">
         ¿Encontraste el taller ideal para ti? Completa el formulario para
         solicitar tu preinscripción. Nuestro equipo se pondrá en contacto
-        contigo para confirmar disponibilidad, brindarte los detalles de pago
-        y finalizar tu inscripción.
+        contigo para confirmar disponibilidad, brindarte los detalles de pago y
+        finalizar tu inscripción.
       </p>
 
       <!-- Change or deletion of the name attributes in the input tags will lead to empty values on record submission -->
@@ -36,6 +43,7 @@ const { talleres, tallerPreseleccionado, patronFondo = PATRON_TRIGO } =
         name="form"
         id="zoho-form"
         method="POST"
+        target="zoho-hidden-frame"
         accept-charset="UTF-8"
         enctype="multipart/form-data"
       >
@@ -186,11 +194,22 @@ const { talleres, tallerPreseleccionado, patronFondo = PATRON_TRIGO } =
         </button>
         <p class="form-note">
           *El pago y confirmación final se gestionan de forma directa con
-          nuestro equipo comercial. Precio de preventa disponible solo
-          pagando el taller completo al reservar; reservando con el 50% de
-          anticipo no aplica el descuento.
+          nuestro equipo comercial. Precio de preventa disponible solo pagando
+          el taller completo al reservar; reservando con el 50% de anticipo no
+          aplica el descuento.
         </p>
       </form>
+      <iframe name="zoho-hidden-frame" style="display:none" title="envío"
+      ></iframe>
+      <div id="modal-confirmacion" class="modal-confirmacion" hidden>
+        <div class="modal-contenido">
+          <h3>¡Listo! Tu preinscripción fue enviada</h3>
+          <p>
+            Nuestro equipo te contactará pronto para confirmar disponibilidad.
+          </p>
+          <button id="cerrar-modal">Cerrar</button>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -287,7 +306,85 @@ const { talleres, tallerPreseleccionado, patronFondo = PATRON_TRIGO } =
       grid-template-columns: 1fr;
     }
   }
+  .modal-confirmacion {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.55);
+  padding: var(--space-md, 1rem);
+}
+
+.modal-confirmacion[hidden] {
+  display: none;
+}
+
+.modal-contenido {
+  background: #fff;
+  border-radius: var(--radius-lg, 12px);
+  padding: var(--space-lg, 2rem);
+  max-width: 420px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+  animation: modal-aparece 0.25s ease-out;
+}
+
+.modal-contenido h3 {
+  color: var(--brand-primary, #FD7A18);
+  font-size: 1.4rem;
+  margin-bottom: var(--space-xs, 0.5rem);
+}
+
+.modal-contenido p {
+  color: var(--text-muted, #64748B);
+  margin-bottom: var(--space-md, 1.25rem);
+}
+
+.modal-contenido button {
+  background: var(--brand-primary, #FD7A18);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-md, 8px);
+  padding: 0.6rem 1.5rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.modal-contenido button:hover {
+  opacity: 0.9;
+}
+
+@keyframes modal-aparece {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
 </style>
+
+<script is:inline>
+  const zohoForm = document.getElementById("zoho-form");
+  const modal = document.getElementById("modal-confirmacion");
+
+  zohoForm?.addEventListener("submit", () => {
+    // Deja que el iframe reciba el submit, luego muestra el modal
+    setTimeout(() => {
+      modal.hidden = false;
+    }, 600);
+  });
+
+  document.getElementById("cerrar-modal")?.addEventListener("click", () => {
+    modal.hidden = true;
+    zohoForm.reset();
+  });
+</script>
 
 <script is:inline>
   document.addEventListener("DOMContentLoaded", function () {

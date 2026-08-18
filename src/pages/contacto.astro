@@ -195,27 +195,58 @@ const sucursales = sucursalesBase.map((sucursal) => {
           Mándanos tu consulta y te respondemos a la brevedad.
         </p>
 
-        <form id="form-dudas">
-          <div class="form-group">
-            <label for="duda-nombre" class="form-label">Nombre</label>
-            <input
-              type="text"
-              id="duda-nombre"
-              name="nombre"
-              class="form-control"
-              placeholder="Ej. Juan Pérez"
-              required
-            />
+        <!-- No cambiar los atributos name: Zoho los usa para mapear los datos -->
+        <form
+          action="https://forms.zohopublic.com/promaica/form/ContactoTaller/formperma/gBBDZF2CLF1LAtLFY62r8gHnYjzYih3E8rLcyKnbLwM/htmlRecords/submit"
+          name="form-dudas"
+          id="form-dudas"
+          method="POST"
+          target="dudas-hidden-frame"
+          accept-charset="UTF-8"
+          enctype="multipart/form-data"
+        >
+          <input type="hidden" name="zf_referrer_name" value="" />
+          <input type="hidden" name="zf_redirect_url" value="" />
+          <input type="hidden" name="zc_gad" value="" />
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="duda-nombre" class="form-label"
+                >Nombres <em>*</em></label
+              >
+              <input
+                type="text"
+                id="duda-nombre"
+                name="Name_First"
+                maxlength="255"
+                class="form-control"
+                placeholder="Ej. Juan"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="duda-apellido" class="form-label">Apellidos</label>
+              <input
+                type="text"
+                id="duda-apellido"
+                name="Name_Last"
+                maxlength="255"
+                class="form-control"
+                placeholder="Ej. Pérez"
+              />
+            </div>
           </div>
 
           <div class="form-group">
             <label for="duda-correo" class="form-label"
-              >Correo electrónico</label
+              >Correo electrónico <em>*</em></label
             >
             <input
-              type="email"
+              type="text"
               id="duda-correo"
-              name="correo"
+              name="Email1"
+              maxlength="255"
               class="form-control"
               placeholder="ejemplo@correo.com"
               required
@@ -223,10 +254,25 @@ const sucursales = sucursalesBase.map((sucursal) => {
           </div>
 
           <div class="form-group">
-            <label for="duda-mensaje" class="form-label">Mensaje</label>
+            <label for="duda-telefono" class="form-label">Teléfono</label>
+            <input
+              type="text"
+              id="duda-telefono"
+              name="PhoneNumber_countrycode"
+              maxlength="20"
+              class="form-control"
+              placeholder="Ej. 71778450"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="duda-mensaje" class="form-label"
+              >Mensaje <em>*</em></label
+            >
             <textarea
               id="duda-mensaje"
-              name="mensaje"
+              name="MultiLine"
+              maxlength="65535"
               class="form-control"
               rows="4"
               placeholder="Cuéntanos en qué te podemos ayudar"
@@ -241,14 +287,40 @@ const sucursales = sucursalesBase.map((sucursal) => {
       </div>
     </div>
   </section>
+
+  <iframe
+    name="dudas-hidden-frame"
+    title="envío de formulario de contacto"
+    style="display:none"
+  ></iframe>
+
+  <div id="modal-confirmacion" class="modal-confirmacion" hidden>
+    <div class="modal-contenido">
+      <h3>¡Mensaje enviado!</h3>
+      <p>Gracias por escribirnos. Te responderemos a la brevedad.</p>
+      <button id="cerrar-modal" type="button" class="btn btn-primary">
+        Cerrar
+      </button>
+    </div>
+  </div>
 </Layout>
 
 <script is:inline>
   const form = document.getElementById("form-dudas");
-  form?.addEventListener("submit", (e) => {
-    e.preventDefault();
-    alert("Gracias por escribirnos. Te responderemos pronto.");
-    form.reset();
+  const modal = document.getElementById("modal-confirmacion");
+  const cerrarModal = document.getElementById("cerrar-modal");
+
+  form?.addEventListener("submit", () => {
+    // El iframe recibe el submit; no podemos leer su respuesta (cross-origin),
+    // así que mostramos el modal después de un breve margen.
+    setTimeout(() => {
+      modal.hidden = false;
+      form.reset();
+    }, 600);
+  });
+
+  cerrarModal?.addEventListener("click", () => {
+    modal.hidden = true;
   });
 </script>
 
@@ -463,8 +535,68 @@ const sucursales = sucursalesBase.map((sucursal) => {
     font-size: 0.95rem;
   }
 
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-sm);
+  }
+
   .form-group {
     margin-bottom: var(--space-sm);
+  }
+
+  .form-label em {
+    color: var(--brand-primary);
+    font-style: normal;
+  }
+
+  /* --- Modal de confirmación --- */
+  .modal-confirmacion {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.55);
+    padding: var(--space-md);
+  }
+
+  .modal-confirmacion[hidden] {
+    display: none;
+  }
+
+  .modal-contenido {
+    background-color: var(--bg-surface);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    padding: var(--space-lg);
+    max-width: 420px;
+    width: 100%;
+    text-align: center;
+    animation: modal-aparece 0.25s ease-out;
+  }
+
+  .modal-contenido h3 {
+    color: var(--brand-primary);
+    font-size: 1.4rem;
+    margin-bottom: var(--space-xs);
+  }
+
+  .modal-contenido p {
+    color: var(--text-muted);
+    margin-bottom: var(--space-md);
+  }
+
+  @keyframes modal-aparece {
+    from {
+      opacity: 0;
+      transform: translateY(10px) scale(0.97);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
   }
 
   .form-label {
@@ -498,6 +630,10 @@ const sucursales = sucursalesBase.map((sucursal) => {
 
     .dudas .form-container {
       padding: var(--space-md) var(--space-sm);
+    }
+
+    .form-row {
+      grid-template-columns: 1fr;
     }
   }
 </style>
