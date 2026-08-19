@@ -37,9 +37,9 @@ const {
       </p>
 
       <!-- Change or deletion of the name attributes in the input tags will lead to empty values on record submission -->
-      <!-- action="https://forms.zohopublic.com/promaica/form/RegistrodeTalleresdePanadera/formperma/8Znatko58Yl6p6O17r3YomF3yP2d-ifDUGoJ42r0lTo/htmlRecords/submit"  -->
+      <!-- action="https://forms.zohopublic.com/promaica/form/TestRegistrodetalleresdepanaderia/formperma/2Nk8m2rKCbbMNYq0PRvvIOsgrQWgjyw3qDub5n600mU/htmlRecords/submit" -->
       <form
-        action="https://forms.zohopublic.com/promaica/form/TestRegistrodetalleresdepanaderia/formperma/2Nk8m2rKCbbMNYq0PRvvIOsgrQWgjyw3qDub5n600mU/htmlRecords/submit"
+        action="https://forms.zohopublic.com/promaica/form/RegistrodeTalleresdePanadera/formperma/8Znatko58Yl6p6O17r3YomF3yP2d-ifDUGoJ42r0lTo/htmlRecords/submit"
         name="form"
         id="zoho-form"
         method="POST"
@@ -370,20 +370,22 @@ const {
 </style>
 
 <script is:inline>
-  const zohoForm = document.getElementById("zoho-form");
-  const modal = document.getElementById("modal-confirmacion");
+  (() => {
+    const zohoForm = document.getElementById("zoho-form");
+    const modal = document.getElementById("modal-confirmacion");
 
-  zohoForm?.addEventListener("submit", () => {
-    // Deja que el iframe reciba el submit, luego muestra el modal
-    setTimeout(() => {
-      modal.hidden = false;
-    }, 600);
-  });
+    zohoForm?.addEventListener("submit", () => {
+      // Deja que el iframe reciba el submit, luego muestra el modal
+      setTimeout(() => {
+        modal.hidden = false;
+      }, 600);
+    });
 
-  document.getElementById("cerrar-modal")?.addEventListener("click", () => {
-    modal.hidden = true;
-    zohoForm.reset();
-  });
+    document.getElementById("cerrar-modal")?.addEventListener("click", () => {
+      modal.hidden = true;
+      zohoForm.reset();
+    });
+  })();
 </script>
 
 <script is:inline>

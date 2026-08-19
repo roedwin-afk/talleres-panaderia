@@ -308,6 +308,7 @@ const galerias = await Promise.all(
 </style>
 
 <script is:inline>
+  (() => {
   const modal = document.getElementById("galeria-modal");
   const modalImg = document.getElementById("galeria-modal-img");
   const modalTitulo = document.getElementById("galeria-modal-titulo");
@@ -389,4 +390,5 @@ const galerias = await Promise.all(
     if (e.key === "ArrowLeft") irAnterior();
     if (e.key === "ArrowRight") irSiguiente();
   });
+  })();
 </script>
