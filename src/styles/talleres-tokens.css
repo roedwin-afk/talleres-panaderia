@@ -1,6 +1,27 @@
 /* src/styles/talleres-tokens.css
    Design tokens — actualizar cuando Marketing confirme el Manual de Marca. */
 
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Offset para que las secciones-ancla (#workshops, #registration,
+   #talleres-anteriores, #faq) no queden tapadas por el header sticky
+   al hacer scroll hacia ellas. Usa la altura máxima del header (estado
+   expandido, sin compactar). */
+#workshops,
+#registration,
+#talleres-anteriores,
+#faq {
+  scroll-margin-top: 10.5rem;
+}
+
 :root {
   /* Paleta de Colores — oficial, del Manual de Marca (EYP_MANUAL_DE_MARCA) */
   --brand-primary: #FD7A18;       /* Color Secundario del manual: títulos, botones CTA */
@@ -13,6 +34,7 @@
   --bg-surface-alt: #F3EAE1;
 
   --text-main: #232426;            /* Color secundario oscuro del manual */
+
   --text-muted: #718096;
   --text-light: #F7FAFC;
 

@@ -41,17 +41,17 @@ const hashActual = Astro.url.hash; // ej: "#formulario" o ""
 
 <header id="site-header">
   <div class="container header-content">
-    <div class="header-top">
-      <button
-        id="nav-toggle"
-        class="nav-toggle"
-        aria-label="Abrir menú"
-        aria-expanded="false"
-        aria-controls="main-nav"
-      >
-        <span></span><span></span><span></span>
-      </button>
+    <button
+      id="nav-toggle"
+      class="nav-toggle"
+      aria-label="Abrir menú"
+      aria-expanded="false"
+      aria-controls="main-nav"
+    >
+      <span></span><span></span><span></span>
+    </button>
 
+    <div class="header-top">
       <a href={base} class="logo">
         <Image
           src={logo}
@@ -126,10 +126,11 @@ const hashActual = Astro.url.hash; // ej: "#formulario" o ""
   .header-top {
     position: relative;
     width: 100%;
-    height: 9.25rem;
+    height: 8rem;
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
     transition: height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
@@ -144,7 +145,7 @@ const hashActual = Astro.url.hash; // ej: "#formulario" o ""
   }
 
   #site-header.header--compact .header-top {
-    height: 2.0rem;
+    height: 0;
   }
 
   #site-header.header--compact .logo {
@@ -155,7 +156,7 @@ const hashActual = Astro.url.hash; // ej: "#formulario" o ""
 
   .navbar__logo-img {
     display: block;
-    height: 8.75rem;
+    height: 7.5rem;
     width: auto;
   }
 
@@ -168,9 +169,8 @@ const hashActual = Astro.url.hash; // ej: "#formulario" o ""
     cursor: pointer;
     padding: 0.5rem;
     position: absolute;
-    top: 50%;
+    top: 0.6rem;
     left: 0.5rem;
-    transform: translateY(-50%);
     z-index: 10;
   }
 

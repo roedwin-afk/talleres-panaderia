@@ -8,7 +8,7 @@ lugar: 'PROMAICA San Salvador'
 instructor: Felipe Gonzalez
 instructorGenero: m
 nivel: Todo público
-cuposDisponibles: 8
+cuposDisponibles: 10
 cuposTotales: 10
 precio: 35
 precioPreventa: 30

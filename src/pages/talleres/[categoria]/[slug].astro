@@ -43,6 +43,7 @@ const fechaFormateada = fecha.toLocaleDateString("es-SV", {
   weekday: "long",
   day: "numeric",
   month: "long",
+  timeZone: "UTC",
 });
 const formateadorUSD = new Intl.NumberFormat("en-US", {
   style: "currency",
