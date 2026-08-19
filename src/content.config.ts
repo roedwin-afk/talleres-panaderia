@@ -11,6 +11,7 @@ const talleres = defineCollection({
     fecha: z.coerce.date(),
     horarioInicio: z.string(),
     horarioFin: z.string(),
+    lugar: z.string(),
     instructor: z.string(),
     instructorGenero: z.enum(['m', 'f']).default('m'),
     nivel: z.enum(['Todo público', 'Principiante', 'Intermedio', 'Avanzado']),

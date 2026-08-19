@@ -4,6 +4,7 @@ slug: reposteria-para-emprender-piononos-y-brownies
 fecha: 2026-09-26T00:00:00.000Z
 horarioInicio: '9:00 AM'
 horarioFin: '12:00 PM'
+lugar: 'PROMAICA San Salvador'
 instructor: Felipe Gonzalez
 instructorGenero: m
 nivel: Todo público
