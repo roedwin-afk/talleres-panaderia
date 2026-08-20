@@ -25,6 +25,22 @@ const contactoActivo = normalizar(pathnameActual).startsWith(
 
 const esRaiz = normalizar(pathnameActual) === normalizar(base);
 
+// Las anclas del menú (Talleres, Formulario, Talleres Anteriores, FAQ)
+// viven en la página de categoría (/talleres/{categoria}/), no en el
+// detalle de un taller individual. Si estamos dentro de un taller
+// (/talleres/{categoria}/{slug}/), estas anclas deben apuntar de vuelta
+// a la página de categoría, no a la página actual — si no, el navegador
+// busca el ancla dentro del detalle, donde no existe.
+const talleresPrefix = `${base}talleres/`;
+let categoriaPathname = pathnameActual;
+if (pathnameActual.startsWith(talleresPrefix)) {
+  const resto = pathnameActual.slice(talleresPrefix.length);
+  const categoriaId = resto.split("/")[0];
+  if (categoriaId) {
+    categoriaPathname = `${talleresPrefix}${categoriaId}/`;
+  }
+}
+
 // La página de Contacto tampoco tiene las anclas (#formulario,
 // #talleres-anteriores, #faq) — esas solo existen dentro de una página de
 // categoría o de un taller. Así que en Contacto debe mostrarse la misma
@@ -78,9 +94,9 @@ const hashActual = Astro.url.hash; // ej: "#formulario" o ""
                 );
               })
             : menu.map((cat) => {
-                // El ancla apunta a la página ACTUAL (categoría o taller),
-                // no siempre a la raíz del sitio.
-                const href = `${pathnameActual}#${cat.tag}`;
+                // El ancla apunta a la página de categoría, no a la
+                // página actual (que puede ser el detalle de un taller).
+                const href = `${categoriaPathname}#${cat.tag}`;
                 const activo = hashActual === `#${cat.tag}`;
                 return (
                   <li>
@@ -126,7 +142,7 @@ const hashActual = Astro.url.hash; // ej: "#formulario" o ""
   .header-top {
     position: relative;
     width: 100%;
-    height: 8rem;
+    height: 6rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -156,7 +172,7 @@ const hashActual = Astro.url.hash; // ej: "#formulario" o ""
 
   .navbar__logo-img {
     display: block;
-    height: 7.5rem;
+    height: 5.5rem;
     width: auto;
   }
 
