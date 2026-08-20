@@ -52,6 +52,8 @@ const sucursalesBase = [
   {
     nombre: 'San Salvador',
     direccion: 'Calle Roma y Calle Lorena #170, San Salvador.',
+    lat: 13.694118,
+    lng: -89.2269268,
     horario: [
       'Lunes - Viernes: 8:00 a.m. - 5:00 p.m.',
       'Sábado: 8:00 a.m. - 4:00 p.m.',
@@ -62,6 +64,8 @@ const sucursalesBase = [
     nombre: 'San Miguel',
     direccion:
       'Carretera Panamericana, 500 metros de Metrocentro. Ex local Zócalo, San Miguel.',
+    lat: 13.4645698,
+    lng: -88.1693709,
     horario: [
       'Lunes - Viernes: 8:00 a.m. - 5:00 p.m.',
       'Sábado: 8:00 a.m. - 12:00 m.d.',
@@ -72,17 +76,16 @@ const sucursalesBase = [
 
 // Se precalculan aquí (y no dentro del markup) para no tener URLs sueltas
 // mezcladas con atributos JSX, que es justo lo que se rompió la vez pasada.
+// El mapa usa las coordenadas exactas (confirmadas en Google Maps), no una
+// búsqueda por texto de dirección, para que el pin caiga siempre en el
+// lugar correcto.
 const sucursales = sucursalesBase.map((sucursal) => {
-  const direccionCompleta = sucursal.direccion + ' El Salvador';
-  const direccionCodificada = encodeURIComponent(direccionCompleta);
+  const coords = sucursal.lat + ',' + sucursal.lng;
   return {
     ...sucursal,
     mapEmbedSrc:
-      'https://www.google.com/maps?q=' +
-      direccionCodificada +
-      '&output=embed',
-    mapsUrl:
-      'https://www.google.com/maps/search/' + direccionCodificada,
+      'https://www.google.com/maps?q=' + coords + '&z=17&output=embed',
+    mapsUrl: 'https://www.google.com/maps?q=' + coords,
   };
 });
 ---
@@ -172,7 +175,7 @@ const sucursales = sucursalesBase.map((sucursal) => {
                   ))}
                 </ul>
                 <a
-                  class="btn btn-outline btn-block"
+                  class="btn btn-outline btn-block sucursal-cta"
                   href={sucursal.mapsUrl}
                   target="_blank"
                   rel="noopener"
@@ -463,6 +466,8 @@ const sucursales = sucursalesBase.map((sucursal) => {
     border-radius: var(--radius-lg);
     overflow: hidden;
     box-shadow: var(--shadow-md);
+    display: flex;
+    flex-direction: column;
   }
 
   .sucursal-mapa {
@@ -470,10 +475,14 @@ const sucursales = sucursalesBase.map((sucursal) => {
     height: 220px;
     border: 0;
     display: block;
+    flex-shrink: 0;
   }
 
   .sucursal-body {
     padding: var(--space-md);
+    display: flex;
+    flex-direction: column;
+    flex: 1;
   }
 
   .sucursal-body h3 {
@@ -506,6 +515,10 @@ const sucursales = sucursalesBase.map((sucursal) => {
 
   .sucursal-horario li {
     padding: 0.15rem 0;
+  }
+
+  .sucursal-cta {
+    margin-top: auto;
   }
 
   /* --- Formulario de dudas --- */
