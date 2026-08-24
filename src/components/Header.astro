@@ -242,31 +242,92 @@ const hashActual = Astro.url.hash; // ej: "#formulario" o ""
     border-bottom-color: var(--brand-primary);
   }
 
+  @media (max-width: 767px) {
+  .header-content {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .nav-toggle {
+    position: absolute;
+    left: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .header-top {
+    width: 100%;
+    justify-content: center;
+    transition: justify-content 0.35s ease;
+  }
+
+  .logo {
+    height: 100%;
+    transition:
+      opacity 0.3s ease,
+      transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .navbar__logo-img {
+    height: 100%;
+    width: auto;
+  }
+
+  /* Al hacer scroll, mover el logo hacia la derecha */
+  #site-header.header--compact .header-top {
+    justify-content: flex-end;
+    padding-right: 0.5rem;
+  }
+
+  #site-header.header--compact .logo {
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+  }
+}
+
   /* --- Desktop: logo arriba, nav horizontal debajo, sin hamburguesa --- */
   @media (min-width: 768px) {
-    .nav-toggle {
-      display: none;
-    }
-
-    .main-nav {
-      display: block; /* ya no depende de .open */
-      position: static;
-      width: auto;
-      background: none;
-      box-shadow: none;
-      padding: var(--space-xs, 0.5rem) 0 0;
-      border-top: none;
-    }
-
-    .main-nav ul {
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-      align-items: center;
-      gap: var(--space-md, 1.5rem);
-      list-style: none;
-    }
+  .nav-toggle {
+    display: none;
   }
+
+  .main-nav {
+    display: block;
+    position: static;
+    width: auto;
+    background: none;
+    box-shadow: none;
+    padding: var(--space-xs, 0.5rem) 0;
+    border-top: none;
+  }
+
+  .main-nav ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-md, 1.5rem);
+    list-style: none;
+  }
+
+  /* Estado normal: logo visible */
+  .header-top {
+    height: 6rem;
+  }
+
+  /* Al hacer scroll: desaparece completamente el espacio del logo */
+  #site-header.header--compact .header-top {
+    height: 0;
+  }
+
+  #site-header.header--compact .logo {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(-50%) scale(0.6);
+  }
+}
 </style>
 <script is:inline>
   const toggle = document.getElementById("nav-toggle");
