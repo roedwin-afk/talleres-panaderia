@@ -6,6 +6,14 @@ on:
         description: 'Slug del taller (nombre del archivo sin extensión, ej: domina-arte-pizza)'
         required: true
         type: string
+      accion:
+        description: 'Acción a realizar'
+        required: true
+        type: choice
+        default: 'decrementar'
+        options:
+          - decrementar
+          - incrementar
 permissions:
   contents: write
   actions: write
@@ -25,7 +33,11 @@ jobs:
       - name: Install gray-matter
         run: npm install gray-matter --no-save
       - name: Decrement disponibles
+        if: ${{ inputs.accion == 'decrementar' }}
         run: node .github/scripts/decrement-availability.mjs "${{ inputs.taller_slug }}"
+      - name: Increment disponibles
+        if: ${{ inputs.accion == 'incrementar' }}
+        run: node .github/scripts/increment-availability.mjs "${{ inputs.taller_slug }}"
       - name: Commit and push
         run: |
           git config user.name "github-actions[bot]"
@@ -35,7 +47,7 @@ jobs:
             echo "No hay cambios, nada que commitear."
             exit 0
           fi
-          git commit -m "chore: actualizar disponibilidad de ${{ inputs.taller_slug }}"
+          git commit -m "chore: actualizar disponibilidad de ${{ inputs.taller_slug }} (${{ inputs.accion }})"
           git pull --rebase origin main
           git push origin main
       - name: Trigger deploy
