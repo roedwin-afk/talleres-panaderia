@@ -362,4 +362,18 @@ const ICONO_CHEF =
       font-size: 2rem;
     }
   }
+
+  @media (max-width: 600px) {
+    /* El .container global reduce su padding a --space-xs en este
+       breakpoint; acá se agrega un poco más solo para este hero,
+       porque el texto queda pegado al borde sobre la imagen. */
+    .detalle-hero-content {
+      padding-left: var(--space-md);
+      padding-right: var(--space-md);
+    }
+    .detalle-contenido {
+      padding-left: var(--space-md);
+      padding-right: var(--space-md);
+    }
+  }
 </style>
