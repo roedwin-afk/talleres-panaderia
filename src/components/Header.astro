@@ -302,6 +302,17 @@ const hashActual = Astro.url.hash; // ej: "#formulario" o ""
     let compacto = false;
     let ticking = false;
 
+    // El header cambia de alto entre su estado expandido y compacto
+    // (y con el menú móvil abierto/cerrado). Esta variable la usan las
+    // secciones-ancla (scroll-padding-top en talleres-tokens.css) para
+    // no quedar tapadas por el header sticky al llegar por un enlace #.
+    const actualizarAlturaHeader = () => {
+      document.documentElement.style.setProperty(
+        "--header-height",
+        `${header.offsetHeight}px`,
+      );
+    };
+
     const actualizarHeader = () => {
       const y = window.scrollY;
 
@@ -313,8 +324,15 @@ const hashActual = Astro.url.hash; // ej: "#formulario" o ""
         header.classList.remove("header--compact");
       }
 
+      actualizarAlturaHeader();
       ticking = false;
     };
+
+    actualizarAlturaHeader();
+    window.addEventListener("resize", actualizarAlturaHeader, { passive: true });
+    // La altura cambia con una transición CSS (0.35s); se vuelve a medir
+    // al terminar para que quede exacta también en el estado final.
+    header.addEventListener("transitionend", actualizarAlturaHeader);
 
     window.addEventListener(
       "scroll",

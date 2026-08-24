@@ -12,14 +12,14 @@ html {
 }
 
 /* Offset para que las secciones-ancla (#workshops, #registration,
-   #talleres-anteriores, #faq) no queden tapadas por el header sticky
-   al hacer scroll hacia ellas. Usa la altura máxima del header (estado
-   expandido, sin compactar). */
-#workshops,
-#registration,
-#talleres-anteriores,
-#faq {
-  scroll-margin-top: 10.5rem;
+   #talleres-anteriores, #faq, y cada tarjeta de taller) no queden
+   tapadas por el header sticky al hacer scroll hacia ellas.
+   --header-height la actualiza Header.astro con el alto real del
+   header (que cambia entre su estado expandido y compacto), así que
+   esto no se desalinea si el header cambia de tamaño. El valor de
+   respaldo (6.5rem) es solo por si el JS todavía no corrió. */
+html {
+  scroll-padding-top: var(--header-height, 6.5rem);
 }
 
 :root {
