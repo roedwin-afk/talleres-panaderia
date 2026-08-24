@@ -161,7 +161,7 @@ const hashActual = Astro.url.hash; // ej: "#formulario" o ""
   }
 
   #site-header.header--compact .header-top {
-    height: 0;
+    height: var(--header-top-compact, 3rem);
   }
 
   #site-header.header--compact .logo {
