@@ -2,6 +2,7 @@
 // src/components/talleres/ListadoTalleres.astro
 import { getCollection } from "astro:content";
 import TarjetaTaller from "./TarjetaTaller.astro";
+import { contenidoPorCategoria } from "../data/content";
 
 interface Props {
   categoria: string;
@@ -36,7 +37,7 @@ const talleresOrdenados = talleresEntries.sort(
     </div>
 
     <div class="grid">
-      {talleresOrdenados.map((taller) => <TarjetaTaller taller={taller} />)}
+      {talleresOrdenados.map((taller) => <TarjetaTaller taller={taller} items={contenidoPorCategoria[categoria].imageNames} />)}
     </div>
   </div>
 </section>

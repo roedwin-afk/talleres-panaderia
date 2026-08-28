@@ -14,6 +14,7 @@ precio: 35
 precioPreventa: 30
 imagen: >-
   https://images.unsplash.com/photo-1568471173242-461f0a730452?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80
+imagenName: pan_frances.jpg
 imagenAlt: Baguettes de pan francés recién horneadas
 destacado: false
 categoria: panaderia

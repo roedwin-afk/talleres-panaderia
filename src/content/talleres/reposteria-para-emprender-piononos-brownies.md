@@ -14,6 +14,7 @@ precio: 35
 precioPreventa: 30
 imagen: >-
   https://images.unsplash.com/photo-1636743715220-d8f8dd900b87?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80
+imagenName: brownie.jpg
 imagenAlt: Piononos y brownies recién horneados
 destacado: false
 categoria: panaderia

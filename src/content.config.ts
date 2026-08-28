@@ -22,6 +22,7 @@ const talleres = defineCollection({
     // Si la reserva se hace con el 50%, el descuento no aplica y el precio sigue siendo `precio`.
     precioPreventa: z.number().positive().optional(),
     imagen: z.string(),
+    imagenName: z.string(),
     imagenAlt: z.string(),
     destacado: z.boolean().default(false),
   }),

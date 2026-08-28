@@ -14,6 +14,7 @@ precio: 35
 precioPreventa: 30
 imagen: >-
   https://images.unsplash.com/photo-1602903489862-1fe54b1f5ff2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80
+imagenName: choux.jpg
 imagenAlt: Profiteroles de pasta choux rellenos de crema
 destacado: false
 categoria: panaderia

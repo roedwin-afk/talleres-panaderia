@@ -38,10 +38,24 @@ import tallerPostresHojaldre from "../assets/taller-postres-hojaldre.jpg";
 import tallerPostresHojaldre2 from "../assets/taller-postres-hojaldre-2.jpg";
 import tallerCrepasWaffles from "../assets/taller-crepas-waffles.jpg";
 
+import torta from "../assets/torta.jpg";
+import pizza from "../assets/pizza.jpg";
+import panFrances from "../assets/pan_frances.jpg";
+import brownie from "../assets/brownie.jpg";
+import choux from "../assets/choux.jpg";
+
+
+
+
 export interface TallerAnterior {
   titulo: string;
   imagen: ImageMetadata;
   imagenes?: ImageMetadata[];
+}
+
+export interface imageNames {
+  name: string;
+  imagen: ImageMetadata;
 }
 
 export interface ContenidoCategoria {
@@ -51,6 +65,7 @@ export interface ContenidoCategoria {
   faq: FaqItem[];
   testimonios: Testimonio[];
   talleresAnteriores: TallerAnterior[];
+  imageNames: imageNames[];
 }
 
 export const contenidoPorCategoria: Record<string, ContenidoCategoria> = {
@@ -117,6 +132,28 @@ export const contenidoPorCategoria: Record<string, ContenidoCategoria> = {
         titulo: "Taller de crepas y waffles",
         imagen: tallerCrepasWaffles,
         imagenes: [tallerCrepasWaffles],
+      },
+    ],
+    imageNames: [
+      {
+        name: "torta.jpg",
+        imagen: torta,
+      },
+      {
+        name: "pizza.jpg",
+        imagen: pizza,
+      },
+      {
+        name: "pan_frances.jpg",
+        imagen: panFrances,
+      },
+      {
+        name: "brownie.jpg",
+        imagen: brownie,
+      },
+      {
+        name: "choux.jpg",
+        imagen: choux,
       },
     ],
   },

@@ -5,12 +5,10 @@ import Layout from '../../../layouts/Layout.astro';
 import Hero from '../../../components/Hero.astro';
 import ListadoTalleres from '../../../components/ListadoTalleres.astro';
 import TalleresAnteriores from '../../../components/TalleresAnteriores.astro';
-import Testimonios from '../../../components/Testimonios.astro';
 import FAQ from '../../../components/FAQ.astro';
 import ZohoFormularioHTML from '../../../components/ZohoFormularioHTML.astro';
 import { categorias } from '../../../data/categorias';
 import { contenidoPorCategoria } from '../../../data/content';
-import ZohoFormulario from '../../../components/ZohoFormulario.astro';
 
 export async function getStaticPaths() {
   return categorias.map((categoria) => ({
