@@ -1,7 +1,7 @@
 ---
 nombre: 'Taller de Pasta Choux: Elaboración de Profiteroles y Repollos'
 slug: pasta-choux-profiteroles-y-repollos
-fecha: 2026-09-19T00:00:00.000Z
+fecha: 2026-10-03T00:00:00.000Z
 horarioInicio: '9:00 AM'
 horarioFin: '12:00 PM'
 lugar: 'PROMAICA San Salvador'
