@@ -4,7 +4,7 @@ slug: relampagos-profiteroles-taller-practico-de-pasta-choux
 fecha: 2026-10-03T00:00:00.000Z
 horarioInicio: '9:00 AM'
 horarioFin: '12:00 PM'
-lugar: 'PROMAICA San Salvador'
+lugar: PROMAICA San Salvador
 instructor: Felipe Gonzalez
 instructorGenero: m
 nivel: Todo público
