@@ -1,6 +1,6 @@
 ---
-nombre: 'Repostería para Emprender: Piononos y Brownies'
-slug: reposteria-para-emprender-piononos-y-brownies
+nombre: Repostería para Emprender: Brazo Gitano y Brownies
+slug: reposteria-para-emprender-brazo-gitano-brownies
 fecha: 2026-09-26T00:00:00.000Z
 horarioInicio: '9:00 AM'
 horarioFin: '12:00 PM'
@@ -15,25 +15,31 @@ precioPreventa: 30
 imagen: >-
   https://images.unsplash.com/photo-1636743715220-d8f8dd900b87?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80
 imagenName: brownie.jpg
-imagenAlt: Piononos y brownies recién horneados
+imagenAlt: Brazo gitano y brownies recién horneados
 destacado: false
 categoria: panaderia
 ---
 
-Aprende haciendo y descubre el proceso para preparar piononos y brownies, dos productos de alta rotación y fáciles de vender, ideales para quienes buscan iniciar o fortalecer un emprendimiento de repostería.
+Aprende haciendo y descubre cómo preparar brazo gitano de vainilla y chocolate, además de brownies con dos atractivas presentaciones: decorados con Oreo y con chispas de chocolate.
 
 En este taller práctico participarás en las preparaciones mientras conoces técnicas y maquinaria profesional que puede ayudarte a facilitar el trabajo y agilizar diferentes etapas de producción.
 
-Una experiencia ideal si quieres emprender, ampliar tu variedad de productos y descubrir nuevas opciones para ofrecer a tus clientes.
+Una experiencia ideal si quieres aprender nuevas recetas, ampliar tu variedad de productos o encontrar opciones para ofrecer en tu emprendimiento o negocio.
 
 ## ¿Qué aprenderás?
 
-- Cómo preparar pionono paso a paso, participando directamente en el proceso.
-- Cómo preparar brownie y conocer las diferentes etapas de su elaboración.
-- Técnicas prácticas para el enrollado y relleno del pionono.
-- Cómo realizar correctamente el armado, corte y presentación de cada producto.
-- Cómo apoyarte en maquinaria profesional para facilitar diferentes etapas del trabajo.
-- Recomendaciones para costeo y venta, pensadas para quienes quieren emprender con estos productos.
+Durante el taller aprenderás:
+
+- Cómo preparar la mezcla para el brazo gitano paso a paso.
+- Cómo elaborar brazo gitano de vainilla y de chocolate.
+- Técnicas para hornear y enrollar correctamente el brazo gitano.
+- Recomendaciones para lograr un bizcocho flexible y evitar que se quiebre al enrollarlo.
+- Cómo preparar brownies con una textura y cocción adecuadas.
+- Cómo presentar brownies decorados con Oreo.
+- Cómo presentar brownies decorados con chispas de chocolate.
+- Cómo utilizar maquinaria profesional para facilitar y agilizar las preparaciones.
+- Información sobre los costos de los productos para ayudarte a establecer precios de venta.
+- Técnicas que podrás aplicar en una repostería, negocio o emprendimiento.
 
 ## ¿Qué incluye?
 
