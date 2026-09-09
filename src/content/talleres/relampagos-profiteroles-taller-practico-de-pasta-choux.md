@@ -1,5 +1,5 @@
 ---
-nombre: Relámpagos y Profiteroles: Taller práctico de pasta choux
+nombre: 'Relámpagos y Profiteroles: Taller práctico de pasta choux'
 slug: relampagos-profiteroles-taller-practico-de-pasta-choux
 fecha: 2026-10-03T00:00:00.000Z
 horarioInicio: '9:00 AM'

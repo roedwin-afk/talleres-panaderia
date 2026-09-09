@@ -1,5 +1,5 @@
 ---
-nombre: Repostería para Emprender: Brazo Gitano y Brownies
+nombre: 'Repostería para Emprender: Brazo Gitano y Brownies'
 slug: reposteria-para-emprender-brazo-gitano-brownies
 fecha: 2026-09-26T00:00:00.000Z
 horarioInicio: '9:00 AM'
