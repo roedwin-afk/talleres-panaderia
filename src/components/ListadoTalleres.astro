@@ -1,5 +1,4 @@
 ---
-// src/components/talleres/ListadoTalleres.astro
 import { getCollection } from "astro:content";
 import TarjetaTaller from "./TarjetaTaller.astro";
 import { contenidoPorCategoria } from "../data/content";
@@ -10,9 +9,11 @@ interface Props {
 
 const { categoria } = Astro.props;
 
+const ahora = new Date();
+
 const talleresEntries = await getCollection(
   "talleres",
-  ({ data }) => data.categoria === categoria,
+  ({ data }) => data.categoria === categoria && data.fecha >= ahora,
 );
 
 const talleresOrdenados = talleresEntries.sort(
