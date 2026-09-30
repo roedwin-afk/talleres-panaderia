@@ -1,13 +1,16 @@
 ---
 // src/components/talleres/TarjetaTaller.astro
 import type { CollectionEntry } from "astro:content";
-import { Image, getImage } from "astro:assets";
+import { Image } from "astro:assets";
 import type { imageNames } from "../data/content";
+import imagenTorta from "../assets/torta.jpg";
+
 interface Props {
     taller: CollectionEntry<"talleres">;
+    items: imageNames[];
 }
 
-const { taller } = Astro.props;
+const { taller, items } = Astro.props;
 const {
     nombre,
     categoria,
@@ -22,45 +25,27 @@ const {
     cuposTotales,
     precio,
     precioPreventa,
-    imagen,
     imagenName,
     imagenAlt,
 } = taller.data;
-
-interface Props {
-  items: imageNames[];
-}
-const { items } = Astro.props;
-
-import imagenTorta from "../assets/torta.jpg";
-
-
-// const galerias = await Promise.all(
-//   items.map(async (item) => {
-//     const fotos = [item.imagen];
-//     const optimizadas = await Promise.all(
-//       fotos.map((foto) => getImage({ src: foto, width: 1200, format: "webp" }))
-//     );
-//     return fotos;
-//   })
-// );
 
 // Porcentaje de cupos disponibles respecto al total
 const porcentajeCupos = (cuposDisponibles / cuposTotales) * 100;
 
 // Umbrales: verde >50%, amarillo 30%-50%, rojo <30%
-let nivelDisponibilidad: "alto" | "medio" | "bajo";
-if (porcentajeCupos > 50) {
-    nivelDisponibilidad = "alto";
-} else if (porcentajeCupos >= 30) {
-    nivelDisponibilidad = "medio";
-} else {
-    nivelDisponibilidad = "bajo";
-}
+let nivelDisponibilidad: "high" | "medium" | "low";
+let etiquetaCupos: string;
 
-// Umbral de "pocos cupos": <= 5, coincide con el criterio del mockup original
-// (3 cupos = "pocos", 8 y 12 = "disponibles"). Ajustable si Marketing define otro criterio.
-const pocosCupos = cuposDisponibles <= 5;
+if (porcentajeCupos > 50) {
+    nivelDisponibilidad = "high";
+    etiquetaCupos = `${cuposDisponibles} disponibles`;
+} else if (porcentajeCupos >= 30) {
+    nivelDisponibilidad = "medium";
+    etiquetaCupos = `Quedan ${cuposDisponibles} cupos`;
+} else {
+    nivelDisponibilidad = "low";
+    etiquetaCupos = `¡Últimos ${cuposDisponibles} cupos!`;
+}
 
 const fechaFormateada = fecha.toLocaleDateString("es-SV", {
     weekday: "short",
@@ -81,22 +66,23 @@ const precioPreventaFormateado = precioPreventa
 const etiquetaInstructor =
     instructorGenero === "f" ? "Instructora" : "Instructor";
 
+const imagenSrc =
+    items.find((item) => item.name === imagenName)?.imagen ?? imagenTorta;
+
 const base = import.meta.env.BASE_URL;
-
-
 ---
 
 <article class="card">
     <div class="card-img-placeholder">
-        <!-- <img src={imagen} alt={imagenAlt} /> -->
-        <Image                  
-                  src={items.find(item => item.name === imagenName)?.imagen ?? imagenTorta}
-                  alt={imagenAlt}
-                  width={480}
-                  height={320}
-                  loading="lazy"
-                />
+        <Image
+            src={imagenSrc}
+            alt={imagenAlt}
+            width={480}
+            height={320}
+            loading="lazy"
+        />
     </div>
+
     <div class="card-content">
         <div class="card-meta">
             <span class="badge badge-nivel">
@@ -116,66 +102,24 @@ const base = import.meta.env.BASE_URL;
                 {nivel}
             </span>
 
-            {
-                nivelDisponibilidad === "bajo" ? (
-                    <span class="badge low">
-                        <svg
-                            width="14"
-                            height="14"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2.5"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                        >
-                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-                            <circle cx="9" cy="7" r="4" />
-                            <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-                            <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-                        </svg>
-                        ¡Últimos {cuposDisponibles} cupos!
-                    </span>
-                ) : nivelDisponibilidad === "medio" ? (
-                    <span class="badge medium">
-                        <svg
-                            width="14"
-                            height="14"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2.5"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                        >
-                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-                            <circle cx="9" cy="7" r="4" />
-                            <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-                            <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-                        </svg>
-                        Quedan {cuposDisponibles} cupos
-                    </span>
-                ) : (
-                    <span class="badge high">
-                        <svg
-                            width="14"
-                            height="14"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2.5"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                        >
-                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-                            <circle cx="9" cy="7" r="4" />
-                            <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-                            <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-                        </svg>
-                        {cuposDisponibles} disponibles
-                    </span>
-                )
-            }
+            <span class={`badge ${nivelDisponibilidad}`}>
+                <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                >
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                    <circle cx="9" cy="7" r="4" />
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                </svg>
+                {etiquetaCupos}
+            </span>
         </div>
 
         <h3 class="card-title">{nombre}</h3>
@@ -257,6 +201,8 @@ const base = import.meta.env.BASE_URL;
         display: flex;
         flex-direction: column;
         border: 1px solid var(--border-light);
+        /* Los @container de abajo miden el ancho de la card, no el viewport */
+        container-type: inline-size;
     }
 
     .card:hover {
@@ -286,6 +232,8 @@ const base = import.meta.env.BASE_URL;
         display: flex;
         justify-content: space-between;
         align-items: center;
+        flex-wrap: wrap;
+        gap: var(--space-xs);
         margin-bottom: var(--space-xs);
     }
 
@@ -313,6 +261,7 @@ const base = import.meta.env.BASE_URL;
     .card-details-list li {
         display: flex;
         justify-content: space-between;
+        gap: var(--space-xs);
         margin-bottom: 0.5rem;
         font-size: 0.95rem;
     }
@@ -365,11 +314,6 @@ const base = import.meta.env.BASE_URL;
         gap: var(--space-xs);
     }
 
-    @media (max-width: 768px) {
-        .card-actions {
-            grid-template-columns: 1fr;
-        }
-    }
     .badge.high {
         background-color: rgba(34, 197, 94, 0.12);
         color: #16a34a;
@@ -383,5 +327,44 @@ const base = import.meta.env.BASE_URL;
     .badge.low {
         background-color: rgba(239, 68, 68, 0.12);
         color: #dc2626;
+    }
+
+    /* Modo compacto: se activa según el ancho de la card, no de la ventana.
+       Reemplaza al antiguo @media (max-width: 768px) de .card-actions. */
+    @container (max-width: 340px) {
+        .card-img-placeholder {
+            height: 160px;
+        }
+
+        .card-content {
+            padding: var(--space-sm);
+        }
+
+        .card-meta {
+            justify-content: flex-start;
+        }
+
+        .card-title {
+            font-size: 1.15rem;
+            line-height: 1.3;
+        }
+
+        .card-details-list li {
+            flex-direction: column;
+            gap: 0.1rem;
+            margin-bottom: 0.6rem;
+        }
+
+        .card-details-list li span:last-child {
+            text-align: left;
+        }
+
+        .card-price-block {
+            align-items: flex-start;
+        }
+
+        .card-actions {
+            grid-template-columns: 1fr;
+        }
     }
 </style>

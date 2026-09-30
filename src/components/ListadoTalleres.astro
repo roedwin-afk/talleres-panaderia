@@ -38,7 +38,14 @@ const talleresOrdenados = talleresEntries.sort(
     </div>
 
     <div class="grid">
-      {talleresOrdenados.map((taller) => <TarjetaTaller taller={taller} items={contenidoPorCategoria[categoria].imageNames} />)}
+      {
+        talleresOrdenados.map((taller) => (
+          <TarjetaTaller
+            taller={taller}
+            items={contenidoPorCategoria[categoria].imageNames}
+          />
+        ))
+      }
     </div>
   </div>
 </section>
@@ -54,9 +61,19 @@ const talleresOrdenados = talleresEntries.sort(
     margin-top: var(--space-xs);
   }
 
-  @media (max-width: 600px) {
-    .workshops-section .grid {
-      gap: var(--space-lg);
-    }
+  /* Ancho mínimo cómodo por card. auto-fill conserva las columnas
+     vacías, así que una sola card no se estira al ancho completo. */
+  .workshops-section .grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-md);
+  align-items: stretch;
+}
+
+@media (max-width: 768px) {
+  .workshops-section .grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
   }
+}
 </style>
